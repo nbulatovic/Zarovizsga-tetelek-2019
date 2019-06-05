@@ -3,6 +3,30 @@ Tudományos adatanalitika és modellezés specializáció záróvizsga tételsor
 
 https://physics.elte.hu/content/fizikus-msc-zarovizsga-informaciok.t.2998?m=1515&fbclid=IwAR1KUiIbuPZiUw67nuoKrVk551MCUSsgpzI6yMt1ao7H331aCvSdKQxeUyw
 
+# Beosztás
+
+ Berekméri Evelin 1, 11
+
+Biricz András 12, 16
+
+Bulatovic Nikola 9, 14
+
+Furuglyás Kristóf 5
+
+Horváth Benedek 7, 10
+
+Kaszás Bálint 6, 3
+
+Kruppa Zoltán 13
+
+Mezősi Máté 15, 8
+
+Nagy Dániel 2
+
+Olar Alex 4
+
+Prósz Aurél 17 
+
 # Tételsor
 
 1) Mérési adatok és a mérési hiba – Hibák és zajok, ezek forrásai. A statisztikus és a szisztematikus hiba. A hiba sztochasztikus modellezése. Adatmodellezés – A függvényillesztés alapproblémája. Magfüggvényes becslések. 
