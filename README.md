@@ -1,12 +1,6 @@
 # Zarovizsga-tetelek-2019
 
-Tudományos adatanalitika és modellezés specializáció záróvizsga tételsor 2019.
-
-  
-
-https://physics.elte.hu/content/fizikus-msc-zarovizsga-informaciok.t.2998?m=1515&fbclid=IwAR1KUiIbuPZiUw67nuoKrVk551MCUSsgpzI6yMt1ao7H331aCvSdKQxeUyw
-
-  
+Tudományos adatanalitika és modellezés specializáció [záróvizsga tételsor 2019](https://physics.elte.hu/content/fizikus-msc-zarovizsga-informaciok.t.2998?m=1515&fbclid=IwAR1KUiIbuPZiUw67nuoKrVk551MCUSsgpzI6yMt1ao7H331aCvSdKQxeUyw).
 
 # Munkamenet:
 
@@ -19,10 +13,10 @@ https://physics.elte.hu/content/fizikus-msc-zarovizsga-informaciok.t.2998?m=1515
 4. Ha kérdésed van, nyiss egy issue-t, hogy mindenki lássa.
 
 # Sablon:
-Itt található egy sablon, amiben vannak hasznos megoldások, példák: 
-# Beosztás
+Itt található egy sablon, amiben vannak hasznos megoldások, példák: [sablon pdf](https://github.com/nbulatovic/Zarovizsga-tetelek-2019/blob/master/template/template.pdf)
+[sablon tex](https://github.com/nbulatovic/Zarovizsga-tetelek-2019/blob/master/template/template.tex)
 
-  
+# Beosztás
 
 Berekméri Evelin 1, 11
 
