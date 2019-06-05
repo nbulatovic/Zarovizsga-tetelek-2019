@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.12.19)  5 JUN 2019 21:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.12.19)  5 JUN 2019 22:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -813,23 +813,21 @@ l.207
                                                   \fi \fi 
 l.207 
        <./media/dla_frac.png> <./media/allometry.png>]
+Overfull \hbox (7.329pt too wide) in paragraph at lines 225--226
+\T1/cmr/m/n/12 Négyzetrácson történ® mozgást nézünk, ahol az egyen irányokba tö
+rtén® el-moz-dulás valószín¶sége
+ []
+
 No file 5.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 248.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 252.
 [6]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 248.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 252.
  (./5.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 248.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 248.
-
-
-Package rerunfilecheck Warning: File `5.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `5.out':
-(rerunfilecheck)             Before: 197682C283ABBB52A67FC77C247B396A;1926
-(rerunfilecheck)             After:  7F700B6829651FB786AC290EF4E28A82;1931.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 248.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 252.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 252.
+Package rerunfilecheck Info: File `5.out' has not changed.
+(rerunfilecheck)             Checksum: 7F700B6829651FB786AC290EF4E28A82;1931.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 252.
  ) 
 Here is how much of TeX's memory you used:
  10036 strings out of 494923
@@ -859,9 +857,9 @@ r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/
 texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on 5.pdf (6 pages, 1042211 bytes).
+Output written on 5.pdf (6 pages, 1044082 bytes).
 PDF statistics:
- 461 PDF objects out of 1000 (max. 8388607)
+ 462 PDF objects out of 1000 (max. 8388607)
  180 compressed objects within 2 object streams
  37 named destinations out of 1000 (max. 500000)
  138 words of extra memory for PDF output out of 10000 (max. 10000000)
