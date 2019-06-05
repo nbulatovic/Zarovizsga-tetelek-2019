@@ -12,6 +12,11 @@ Tudományos adatanalitika és modellezés specializáció [záróvizsga tételso
 
 4. Ha kérdésed van, nyiss egy issue-t, hogy mindenki lássa.
 
+5. Ha nem jelennek meg a hivatkozások, referenciák, próbálkozz ezzel:
+```
+cd <mappa, ahol a tex file van>
+pdflatex <tex_file_kiterjesztes_nelkul> && bibtex <tex_file_kiterjesztes_nelkul> && pdflatex <tex_file_kiterjesztes_nelkul> && pdflatex
+```
 # Sablon:
 Itt található egy sablon, amiben vannak hasznos megoldások, példák: [sablon pdf](https://github.com/nbulatovic/Zarovizsga-tetelek-2019/blob/master/template/template.pdf)
 [sablon tex](https://github.com/nbulatovic/Zarovizsga-tetelek-2019/blob/master/template/template.tex)
