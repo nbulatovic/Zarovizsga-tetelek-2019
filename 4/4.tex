@@ -5,11 +5,9 @@
 \setlength{\footskip}{1cm}
 \setlength{\evensidemargin}{0cm}
 \setlength{\oddsidemargin}{0cm}
-\setlength{\parindent}{0cm}
 
 \usepackage{allrunes}
 \usepackage{amsmath}
-\usepackage[magyar]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{fixltx2e}
@@ -27,6 +25,7 @@
 \usepackage{amsfonts}
 \usepackage{amsthm}
 \usepackage{amssymb}
+\usepackage{indentfirst}
 
 
 \theoremstyle{plain}
@@ -72,25 +71,101 @@
 
 
 \begin{document}
-\title{4. tétel}
-\author{valaki}
+\title{4th exam item}
+\author{Alex Olar}
 
 \maketitle
 
-
 \newpage
 \begin{abstract}
-    Termodinamikai rendszerek szimulációja, Ising-model, Metropolis-algoritmus.
+    Thermodynamic simulations, Ising-model and the Metropolis algorithm
 \end{abstract}
 
-\section{Duma}
-\begin{figure}[H]
-    \begin{center}
-    \includegraphics[width=0.5\textwidth]{media/tsneplot.png}
-    \caption{t-SNE plot for MNIST dataset \cite{tsne-article}} 
-    \label{fig:tsneplot}
-    \end{center}
-\end{figure}
+\section{Introduction}
+
+\par Not only do thermodynamic simulations
+have important practical applications, but they also give us insight into what is “dynamic” in
+thermodynamics. In the following few pages we are going
+to dwelve into how to calculate thermodynamic properties of
+complex systems, give a brief summary of the Metropolis algorithm and its 
+applications. The theory forms the basis for field- theoretic calculations
+of quantum chromodynamics, some of the most fundamental and most time-consuming
+computations in existence.
+
+\section{The Ising-model}
+
+\par Ferromagnets contain finite-size domains in which the spins of all the atoms point in the same
+direction. When an external magnetic field is applied to these materials, the different domains
+align and the materials become “magnetized.” Yet as the temperature is raised, the total mag-
+netism decreases, and at the Curie temperature the system goes through a phase transition
+beyond which all magnetization vanishes.
+
+\par To handle this behaviour we can develop the most simple model: a \textbf{chain of spins}. As our model
+we consider N magnetic dipoles fixed in place on the links of a linear chain. Because
+the particles are fixed, their positions and momenta are not dynamic variables, and we need
+worry only about their spins. We assume that the particle at site $i$ has spin $s_{i}$ , which is either
+up or down:
+
+\begin{equation*}
+    s_{i} \equiv s_{z, i} = \pm \frac{1}{2}
+\end{equation*}
+
+\par Each configuration of the N particles is described by a quantum state vector:
+
+\begin{equation*}
+    \ket{\alpha_{j}} = \ket{s_1, s_2, ..., s_N} = \Big\{ \pm \frac{1}{2}, \pm \frac{1}{2}, ...\Big\}, \quad j = 1, ..., 2^{N}
+\end{equation*}
+
+\par Since fixed particles cannot be interchanged, we do not need to concern
+ourserlves with the symmtery of the wave function.
+
+\par The energy of the system arises from the interaction of the spins with each other and
+with the external magnetic field B . We know from quantum mechanics that an electron’s spin
+and magnetic moment are proportional to each other, so a magnetic dipole–dipole interaction
+is equivalent to a spin–spin interaction. We assume that each dipole interacts with the external
+magnetic field and with its nearest neighbor through the potential:
+
+\begin{equation*}
+    V_{i} = -J\vec{s_{i}}\vec{s_{i+1}} - g\mu_{b}\vec{s_i}\vec{B}
+\end{equation*}
+
+\par Here the constant $J$ is called the \textit{exchange energy} and is a measure of the strength of the spin–
+spin interaction. The constant $g$ is the \textit{gyromagnetic ratio}, that is, the proportionality constant
+between a particle’s angular momentum and magnetic moment. The constant $\mu_b = e\hbar / (2m_e c)$
+is the Bohr magneton, the basic measure for magnetic moments.
+
+\par Even for small numbers of particles, the $2^N$ possible spin configurations gets to be very
+large ( $2^{20} > 10^6$ ), and it is expensive for the computer to examine them all. Realistic samples
+with $\approx 10^{23}$ particles are beyond imagination. Consequently, statistical approaches are usually
+assumed, even for moderate values of $N$.
+
+\par The energy of the system in state $\alpha_k$ is the expectation value of the sum of the potential $V$
+over the spins of the particles:
+
+\begin{equation*}
+    E_{\alpha_k} = \bra{\alpha_k}\sum_{i}V_i\ket{\alpha_k} = -J\sum_{i=1}^{N-1}s_i s_{i+1} - B\mu_{b}\sum_{i=1}^{N}s_i
+\end{equation*}
+
+\par If we turn off the external magnetic field there will be no preferred
+direction in space and the average magnetization should vanish even though
+energetically most adventageous state would be all spins aligned. To
+resolution of the paradox is that the system is unstable at $B=0$. Some properties must be
+calculated differently. For example magnetization should be calculated $\bra{}\sum_{i}s_{i}\ket{}$
+and not $\bra{}\sum_{i}s_{i}\ket{}$ with no preferred direction.
+
+\par The equilibrium alignment of the spins depends critically on the sign of the exchange
+energy $J$ . If $J > 0$ , the lowest energy state will tend to have neighboring spins aligned. If the
+temperature is low enough, the ground state will be a ferromagnet with all the spins aligned.
+If $J < 0$ , the lowest energy state will tend to have neighbors with opposite spins. If the
+temperature is low enough, the ground state will be a antiferromagnet with alternating spins.
+
+\par A fascinating aspect of magnetic materials is the existence of a critical temperature, the
+\textit{Curie temperature}, above which the gross magnetization essentially vanishes. Below the Curie
+temperature the quantum state of the material has long-range order extending over macroscopic
+dimensions; above the Curie temperature there is only short-range order extending over atomic
+dimensions. Even though the 1-D Ising model predicts realistic temperature dependences for
+the thermodynamic quantities, the model is too simple to support a phase transition. However,
+the 2-D and 3-D Ising models do support the Curie temperature phase transition.
 
 \bibliographystyle{plain}
 \bibliography{references}
