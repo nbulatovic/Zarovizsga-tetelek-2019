@@ -94,7 +94,7 @@ to dwelve into how to calculate thermodynamic properties of
 complex systems, give a brief summary of the Metropolis algorithm and its 
 applications. The theory forms the basis for field- theoretic calculations
 of quantum chromodynamics, some of the most fundamental and most time-consuming
-computations in existence.
+computations in existence. \cite{landau}
 
 \vspace{2mm}
 
@@ -172,9 +172,10 @@ over the spins of the particles:
 
 \vspace{2mm}
 
-\begin{equation*}
+\begin{equation}
     E_{\alpha_k} = \bra{\alpha_k}\sum_{i}V_i\ket{\alpha_k} = -J\sum_{i=1}^{N-1}s_i s_{i+1} - B\mu_{b}\sum_{i=1}^{N}s_i
-\end{equation*}
+    \label{energy}
+\end{equation}
 
 \vspace{2mm}
 
@@ -201,7 +202,7 @@ temperature the quantum state of the material has long-range order extending ove
 dimensions; above the Curie temperature there is only short-range order extending over atomic
 dimensions. Even though the 1-D Ising model predicts realistic temperature dependences for
 the thermodynamic quantities, the model is too simple to support a phase transition. However,
-the 2-D and 3-D Ising models do support the Curie temperature phase transition.
+the 2-D and 3-D Ising models do support the Curie temperature phase transition. \cite{landau}
 
 \vspace{2mm}
 
@@ -251,11 +252,270 @@ configurations of the system. Another formulation is to sum over the energies of
 factor $g(E_i)$ to account for degenerate states with the same energy. While the present sum over
 states is a simpler way to express the problem (one less function), we shall see that the sum
 over energies is more efficient numerically. In fact, in this section we even ignore the partition
-function $Z(T)$ because it cancels out when dealing with the ratio of probabilities.
+function $Z(T)$ because it cancels out when dealing with the ratio of probabilities. \cite{landau}
 
 \vspace{2mm}
 
+\subsection{Analytical solution of Ising-chain}
 
+\vspace{2mm}
+
+\par In order to solve the 1D Ising model analitically we need to understand the 
+partition function properly \cite{exactising}. $Z(T)$ is summed over all states $\ket{\alpha_k}$ which means
+all the spin position realization of the system. If periodic conditions are given ($s_1 \equiv s_N$)
+we can actually calculate the sum analitically since we already have the formulare eq. \ref{energy}
+where in the case of periodic boundary conditions all sums go to $N$:
+
+\vspace{2mm}
+
+\begin{equation*}
+    Z = \sum_{\alpha_k} e^{-E_{\alpha_k}\beta}
+\end{equation*}
+
+\vspace{2mm}
+
+\par This can be written as:
+
+\vspace{2mm}
+
+\begin{equation*}
+    Z = \sum_{s_1}\sum_{s_2}...\sum_{s_N} e^{\sum_{i=1}^{N}(-Js_i s_{i+1} - B\mu_{b}\frac{s_i + s_{i+1}}{2})\beta}
+\end{equation*}
+
+\vspace{2mm}
+
+\par Where the sums for spin $i$ are sums for $\pm 1$. We made a nice trick by introducing
+instead of $\sum_i s_i$, $\sum_{i}\frac{s_i + s_{i+1}}{2}$ which will make life simpler later on.
+Now we can happily realize that the sum in the exponential results in a separable form:
+
+\vspace{2mm}
+
+\begin{equation*}
+    Z = \sum_{s_1}\sum_{s_2}...\sum_{s_N} e^{\sum_{i}E_{i}(s_i, s_{i+1})\beta} 
+\end{equation*}
+
+\vspace{2mm}
+
+\par This can easilly be deconstructed to spin pairs:
+
+\vspace{2mm}
+
+\begin{equation*}
+    Z = \sum_{s_1}\sum_{s_2}...\sum_{s_N} e^{E_{1}(s_1, s_2)\beta}e^{E_{2}(s_2, s_3)\beta}\cdot ... e^{E_{N}(s_N, s_1)\beta} 
+\end{equation*}
+
+\vspace{2mm}
+
+\par We can introduce the matrix  $t_{s_i, s_{i+1}} = e^{E_{i}(s_i, s_{i+1})\beta}$. Since spins can only
+take values $\pm 1$, it takes the following form:
+
+\vspace{2mm}
+
+\begin{equation}
+    t = 
+    \left( \begin{array}{cc}
+        e^{\beta E(\uparrow, \uparrow)} & e^{\beta E(\downarrow, \uparrow)} \\
+        e^{\beta E(\uparrow, \downarrow)} & e^{\beta E(\downarrow, \downarrow)}
+    \end{array}
+    \right) = 
+    \left( \begin{array}{cc}
+        e^{\beta J + B\beta \mu_{B}} & e^{-\beta J} \\
+        e^{-\beta J} & e^{\beta J - \beta B \mu_{B}}
+    \end{array}
+    \right)
+    \label{t}
+\end{equation}
+
+\vspace{2mm}
+
+\par Therefore the partition function simplifies to:
+
+\vspace{2mm}
+
+\begin{equation*}
+    Z = \sum_{\{s_{i}\}_{i=1}^{N}} t_{s_1, s_2}t_{s_2, s_3} \cdot ... \cdot t_{s_N, s_1} = \sum_{s_1} [t^{N}]_{s_1, s_2} = Tr(t^{N})
+\end{equation*}
+
+\vspace{2mm}
+
+\par To calculate the trace we need the eigenvalues and eigenstates of the $t$ matrix.
+
+\vspace{2mm}
+
+\begin{align*}
+    t \ket{t_+} = \lambda_+ \ket{t_+} \quad \quad t^N \ket{t_+} = \lambda_+^N \ket{t_+} \\
+    t \ket{t_-} = \lambda_- \ket{t_-} \quad \quad t^N \ket{t_-} = \lambda_-^N \ket{t_-}
+\end{align*}
+
+\vspace{2mm}
+
+\par Since the eigenstates with the eigenvalues give the decompostion of $t$:
+
+\vspace{2mm}
+
+\begin{align*}
+    t = \lambda_+ \ket{t_+} \bra{t_+} + \lambda_- \ket{t_-} \bra{t_-} \\
+    t^N = \lambda_+^N \ket{t_+} \bra{t_+} + \lambda_-^N \ket{t_-} \bra{t_-}
+\end{align*}
+
+\vspace{2mm}
+
+\par Given the above equations the trace of $t^N$ is $\lambda_+^N + \lambda_-^N$.
+Calculating these is simple since we have eq. \ref{t}:
+
+\vspace{2mm}
+
+\begin{equation}
+    \lambda_{\pm} = e^{\beta J}ch(\beta B \mu_B) \pm \sqrt{e^{-2\beta J} + e^{2\beta J}sh^{2}(\beta B \mu_B)} \stackrel{(B = 0)}{=} 2 ch(\beta J)
+    \label{lambda}
+\end{equation}
+
+\vspace{2mm}
+
+\par Given that $\lambda_+ > \lambda_-$ and we take the $N \rightarrow \infty$ limit the partition function is:
+
+\vspace{2mm}
+
+\begin{equation*}
+    Z = \lambda_+^{N} + \lambda_-^N = \lambda_+^N\cdot \Big( 1 + \Big(\frac{\lambda_-}{\lambda_+}\Big)^N\Big) \rightarrow \lambda_+^N
+\end{equation*}
+
+\vspace{2mm}
+
+\par Since $U = \langle E \rangle = - \frac{\partial lnZ}{\partial \beta}$, if we take it at $B = 0$
+given eq. \ref{lambda} it becomes:
+
+\vspace{2mm}
+
+\begin{equation*}
+    \frac{U}{J} = -Nth(\beta J) J = \Big\{N, \quad k_B T \rightarrow 0 \quad | \quad 0, \quad k_B T \rightarrow \infty
+\end{equation*}
+
+\vspace{2mm}
+
+\par Specific heat and magnetization can be calculated as \cite{landau}:
+
+\vspace{2mm}
+
+\begin{align*}
+    C = \frac{1}{N}\frac{dU}{dT} = \frac{(J / k_B T)^2}{ch^{2}(J / k_B T)} \\
+    M = -\frac{\partial F}{\partial H} = \frac{Ne^{J/k_B T}sh(B / k_B T)}{\sqrt{e^{2J/k_B T}sh^2(B/k_B T) + e^{-2J/k_B T}}}
+\end{align*}
+
+\vspace{2mm}
+
+\par Where $F$ is the free energy of the system and can be calculated as $- k_B T lnZ$. This calculation can be reproduced for
+2 dimensions as well but it becomes more cumbersome and tireing so we introduce a general algoritm in 
+order to be able to simulate the system in finite time and proper precision.
+
+\vspace{2mm}
+
+\section{The Metropolis algorithm}
+
+\vspace{2mm}
+
+\par In trying to devise an algorithm that simulates thermal equilibrium, it is important to understand
+that the Boltzmann distribution does not require a system to remain in the state of lowest
+energy but says that it is less likely for the system to be found in a higher-energy state than
+in a lower-energy one. Of course, as $T \rightarrow 0$ , only the lowest energy state will be populated.
+For finite temperatures we expect the energy to fluctuate by approximately $k_B T$ about the
+equilibrium value.
+
+\vspace{2mm}
+
+\par In their simulation of neutron transmission through matter, Metropolis, Rosenbluth,
+Teller, and Teller invented an algorithm to improve the Monte Carlo calculation
+of averages. This Metropolis algorithm is now a cornerstone of computational physics. The
+sequence of configurations it produces (a Markov chain) accurately simulates the fluctuations
+that occur during thermal equilibrium. The algorithm randomly changes the individual spins
+such that, on the average, the probability of a configuration occurring follows a Boltzmann
+distribution.
+
+\vspace{2mm}
+
+\par The Metropolis algorithm is a combination of the variance reduction technique (subtracting a 
+well-chosen function to reduce the variance of ours thus acquireing more precise results)
+and the von Neumann rejection technique. Now we would like to have spins flip randomly,
+have a system that can reach any energy in a finite number of steps (ergodic sampling),
+have a distribution of energies described by a Boltzmann distribution,
+yet have systems that equilibrate quickly enough to compute in
+reasonable times.
+
+\vspace{2mm}
+
+\par The Metropolis algorithm is implemented via a number of steps. We start with a fixed
+temperature and an initial spin configuration and apply the algorithm until a thermal equilib-
+rium is reached (equilibration). Continued application of the algorithm generates the statistical
+fluctuations about equilibrium from which we deduce the thermodynamic quantities such as
+the magnetization $M (T )$ . Then the temperature is changed, and the whole process is repeated
+in order to deduce the T dependence of the thermodynamic quantities. The accuracy of the de-
+duced temperature dependences provides convincing evidence for the validity of the algorithm.
+Because the possible $2^N$ configurations of $N$ particles can be a very large number, the amount
+of computer time needed can be very long. Typically, a small number of iterations $\approx 10N$ is
+adequate for equilibration. The explicit steps of the algortihms are:
+
+\vspace{2mm}
+
+\begin{enumerate}
+    \item Take an arbitrary spin configuration $\alpha_k = \{ s_1, s_2, ..., s_N \}$
+    \item Generate a trial configuration $\alpha_{trial}$:
+    \begin{enumerate}
+        \item choose a particle randomly \footnote{in large-scale not just one particle is updated but a random sweep is applied through the system to remove any auto-correlations}
+        \item flip its spin
+    \end{enumerate}
+    \item Calculate the energy of the trial configuration $E_{\alpha_{trail}}$
+    \item If $\alpha_{trial} \leq E_{\alpha_k}$, accept the trial by setting $\alpha_{k + 1} = \alpha_{trial}$
+    \item If $\alpha_{trial} > E_{\alpha_k}$, accepts the trial with relative probability $R = e^{-\Delta E / k_B T}$
+    \begin{enumerate}
+        \item choose a uniform random number $r_i \in [0, 1]$
+        \item set $\alpha_{k+1} = \{\alpha_{trail}, ~ if ~ R \geq r_i \quad | \quad \alpha_k, ~ if ~ R < r_j$
+    \end{enumerate}
+\end{enumerate}
+
+\vspace{2mm}
+
+\par The heart of this algorithm is its generation of a random spin configuration $\alpha_j$ with
+probability
+
+\vspace{2mm}
+
+\begin{equation*}
+    P(E_{\alpha_j}, T) \propto e^{-E_{\alpha_j} / k_B T}
+\end{equation*}
+
+\vspace{2mm}
+
+\par The technique is a variation of von Neumann rejection in which a
+random trial configuration is either accepted or rejected depending upon the value of the Boltz-
+mann factor. Explicitly, the ratio of probabilities for a trial configuration of energy E t to that
+of an initial configuration of energy $E_i$ is
+
+\vspace{2mm}
+
+\begin{equation*}
+    R = \frac{P_{trial}}{P_i} = e^{-\Delta E / k_B T}, \quad \quad \Delta E = E_{trial} - E_{\alpha_i}
+\end{equation*}
+
+\vspace{2mm}
+
+\par If the trial configuration has a lower energy, the relative probability will be greater
+than 1 and we will accept the trial configuration as the new initial configuration without further
+ado. However, if the trial configuration has a higher energy, we will not reject it out
+of hand but instead accept it with relative probability. To accept
+a configuration with a probability, we pick a uniform random number between 0 and 1 , and if
+the probability is greater than this number, we accept the trial configuration; if the probability
+is smaller than the chosen random number, we reject it. When the trial
+configuration is rejected, the next configuration is identical to the preceding one.
+
+\vspace{2mm}
+
+\par It is possible to start with random values of spins, which is often referred to as hot start.
+Another choise is a cold start in which the system is started with all spins parallel ($J > 0$)
+or antiparallel ($J < 0$). In general the system is let to run for a few iterations ($\approx 10N$)
+before calculating the equilibrium. Similair results of numerical simulations should come from cold, hot
+or arbitrary starts. \cite{landau}
+
+\newpage
 
 \bibliographystyle{plain}
 \bibliography{references}
