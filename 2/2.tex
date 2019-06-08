@@ -73,24 +73,157 @@
 
 \begin{document}
 \title{2. tétel}
-\author{valaki}
-
+\author{Nagy Dániel}
 \maketitle
 
 
 \newpage
 \begin{abstract}
-    Bootstrap módszerek. A maximum likelihood módszer. Hipotézis tesztelés. Extrém statisztikák. Post hoc analízis. Regresszió. Függetlenségvizsgálat. Egzakt tesztek.
+    Bootstrap módszerek. A maximum likelihood módszer. Hipotézis tesztelés. Extrém statisztikák.
+    Post hoc analízis. Regresszió. Függetlenségvizsgálat. Egzakt tesztek.
 \end{abstract}
 
-\section{Duma}
-\begin{figure}[H]
-    \begin{center}
-    \includegraphics[width=0.5\textwidth]{media/tsneplot.png}
-    \caption{t-SNE plot for MNIST dataset \cite{tsne-article}} 
-    \label{fig:tsneplot}
-    \end{center}
-\end{figure}
+\section{Bevezetés}
+\subsection{Valószínűségszámítás alapfogalmak}
+\begin{itemize}
+    \item \textbf{Eseménytér} (ez egy abstrakt fogalom): $\Omega = \{\omega_1, \omega_2, ..., \omega_n\}$ pl. kockadobás esetén $\Omega = \{ \omega_1=\text{"1est dobok"}, \omega_2=\text{"2est dobok"}, \omega_3=\text{"párosat dobok"} ... \}$
+    \item \textbf{Valószínűségi változó}: $X:\Omega \rightarrow \mathbb R$ pl. kockadobás esetén $X(\omega_1) = 1, X(\omega_2) = 2, ... $
+    \item \textbf{Valószínűség}: $P$ egy mérték, amely $\Omega$ részhalmazaihoz számot rendel:
+        \begin{itemize}
+            \item $P: \mathcal{P}(\Omega) \rightarrow \mathbb R$
+            \item $P(\Omega) = 1$ és $P(\varnothing) = 0$
+            \item $ 0 \leq P(A) \leq 1 ~ \forall A \in \Omega$
+            \item Ha $A_1, A_2, ...$ diszjunkt részhalmazai $\Omega$-nak, akkor 
+            \begin{equation*}
+                P\left(\bigcup\limits_{i=1}^{\infty}A_i\right) = \sum\limits_{i=1}^{\infty}P(A_i)
+            \end{equation*}
+        \end{itemize}
+    \item \textbf{Hasznos összefüggések}:
+        \begin{itemize}
+            \item $P(A\cup B) = P(A)+P(B)-P(A\cap B)$
+            \item Két esemény független $\Longleftrightarrow P(A\cap B) = P(A)P(B)$
+            \item $P(A|B) = \frac{P(A\cap B)}{P(B)}$
+            \item Teljes valószínűség: Ha $A_1, A_2, ...$ az $\Omega$ egy felosztása, akkor 
+                \begin{equation*}
+                    P(B) = \sum\limits_{k} P(B|A_k)P(A_k)
+                \end{equation*}
+            \item Bayes-tétel: Ha $A_1, A_2, ...$ az $\Omega$ egy felosztása, akkor 
+                \begin{equation*}
+                    P(A_k|B) = \frac{P(B|A_k)P(A_k)}{P(B)} = \frac{P(B|A_k)P(A_k)}{\sum\limits_{j} P(B|A_j)P(A_j)}
+                \end{equation*}
+        \end{itemize}
+    \item \textbf{Eloszlásfüggvény} (CDF - cumulative distribution function):
+        \begin{equation*}
+            F_X(x) = P(X<x) = P(\{\omega\in\Omega | X(\omega)<x \})
+        \end{equation*}
+        diszkrét esetben 
+        \begin{equation*}
+            F_X(x) = P(X=x) = P(\{\omega\in\Omega | X(\omega)=x \})
+        \end{equation*}
+        Ha az $X$ változó $F$ eloszlást követ, akkor így jelöljük: $X\sim F$.
+    \item \textbf{Sűrűségfüggvény} (PDF - Probability density function):\\
+    Ha az $X$ változó eloszlásfüggvénye $F_X(x)$, akkor a sűrűségfüggvény definíciója
+        \begin{equation*}
+            F_X(x) = \int\limits_{-\infty}^{x}\rho_X(\xi)\dd \xi \Longleftrightarrow P(a \leq X(\omega) \leq b) = \int\limits_{a}^{b}\rho_X(x)\dd x
+        \end{equation*}
+        Megjegyzés: sűrűségfüggvénye csak folytonos eloszlású valószínűségi változónak van.
+    \item \textbf{Várható érték}
+    \begin{equation*}
+        \text{folytonos eset}~E(X) = \langle X \rangle = \int\limits_{-\infty}^{\infty}x\rho(x) \dd x 
+    \end{equation*}
+    \begin{equation*}
+        \text{diszkrét eset}~E(X) = \langle X \rangle = \sum\limits_{k} x_k p_k = \sum\limits_{k} x_k P(X=x_k)
+    \end{equation*}
+    \item \textbf{Várható értékre vonatkozó azonosságok}:
+        \begin{itemize}
+            \item Ha $Y=g(X) \Rightarrow E(Y) = E(g(X)) = {\displaystyle\int\limits_{-\infty}^{\infty}g(x)\rho(x) \dd x}$  
+            \item ${\displaystyle E\left(\sum\limits_k a_k X_k\right) = \sum\limits_k a_k E(X_k)}$
+            \item Ha $X_1, X_2, ...$ független változók, akkor ${\displaystyle E\left(\prod\limits_k X_k\right) = \prod\limits_k E(X_k)}$
+        \end{itemize}
+    \item \textbf{Variancia} (szórásnégyzet)\\
+    Ha $E(X)=\mu$, akkor a szórásnégyzet a változó és a várható értéke közötti különbség négyzetének várható értéke:
+    \begin{equation*}
+        \sigma^2(X) = V(X) = E((X-\mu)^2) = \langle (X-\mu)^2 \rangle = \langle X^2 \rangle - \mu^2
+    \end{equation*}
+    \item Ha $X_1, X_2, ...$ függetlenek, akkor 
+        \begin{equation*}
+            \sigma^2\left( \sum\limits_k(a_kX_k + b_k) \right) = \sum\limits_k a_k^2\sigma^2(X_k)
+        \end{equation*}
+    \item \textbf{Szórás} (standard deviation) definíciója:
+        \begin{equation*}
+            \sigma(X) = \sqrt{\sigma^2(X)} = \sqrt{\langle X^2 \rangle - \langle X \rangle^2}
+        \end{equation*}
+    \item \textbf{Minta}\\
+    Matematikailag egy statisztikai minta megfelel $N$ darab azonos eloszlású, független (iid) változónak egy adott $F$ eloszlásból.
+    \item \textbf{Minta átlaga}: ${\displaystyle\overline{X} = \frac{1}{N}\sum\limits_{i=1}^{N}X_i}$ ($p_k$-t a relatív gyakorisággal közelítjük)
+    \item \textbf{Minta varianciája}: ${\displaystyle s^2 = \frac{1}{N-1}\sum\limits_{i=1}^{N}(X_i-\overline{X})^2}$,
+    standard hibája $SE = \sqrt{s^2}$. A nevezőben az $N-1$ faktor az ún. Bessel-korrekció \cite{besselcorr}.
+    \item \textbf{Megjegyzés}: Ha egy teljes populáció esetén $E(X)=\mu$ és $V(X)=\sigma^2$, attól még általában
+    $\overline{X}\neq\mu$ illetve $s^2\neq\sigma^2$.
+    \item Egy minta esetében $\overline{X}, s^2, SE$ maguk is valószínűségi változók, hiszen minden mintavételezés esetén más-más
+    értéket vehetnek fel. Ezért van értelme arról beszélni, hogy pl. $s^2$ értéke milyen eloszlást követ.
+    Ha a minta (mérési pontok) iid változók, és $E(X_i)=\mu$, $V(X_i)=\sigma^2$, akkor 
+    \begin{align*}
+        & E(\overline{X}) = \mu \\
+        & V(\overline{X}) = \sigma^2/N \\
+        & E(s^2) = \sigma^2
+    \end{align*}
+\end{itemize}
+
+\subsection{Statisztikai következtetés (inference)}
+\begin{itemize}
+    \item Az alapprobléma: van egy adathalmaz, ami tartalmazza a méréseket. Ezek $X_1, X_2, ..., X_N \sim F$ független, 
+    azonos $F$ eloszlást követő valószínűségi változók.
+    \item A statisztikai következtetés feladata, hogy a minta alapján meghatározzuk az $F$ eloszlásfüggvényt. Ezzel ekvivalens,
+    ha $F$ helyett a $\rho$ sűrűségfüggvényt határozzuk meg.
+    \item Ehhez használhatunk parametrikus és nem-parametrikus modelleket. A parametrikus modell egy olyan $\mathcal F$ halmaz, 
+    ami a lehetséges PDF-eket tartalmazza:
+    \begin{equation*}
+        \mathcal F = \{\rho(x|\theta) : \theta \in \Theta\}\text{,}
+    \end{equation*}
+    ahol $\Theta$ a lehetséges paraméterek halmaza. Pl. ha normális eloszlást feltételezünk, akkor a parametrikus modell
+    \begin{equation*}
+        \mathcal F = \left\{\rho(x|\mu, \sigma) = \frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right) : \mu\in\mathbb R, \sigma>0 \right\}\text{,}
+    \end{equation*}
+    a feladat pedig $\mu$ és $\sigma$ meghatározása. Nem-parametrikus modellek azok, amelyeket nem lehet véges számú valós paraméterrel
+    definiálni, pl. $\mathcal F = \{\text{az összes létező PDF}\}$.
+\end{itemize}
+
+\section{Bootstrap módszerek}
+
+\subsection{Jackknife módszer}
+
+\section{Maximum likelihood}
+A maximum likelihood módszer egy olyan becslési eljárás, amelynek segítségével egy parametrikus modell paramétereinek
+értékét próbáljuk a minta alapján meghatározni. Ehhez felírjuk az ún. likelihood-függvényt, ami azt fejezi ki, hogy a 
+mért adatok esetén mekkora a valószínűsége a $\theta$ paramétereknek:
+\begin{equation*}
+    \mathcal L(\theta|x) = P(\theta|X=x)
+\end{equation*}
+A gyakorlatban sokszor a log-likelihood függvényt vagy az átlagolt log-likelihood függvényt használjuk:
+\begin{align*}
+    & \ell(\theta|x) = \ln \mathcal L(\theta|x) \\
+    & \hat \ell(\theta|x) = \frac{1}{N}\ln \mathcal L(\theta|x)
+\end{align*}
+A maximum likelihood módszer lényege, hogy megkeressük azt a $\theta$ paramétert, ami a likelihood függvényt 
+maximalizálja:
+\begin{equation*}
+    \hat\theta_{MLE} = \underset{\theta \in \Theta}{\textrm{argmax}} \,\mathcal L(\theta|x)
+\end{equation*}
+
+Példa: normális eloszlás:
+\begin{equation*}
+    \rho(x|\mu, \sigma^2) = \frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)
+\end{equation*}
+
+\section{Extrém statisztikák}
+
+\section{Post-hoc analízis}
+\section{Regresszió}
+\section{Hipotézis tesztelés}
+\section{z-teszt, t-test}
+\subsection{Konfidenciaintervallumok}
+\subsection{Függetlenségvizsgálat, $\chi^2$-próba}
 
 \bibliographystyle{plain}
 \bibliography{references}
