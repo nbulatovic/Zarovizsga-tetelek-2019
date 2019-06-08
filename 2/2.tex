@@ -183,7 +183,7 @@
     \end{equation*}
     ahol $\Theta$ a lehetséges paraméterek halmaza. Pl. ha normális eloszlást feltételezünk, akkor a parametrikus modell
     \begin{equation*}
-        \mathcal F = \left\{\rho(x|\mu, \sigma) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-\mu)^2}{2\sigma^2}} : \mu\in\mathbb R, \sigma>0 \right\}\text{,}
+        \mathcal F = \left\{\rho(x|\mu, \sigma) = \frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right) : \mu\in\mathbb R, \sigma>0 \right\}\text{,}
     \end{equation*}
     a feladat pedig $\mu$ és $\sigma$ meghatározása. Nem-parametrikus modellek azok, amelyeket nem lehet véges számú valós paraméterrel
     definiálni, pl. $\mathcal F = \{\text{az összes létező PDF}\}$.
@@ -213,7 +213,7 @@ maximalizálja:
 
 Példa: normális eloszlás:
 \begin{equation*}
-    \rho(x|\mu, \sigma^2) = \frac{1}{\sigma\sqrt{2\pi}}\exp{-\frac{(x-\mu)^2}{2\sigma^2}}
+    \rho(x|\mu, \sigma^2) = \frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)
 \end{equation*}
 
 \section{Extrém statisztikák}
