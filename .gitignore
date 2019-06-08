@@ -4,6 +4,7 @@
 *.toc
 *.fls
 *.blg
+*.log
 *.out
 *.fdb_latexmk
 *.synctex.gz
