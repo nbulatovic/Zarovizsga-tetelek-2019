@@ -163,13 +163,29 @@
     Ha a minta (mérési pontok) iid változók, és $E(X_i)=\mu$, $V(X_i)=\sigma^2$, akkor 
     \begin{align*}
         & E(\overline{X}) = \mu \\
-        & V(\overline{X}) = \frac{\sigma^2}{N} \\
+        & V(\overline{X}) = \sigma^2/N \\
         & E(s^2) = \sigma^2
     \end{align*}
 \end{itemize}
 
 \subsection{Statisztikai következtetés (inference)}
-
+\begin{itemize}
+    \item Az alapprobléma: van egy adathalmaz, ami tartalmazza a méréseket. Ezek $X_1, X_2, ..., X_N \sim F$ független, 
+    azonos $F$ eloszlást követő valószínűségi változók.
+    \item A statisztikai következtetés feladata, hogy a minta alapján meghatározzuk az $F$ eloszlásfüggvényt. Ezzel ekvivalens,
+    ha $F$ helyett a $\rho$ sűrűségfüggvényt határozzuk meg.
+    \item Ehhez használhatunk parametrikus és nem-parametrikus modelleket. A parametrikus modell egy olyan $\mathcal F$ halmaz, 
+    ami a lehetséges PDF-eket tartalmazza:
+    \begin{equation*}
+        \mathcal F = \{\rho(x|\theta) : \theta \in \Theta\}\text{,}
+    \end{equation*}
+    ahol $\Theta$ a lehetséges paraméterek halmaza. Pl. ha normális eloszlást feltételezünk, akkor a parametrikus modell
+    \begin{equation*}
+        \mathcal F = \left\{\rho(x|\mu, \sigma) = \frac{1}{\sigma\sqrt{2\pi}}e^{\frac{(x-\mu)^2}{2\sigma^2}} : \mu\in\mathbb R, \sigma>0 \right\}\text{,}
+    \end{equation*}
+    a feladat pedig $\mu$ és $\sigma$ meghatározása. Nem-parametrikus modellek azok, amelyeket nem lehet véges számú valós paraméterrel
+    definiálni, pl. $\mathcal F = \{\text{az összes létező PDF}\}$.
+\end{itemize}
 \section{Bootstrap módszerek}
 
 \subsection{Jackknife módszer}
