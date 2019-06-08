@@ -183,7 +183,7 @@
     \end{equation*}
     ahol $\Theta$ a lehetséges paraméterek halmaza. Pl. ha normális eloszlást feltételezünk, akkor a parametrikus modell
     \begin{equation*}
-        \mathcal F = \left\{\rho(x|\mu, \sigma) = \frac{1}{\sigma\sqrt{2\pi}}e^{\frac{(x-\mu)^2}{2\sigma^2}} : \mu\in\mathbb R, \sigma>0 \right\}\text{,}
+        \mathcal F = \left\{\rho(x|\mu, \sigma) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(x-\mu)^2}{2\sigma^2}} : \mu\in\mathbb R, \sigma>0 \right\}\text{,}
     \end{equation*}
     a feladat pedig $\mu$ és $\sigma$ meghatározása. Nem-parametrikus modellek azok, amelyeket nem lehet véges számú valós paraméterrel
     definiálni, pl. $\mathcal F = \{\text{az összes létező PDF}\}$.
@@ -200,15 +200,22 @@ mért adatok esetén mekkora a valószínűsége a $\theta$ paramétereknek:
 \begin{equation*}
     \mathcal L(\theta|x) = P(\theta|X=x)
 \end{equation*}
-A gyakorlatban sokszor a log-likelihood függvényt használjuk:
-\begin{equation*}
-    \ell(\theta|x) = \ln \mathcal L(\theta|x)
-\end{equation*}
+A gyakorlatban sokszor a log-likelihood függvényt vagy az átlagolt log-likelihood függvényt használjuk:
+\begin{align*}
+    & \ell(\theta|x) = \ln \mathcal L(\theta|x) \\
+    & \hat \ell(\theta|x) = \frac{1}{N}\ln \mathcal L(\theta|x)
+\end{align*}
 A maximum likelihood módszer lényege, hogy megkeressük azt a $\theta$ paramétert, ami a likelihood függvényt 
 maximalizálja:
 \begin{equation*}
     \hat\theta_{MLE} = \underset{\theta \in \Theta}{\textrm{argmax}} \,\mathcal L(\theta|x)
 \end{equation*}
+
+Példa: normális eloszlás:
+\begin{equation*}
+    \rho(x|\mu, \sigma^2) = \frac{1}{\sigma\sqrt{2\pi}}\exp{-\frac{(x-\mu)^2}{2\sigma^2}}
+\end{equation*}
+
 \section{Extrém statisztikák}
 
 \section{Post-hoc analízis}
