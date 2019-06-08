@@ -132,7 +132,7 @@
         \text{folytonos eset}~E(X) = \langle X \rangle = \int\limits_{-\infty}^{\infty}x\rho(x) \dd x 
     \end{equation*}
     \begin{equation*}
-        \text{diszkrét eset}~E(X) = \langle X \rangle = \sum\limits_{k} x_k P(X=x_k)
+        \text{diszkrét eset}~E(X) = \langle X \rangle = \sum\limits_{k} x_k p_k = \sum\limits_{k} x_k P(X=x_k)
     \end{equation*}
     \item \textbf{Várható értékre vonatkozó azonosságok}:
         \begin{itemize}
@@ -149,15 +149,17 @@
         \begin{equation*}
             \sigma^2\left( \sum\limits_k(a_kX_k + b_k) \right) = \sum\limits_k a_k^2\sigma^2(X_k)
         \end{equation*}
-    \item \textbf{Szórás}, standard error definíciója:
+    \item \textbf{Szórás} (standard deviation) definíciója:
         \begin{equation*}
             \sigma(X) = \sqrt{\sigma^2(X)} = \sqrt{\langle X^2 \rangle - \langle X \rangle^2}
         \end{equation*}
     \item \textbf{Minta}\\
     Matematikailag egy statisztikai minta megfelel $N$ darab azonos eloszlású, független (iid) változónak egy adott $F$ eloszlásból.
-    \item \textbf{Minta átlaga}: ${\displaystyle\overline{X} = \frac{1}{N}\sum\limits_{i=1}^{N}X_i}$
+    \item \textbf{Minta átlaga}: ${\displaystyle\overline{X} = \frac{1}{N}\sum\limits_{i=1}^{N}X_i}$ ($p_k$-t a relatív gyakorisággal közelítjük)
     \item \textbf{Minta varianciája}: ${\displaystyle s^2 = \frac{1}{N-1}\sum\limits_{i=1}^{N}(X_i-\overline{X})^2}$,
-    standard hibája $SE = \sqrt{s^2}$.
+    standard hibája $SE = \sqrt{s^2}$. A nevezőben az $N-1$ faktor az ún. Bessel-korrekció \cite{besselcorr}.
+    \item \textbf{Megjegyzés}: Ha egy teljes populáció esetén $E(X)=\mu$ és $V(X)=\sigma^2$, attól még általában
+    $\overline{X}\neq\mu$ illetve $s^2\neq\sigma^2$.
     \item Egy minta esetében $\overline{X}, s^2, SE$ maguk is valószínűségi változók, hiszen minden mintavételezés esetén más-más
     értéket vehetnek fel. Ezért van értelme arról beszélni, hogy pl. $s^2$ értéke milyen eloszlást követ.
     Ha a minta (mérési pontok) iid változók, és $E(X_i)=\mu$, $V(X_i)=\sigma^2$, akkor 
@@ -186,11 +188,29 @@
     a feladat pedig $\mu$ és $\sigma$ meghatározása. Nem-parametrikus modellek azok, amelyeket nem lehet véges számú valós paraméterrel
     definiálni, pl. $\mathcal F = \{\text{az összes létező PDF}\}$.
 \end{itemize}
+
 \section{Bootstrap módszerek}
 
 \subsection{Jackknife módszer}
+
 \section{Maximum likelihood}
+A maximum likelihood módszer egy olyan becslési eljárás, amelynek segítségével egy parametrikus modell paramétereinek
+értékét próbáljuk a minta alapján meghatározni. Ehhez felírjuk az ún. likelihood-függvényt, ami azt fejezi ki, hogy a 
+mért adatok esetén mekkora a valószínűsége a $\theta$ paramétereknek:
+\begin{equation*}
+    \mathcal L(\theta|x) = P(\theta|X=x)
+\end{equation*}
+A gyakorlatban sokszor a log-likelihood függvényt használjuk:
+\begin{equation*}
+    \ell(\theta|x) = \ln \mathcal L(\theta|x)
+\end{equation*}
+A maximum likelihood módszer lényege, hogy megkeressük azt a $\theta$ paramétert, ami a likelihood függvényt 
+maximalizálja:
+\begin{equation*}
+    \hat\theta_{MLE} = \underset{\theta \in \Theta}{\textrm{argmax}} \,\mathcal L(\theta|x)
+\end{equation*}
 \section{Extrém statisztikák}
+
 \section{Post-hoc analízis}
 \section{Regresszió}
 \section{Hipotézis tesztelés}
