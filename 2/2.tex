@@ -73,24 +73,84 @@
 
 \begin{document}
 \title{2. tétel}
-\author{valaki}
-
+\author{Nagy Dániel}
+öö
 \maketitle
 
 
 \newpage
 \begin{abstract}
-    Bootstrap módszerek. A maximum likelihood módszer. Hipotézis tesztelés. Extrém statisztikák. Post hoc analízis. Regresszió. Függetlenségvizsgálat. Egzakt tesztek.
+    Bootstrap módszerek. A maximum likelihood módszer. Hipotézis tesztelés. Extrém statisztikák.
+    Post hoc analízis. Regresszió. Függetlenségvizsgálat. Egzakt tesztek.
 \end{abstract}
 
-\section{Duma}
-\begin{figure}[H]
-    \begin{center}
-    \includegraphics[width=0.5\textwidth]{media/tsneplot.png}
-    \caption{t-SNE plot for MNIST dataset \cite{tsne-article}} 
-    \label{fig:tsneplot}
-    \end{center}
-\end{figure}
+\section{Alapfogalmak}
+\begin{itemize}
+    \item Eseménytér (ez egy abstrakt fogalom): $\Omega = \{\omega_1, \omega_2, ..., \omega_n\}$ pl. kockadobás esetén $\Omega = \{ \omega_1=\text{"1est dobok"}, \omega_2=\text{"2est dobok"}, \omega_3=\text{"párosat dobok"} ... \}$
+    \item Valószínűségi változó: $X:\Omega \rightarrow \mathbb R$ pl. kockadobás esetén $X(\omega_1) = 1, X(\omega_2) = 2, ... $
+    \item Valószínűség: $P$ egy mérték, amely $\Omega$ részhalmazaihoz számot rendel:
+        \begin{itemize}
+            \item $P: \mathcal{P}(\Omega) \rightarrow \mathbb R$
+            \item $P(\Omega) = 1$ és $P(\varnothing) = 0$
+            \item $ 0 \leq P(A) \leq 1 ~ \forall A \in \Omega$
+            \item Ha $A_1, A_2, ...$ diszjunkt részhalmazai $\Omega$-nak, akkor 
+            \begin{equation*}
+                P\left(\bigcup\limits_{i=1}^{\infty}A_i\right) = \sum\limits_{i=1}^{\infty}P(A_i)
+            \end{equation*}
+        \end{itemize}
+    \item Hasznos összefüggések:
+        \begin{itemize}
+            \item $P(A\cup B) = P(A)+P(B)-P(A\cap B)$
+            \item Két esemény független $\Longleftrightarrow P(A\cap B) = P(A)P(B)$
+            \item $P(A|B) = \frac{P(A\cap B)}{P(B)}$
+            \item Teljes valószínűség: Ha $A_1, A_2, ...$ az $\Omega$ egy felosztása, akkor 
+                \begin{equation*}
+                    P(B) = \sum\limits_{k} P(B|A_k)P(A_k)
+                \end{equation*}
+            \item Bayes-tétel: Ha $A_1, A_2, ...$ az $\Omega$ egy felosztása, akkor 
+                \begin{equation*}
+                    P(A_k|B) = \frac{P(B|A_k)P(A_k)}{P(B)} = \frac{P(B|A_k)P(A_k)}{\sum\limits_{j} P(B|A_j)P(A_j)}
+                \end{equation*}
+        \end{itemize}
+    \item Eloszlásfüggvény (CDF - cumulative distribution function):
+        \begin{equation*}
+            F_X(x) = P(X<x) = P(\{\omega\in\Omega | X(\omega)<x \})
+        \end{equation*}
+        diszkrét esetben 
+        \begin{equation*}
+            F_X(x) = P(X=x) = P(\{\omega\in\Omega | X(\omega)=x \})
+        \end{equation*}
+    \item Sűrűségfüggvény (PDF - Probability density function):\\
+    Ha az $X$ változó eloszlásfüggvénye $F_X(x)$, akkor a sűrűségfüggvény definíciója
+        \begin{equation*}
+            F_X(x) = \int\limits_{-\infty}^{x}\rho_X(\xi)\dd \xi \Longleftrightarrow P(a \leq X(\omega) \leq b) = \int\limits_{a}^{b}\rho_X(x)\dd x
+        \end{equation*}
+        Megjegyzés: sűrűségfüggvénye csak folytonos eloszlású valószínűségi változónak van.
+    \item Várható érték
+    \begin{equation*}
+        \text{folytonos eset}~E(X) = \langle X \rangle = \int\limits_{-\infty}^{\infty}x\rho(x) \dd x 
+    \end{equation*}
+    \begin{equation*}
+        \text{diszkrét eset}~E(X) = \langle X \rangle = \sum\limits_{k} x_k P(X=x_k)
+    \end{equation*}
+    \item Várható értékre vonatkozó azonosságok:
+        \begin{itemize}
+            \item Ha $Y=g(X) \Leftarrow E(Y) = E(g(X)) = \int\limits_{-\infty}^{\infty}g(x)\rho(x) \dd x$  
+            \item $E\left(\sum\limits_k a_k X_k\right) = \sum\limits_k a_k E(X_k)$
+            \item Ha $X_1, X_2, ...$ független változók, akkor $E\left(\prod\limits_k X_k\right) = \prod\limits_k E(X_k)$
+        \end{itemize}  
+\end{itemize}
+
+\section{Bootstrap módszerek}
+\subsection{Jackknife módszer}
+\section{Maximum likelihood}
+\section{Extrém statisztikák}
+\section{Post-hoc analízis}
+\section{Regresszió}
+\section{Hipotézis tesztelés}
+\section{z-teszt, t-test}
+\subsection{Konfidenciaintervallumok}
+\subsection{Függetlenségvizsgálat, $\chi^2$-próba}
 
 \bibliographystyle{plain}
 \bibliography{references}
