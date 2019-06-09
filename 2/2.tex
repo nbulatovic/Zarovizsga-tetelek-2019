@@ -280,6 +280,30 @@ lognormális eloszlást követ, amelyre $\mu=150000\text{HUF}$ és $\sigma=50000
     ahol $c$ a teszt kritikus értéke.
     \item A hipotézis tesztelés lényege keresni egy olyan $T$-t és $c$-t, amivel a legjobb (legkevésbé káros) döntést
     hozhatjuk.
+    \item \textbf{Egyoldalú teszt}: Ha $X$ a rendelkezésre álló adathalmaz, és $\theta\in \Theta$ egy paraméter 
+    (pl. átlag, variancia, stb), akkor egy egyoldalú teszt a következőt jelenti:
+    \begin{equation*}
+        H_0: \theta = \theta_0 \,\text{és}\, H_1: \theta < \theta_0 ~ (\text{vagy} > \theta_0) 
+    \end{equation*}
+    \item \textbf{Kettős hipotézisteszt}: Ha $X$ a rendelkezésre álló adathalmaz, és $\theta\in \Theta$ egy paraméter 
+    (pl. átlag, variancia, stb), akkor egy kettős teszt a következőt jelenti:
+    \begin{equation*}
+        H_0: \theta = \theta_0 \,\text{és}\, H_1: \theta \neq\theta_0 
+    \end{equation*}
+    \item \textbf{Hibák}
+    \begin{center}
+        \begin{tabular}[H]{|c|c|c|} \hline
+                            & $H_0$ igaz & $H_0$ hamis \\ \hline
+        Elfogadjuk $H_0$-t  &      OK   &   type 2 hiba (false positive)  \\ \hline
+        Elvetjük $H_0$-t    & type 1 hiba (false negative)  &      OK     \\ \hline
+        \end{tabular}
+    \end{center}
+    \item \textbf{Statisztikai erő}: Egy kettős hipotézisteszt statisztikai ereje nem más, mint az a valószínűség,
+    hogy a teszt helyesen veti el a nullhipotézist, amikor az alternatív hipotézis igaz:
+    \begin{equation*}
+        \text{statisztikai erő} = P(H_0 \,\text{elutasítva} \,|\, H_1 \,\text{igaz})
+    \end{equation*}
+    
 \end{itemize}
 \subsection{z-teszt}
 \subsection{t-test}
