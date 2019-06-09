@@ -515,7 +515,31 @@ or antiparallel ($J < 0$). In general the system is let to run for a few iterati
 before calculating the equilibrium. Similair results of numerical simulations should come from cold, hot
 or arbitrary starts. \cite{landau}
 
-\newpage
+\vspace{2mm}
+
+\section{Beyond all this}
+
+\vspace{2mm}
+
+\par This process can be trivially extended to 2 and 3 dimensions as well,
+also one can take into account not just nearest-neighbors but next-nearest-neighbors as well. 
+A recently popular method is the Wang-Landau sampling which has similair steps as 
+described in the Metropolis algortihms but buildson the densitiy-of-states function $g(E)$.
+
+\vspace{2mm}
+
+\par The metropolis algorithm is used in many parts of physics, in calculating 
+Feymann path-integrals one should do the following. Express the Green’s function as a path integral that requires
+integration of the Hamiltonian along paths and a summation over all the paths. We
+evaluate this path integral as the sum over all the trajectories in a space-time lattice. Each
+trial path occurs with a probability based on its action, and we use the Metropolis algorithm to
+include statistical fluctuation in the links, as if they are in thermal equilibrium. This is similar
+to our work with the Ising model, however now, rather than reject or accept a flip in
+spin based on the change in energy, we reject or accept a change in a link based on the change
+in energy. The more iterations we let the algorithm run for, the more time the deduced wave
+function has to equilibrate to the ground state.
+
+\vfill
 
 \bibliographystyle{plain}
 \bibliography{references}
