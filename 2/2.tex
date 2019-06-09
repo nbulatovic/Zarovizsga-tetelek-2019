@@ -266,12 +266,50 @@ lognormális eloszlást követ, amelyre $\mu=150000\text{HUF}$ és $\sigma=50000
     \item A $\Theta$ paraméter-teret felosztjuk $\Theta_0$ és $\Theta_1$-re. ($\Theta_0\cup\Theta_1=\Theta,\, \Theta_0\cap\Theta_1=\varnothing$)
     \item A \textbf{nullhipotézis}  $H_0:\, \theta\in\Theta_0$
     \item Az \textbf{alternatív hipotézis}  $H_1:\, \theta\in\Theta_1$
-    \item 
-    \item 
+    \item Az összegyűjtött $X\in\mathcal X$ adatok alapján akarjuk a hipotézist eldönteni.
+    \item Az elvetési régió (rejection region) egy $R\subset \mathcal X$ halmaz, amelyre
+        \begin{align*}
+            & X\in R \Rightarrow \text{$H_0$-t elvetjük és elfogadjuk $H_1$-et} \\
+            & X\notin R \Rightarrow \text{$H_0$-t elfogadjuk}
+        \end{align*}
+    \item Egy tesztfüggvény (test statistic) egy $T: \mathcal X \rightarrow \mathbb R$ függvény, amelyre az elvetési
+    régió így írható: 
+        \begin{equation*}
+            R = \{x \in \mathcal X | T(x) > c \} \text{, }
+        \end{equation*}
+    ahol $c$ a teszt kritikus értéke.
+    \item A hipotézis tesztelés lényege keresni egy olyan $T$-t és $c$-t, amivel a legjobb (legkevésbé káros) döntést
+    hozhatjuk.
+    \item \textbf{Egyoldalú teszt}: Ha $X$ a rendelkezésre álló adathalmaz, és $\theta\in \Theta$ egy paraméter 
+    (pl. átlag, variancia, stb), akkor egy egyoldalú teszt a következőt jelenti:
+    \begin{equation*}
+        H_0: \theta = \theta_0 ~\text{és}~ H_1: \theta < \theta_0 ~ (\text{vagy} > \theta_0) 
+    \end{equation*}
+    \item \textbf{Kettős hipotézisteszt}: Ha $X$ a rendelkezésre álló adathalmaz, és $\theta\in \Theta$ egy paraméter 
+    (pl. átlag, variancia, stb), akkor egy kettős teszt a következőt jelenti:
+    \begin{equation*}
+        H_0: \theta = \theta_0 ~\text{és}~ H_1: \theta \neq\theta_0 
+    \end{equation*}
+    \item \textbf{Hibák}
+    \begin{center}
+        \begin{tabular}[H]{|c|c|c|} \hline
+                            & $H_0$ igaz & $H_0$ hamis \\ \hline
+        Elfogadjuk $H_0$-t  &      OK   &   type 2 hiba (false positive)  \\ \hline
+        Elvetjük $H_0$-t    & type 1 hiba (false negative)  &      OK     \\ \hline
+        \end{tabular}
+    \end{center}
+    \item \textbf{Statisztikai erő}: Egy kettős hipotézisteszt statisztikai ereje nem más, mint az a valószínűség,
+    hogy a teszt helyesen veti el a nullhipotézist, amikor az alternatív hipotézis igaz:
+    \begin{equation*}
+        \text{statisztikai erő} = P(H_0 \,\text{elutasítva} \,|\, H_1 \,\text{igaz})
+    \end{equation*}
+    
 \end{itemize}
-\section{z-teszt, t-test}
+\subsection{z-teszt}
+\subsection{t-test}
 \subsection{Konfidenciaintervallumok}
-\subsection{Függetlenségvizsgálat, $\chi^2$-próba}
+
+\section{Függetlenségvizsgálat, $\chi^2$-próba}
 
 \bibliographystyle{plain}
 \bibliography{references}
