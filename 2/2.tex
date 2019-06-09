@@ -266,12 +266,26 @@ lognormális eloszlást követ, amelyre $\mu=150000\text{HUF}$ és $\sigma=50000
     \item A $\Theta$ paraméter-teret felosztjuk $\Theta_0$ és $\Theta_1$-re. ($\Theta_0\cup\Theta_1=\Theta,\, \Theta_0\cap\Theta_1=\varnothing$)
     \item A \textbf{nullhipotézis}  $H_0:\, \theta\in\Theta_0$
     \item Az \textbf{alternatív hipotézis}  $H_1:\, \theta\in\Theta_1$
-    \item 
-    \item 
+    \item Az összegyűjtött $X\in\mathcal X$ adatok alapján akarjuk a hipotézist eldönteni.
+    \item Az elvetési régió (rejection region) egy $R\subset \mathcal X$ halmaz, amelyre
+        \begin{align*}
+            & X\in R \Rightarrow \text{$H_0$-t elvetjük és elfogadjuk $H_1$-et} \\
+            & X\notin R \Rightarrow \text{$H_0$-t elfogadjuk}
+        \end{align*}
+    \item Egy tesztfüggvény (test statistic) egy $T: \mathcal X \rightarrow \mathbb R$ függvény, amelyre az elvetési
+    régió így írható: 
+        \begin{equation*}
+            R = \{x \in \mathcal X | T(x) > c \} \text{, }
+        \end{equation*}
+    ahol $c$ a teszt kritikus értéke.
+    \item A hipotézis tesztelés lényege keresni egy olyan $T$-t és $c$-t, amivel a legjobb (legkevésbé káros) döntést
+    hozhatjuk.
 \end{itemize}
-\section{z-teszt, t-test}
+\subsection{z-teszt}
+\subsection{t-test}
 \subsection{Konfidenciaintervallumok}
-\subsection{Függetlenségvizsgálat, $\chi^2$-próba}
+
+\section{Függetlenségvizsgálat, $\chi^2$-próba}
 
 \bibliographystyle{plain}
 \bibliography{references}
