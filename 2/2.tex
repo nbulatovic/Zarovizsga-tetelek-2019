@@ -196,10 +196,12 @@
 \section{Maximum likelihood}
 A maximum likelihood módszer egy olyan becslési eljárás, amelynek segítségével egy parametrikus modell paramétereinek
 értékét próbáljuk a minta alapján meghatározni. Ehhez felírjuk az ún. likelihood-függvényt, ami azt fejezi ki, hogy a 
-mért adatok esetén mekkora a valószínűsége a $\theta$ paramétereknek:
-\begin{equation*}
-    \mathcal L(\theta|x) = P(\theta|X=x)
-\end{equation*}
+mért adatok esetén mekkora a valószínűsége a $\theta$ paramétereknek. Ha a változó elposzlása ismert, akkor ezzel 
+megadható a likelihood függvény:
+\begin{align*}
+    \text{diszkrét változóra:} ~ & \mathcal L(\theta) = P(X=x|\theta) \\
+    \text{folytonos változóra:} ~ & \mathcal L(\theta) = \rho(x|\theta)
+\end{align*}
 A gyakorlatban sokszor a log-likelihood függvényt vagy az átlagolt log-likelihood függvényt használjuk:
 \begin{align*}
     & \ell(\theta|x) = \ln \mathcal L(\theta|x) \\
@@ -208,19 +210,65 @@ A gyakorlatban sokszor a log-likelihood függvényt vagy az átlagolt log-likeli
 A maximum likelihood módszer lényege, hogy megkeressük azt a $\theta$ paramétert, ami a likelihood függvényt 
 maximalizálja:
 \begin{equation*}
-    \hat\theta_{MLE} = \underset{\theta \in \Theta}{\textrm{argmax}} \,\mathcal L(\theta|x)
+    \hat\theta_{MLE} = \underset{\theta \in \Theta}{\textrm{argmax}} \,\mathcal L(\theta|x_1, x_2, ..., x_N)
 \end{equation*}
 
-Példa: normális eloszlás:
+\textbf{Példa:} normális eloszlás paraméterei\\
 \begin{equation*}
     \rho(x|\mu, \sigma^2) = \frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)
 \end{equation*}
 
+Ezért egy $N$ elemű minta esetén azt feltételezve, hogy a mintát egy normális eloszlást követő populációból vesszük, 
+az $N$ minta sűrűségfüggvénye:
+\begin{align*}
+  &  \rho(x_1, x_2, ..., x_N | \mu, \sigma^2) = \prod\limits_{i=1}^{N} \rho(x_i|\mu, \sigma^2)
+    = \prod\limits_{i=1}^{N} \frac{1}{\sigma\sqrt{2\pi}}\exp\left(-\frac{(x_i-\mu)^2}{2\sigma^2}\right) \\
+  & = \left(\frac{1}{2\pi\sigma^2}\right)^{n/2} \exp\left(-\frac{\sum\limits_{i=1}^N(x_i-\mu)^2}{2\sigma^2}\right)
+    = \mathcal L(\mu, \sigma^2)
+\end{align*}
+A log-likelihood függvény pedig
+\begin{equation*}
+    \ell(\mu, \sigma^2) = \ln \mathcal L(\mu, \sigma^2) =
+    -\frac{N}{2}\ln(2\pi\sigma^2) - \frac{1}{2\sigma^2}\sum\limits_{i=1}^{N}(x_i-\mu)^2
+\end{equation*}
+Ahhoz, hogy megkapjuk a $\hat\mu_{MLE}$ és $\hat\sigma_{MLE}$ becsült paramétereket, az alábbi két egyenletet kell megoldani:
+\begin{align*}
+    & \frac{\partial \ell(\mu, \sigma^2)}{\partial \mu} = 0 \\
+    & \frac{\partial \ell(\mu, \sigma^2)}{\partial \sigma} = 0
+\end{align*}
+Ha ezeket megoldjuk, az jön ki, hogy $\hat\mu_{MLE} = \overline{x} = \frac{1}{N}\sum\limits_{i=1}^{N}x_i$ és 
+$\hat\sigma_{MLE}^2 = \frac{1}{N}\sum\limits_{i=1}^{N}(x_i-\mu)^2$.
 \section{Extrém statisztikák}
 
 \section{Post-hoc analízis}
 \section{Regresszió}
-\section{Hipotézis tesztelés}
+Tegyük fel, hogy a megfigyelt adathalmaz $\{(x_1, y_1), (x_2, y_2), ..., (x_N, y_N)\}$. Ekkor az $X$ a független változó
+(feature variable, predictor, regressor), $Y$ pedig a függő változó (outcome, response variable).
+Az \textbf{\textit{$r(X)$ regressziós függvény}} az $Y$ várható értéke $X$ függvényében:
+\begin{equation*}
+    r(x) = E(Y|X=x)
+\end{equation*}
+\begin{itemize}
+    \item Ha $r(x)$ megadható véges számú valós paraméterrel, akkor \textbf{parametrikus regresszió}ról beszélünk.
+    \item Ha $Y$ meghatárzása a cél, ismert $X$ esetén, akkor \textbf{predikció}ról beszzélünk.
+    \item Ha $Y$ diszkrét (pl. kutya vagy macska látható a képen), akkor \textbf{klasszifikáció}ról beszélünk.
+    \item Ha a cél az $r(x)$ görbe meghatározása, akkor \textbf{regresszió}ról vagy \textbf{görbeillesztés}ről beszélünk.
+\end{itemize}
+
+\section{Hipotézistesztelés}
+A hipotézistesztelés lényege, hogy a rendelkezésre álló adatok alapján egy feltevés (hipotézis) igazságtartalmára akarunk
+kijelentést tenni. Fontos, hogy a feltevés a teljes populációra vonatkozik, tehát egy hipotézis elfogadásának vagy elutasításának
+mindig van valamennyi bizonytalansága. Példák: 1. Dobunk egy dobókockával 100-szor, majd feltesszük azt a hipotézist, hogy 
+a dobott számok egyenletes eloszlást követnek. 2. Megnézzük 1000 ember jövedelmét majd feltételezzük, hogy a jövedelem olyan
+lognormális eloszlást követ, amelyre $\mu=150000\text{HUF}$ és $\sigma=50000\text{HUF}$.
+\par Formális definíció:
+\begin{itemize}
+    \item A $\Theta$ paraméter-teret felosztjuk $\Theta_0$ és $\Theta_1$-re. ($\Theta_0\cup\Theta_1=\Theta,\, \Theta_0\cap\Theta_1=\varnothing$)
+    \item A \textbf{nullhipotézis}  $H_0:\, \theta\in\Theta_0$
+    \item Az \textbf{alternatív hipotézis}  $H_1:\, \theta\in\Theta_1$
+    \item 
+    \item 
+\end{itemize}
 \section{z-teszt, t-test}
 \subsection{Konfidenciaintervallumok}
 \subsection{Függetlenségvizsgálat, $\chi^2$-próba}
