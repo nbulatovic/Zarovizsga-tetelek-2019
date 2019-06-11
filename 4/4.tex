@@ -148,14 +148,14 @@ magnetic field and with its nearest neighbor through the potential:
 \vspace{2mm}
 
 \begin{equation*}
-    V_{i} = -J\vec{s_{i}}\vec{s_{i+1}} - g\mu_{b}\vec{s_i}\vec{B}
+    V_{i} = -J\vec{s_{i}}\vec{s_{i+1}} - g B\mu_{B}\vec{s_i}
 \end{equation*}
 
 \vspace{2mm}
 
 \par Here the constant $J$ is called the \textit{exchange energy} and is a measure of the strength of the spin–
 spin interaction. The constant $g$ is the \textit{gyromagnetic ratio}, that is, the proportionality constant
-between a particle’s angular momentum and magnetic moment. The constant $\mu_b = e\hbar / (2m_e c)$
+between a particle’s angular momentum and magnetic moment. The constant $\mu_B = e\hbar / (2m_e c)$
 is the Bohr magneton, the basic measure for magnetic moments.
 
 \vspace{2mm}
@@ -173,7 +173,7 @@ over the spins of the particles:
 \vspace{2mm}
 
 \begin{equation}
-    E_{\alpha_k} = \bra{\alpha_k}\sum_{i}V_i\ket{\alpha_k} = -J\sum_{i=1}^{N-1}s_i s_{i+1} - B\mu_{b}\sum_{i=1}^{N}s_i
+    E_{\alpha_k} = \bra{\alpha_k}\sum_{i}V_i\ket{\alpha_k} = -J\sum_{i=1}^{N-1}s_i s_{i+1} - gB\mu_{B}\sum_{i=1}^{N}s_i
     \label{energy}
 \end{equation}
 
@@ -241,7 +241,7 @@ probabilities $P(\alpha_j)$ given by the Boltzmann distribution:
 \vspace{2mm}
 
 \begin{equation*}
-    Z(T) = \sum_{\alpha_j} e^{-E_{\alpha_j}} / k_B T
+    Z(T) = \sum_{\alpha_j} e^{-E_{\alpha_j} / (k_B T)}
 \end{equation*}
 
 \vspace{2mm}
@@ -279,7 +279,7 @@ where in the case of periodic boundary conditions all sums go to $N$:
 \vspace{2mm}
 
 \begin{equation*}
-    Z = \sum_{s_1}\sum_{s_2}...\sum_{s_N} e^{\sum_{i=1}^{N}(-Js_i s_{i+1} - B\mu_{b}\frac{s_i + s_{i+1}}{2})\beta}
+    Z = \sum_{s_1}\sum_{s_2}...\sum_{s_N} e^{\sum_{i=1}^{N}(-Js_i s_{i+1} - gB\mu_{B}\frac{s_i + s_{i+1}}{2})\beta}
 \end{equation*}
 
 \vspace{2mm}
@@ -319,8 +319,8 @@ take values $\pm 1$, it takes the following form:
     \end{array}
     \right) = 
     \left( \begin{array}{cc}
-        e^{\beta J + B\beta \mu_{B}} & e^{-\beta J} \\
-        e^{-\beta J} & e^{\beta J - \beta B \mu_{B}}
+        e^{\beta J + B\beta g\mu_{B}} & e^{-\beta J} \\
+        e^{-\beta J} & e^{\beta J - \beta B g\mu_{B}}
     \end{array}
     \right)
     \label{t}
@@ -366,7 +366,7 @@ Calculating these is simple since we have eq. \ref{t}:
 \vspace{2mm}
 
 \begin{equation}
-    \lambda_{\pm} = e^{\beta J}ch(\beta B \mu_B) \pm \sqrt{e^{-2\beta J} + e^{2\beta J}sh^{2}(\beta B \mu_B)} \stackrel{(B = 0)}{=} 2 ch(\beta J)
+    \lambda_{\pm} = e^{\beta J}ch(\beta B g \mu_B) \pm \sqrt{e^{-2\beta J} + e^{2\beta J}sh^{2}(\beta B g \mu_B)} \stackrel{(B = 0)}{=} 2 ch(\beta J)
     \label{lambda}
 \end{equation}
 
@@ -388,7 +388,7 @@ given eq. \ref{lambda} it becomes:
 \vspace{2mm}
 
 \begin{equation*}
-    \frac{U}{J} = -Nth(\beta J) J = \Big\{N, \quad k_B T \rightarrow 0 \quad | \quad 0, \quad k_B T \rightarrow \infty
+    \frac{U}{J} = -Nth(\beta J) = \Big\{N, \quad k_B T \rightarrow 0 \quad | \quad 0, \quad k_B T \rightarrow \infty
 \end{equation*}
 
 \vspace{2mm}
