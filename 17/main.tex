@@ -1,24 +1,87 @@
-\documentclass[12pt]{extarticle}
+\documentclass[12pt]{article}
+\setlength{\textwidth}{17cm}
+\setlength{\textheight}{24cm}
+\setlength{\topmargin}{-2cm}
+\setlength{\footskip}{1cm}
+\setlength{\evensidemargin}{0cm}
+\setlength{\oddsidemargin}{0cm}
+\setlength{\parindent}{0cm}
+
+\usepackage{allrunes}
+\usepackage{amsmath}
+\usepackage[magyar]{babel}
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+\usepackage{fixltx2e}
+\usepackage{multirow}
 \usepackage{cite}
+\usepackage[hyphens]{url}
+\usepackage[unicode,colorlinks=true,breaklinks]{hyperref}
+%\usepackage[dvips]{hyperref}
+%should display links, but it does not work with \H accent
+%and formulas in section titles
+
+\hypersetup{colorlinks,linkcolor=blue,urlcolor=magenta,citecolor=magenta}
+%Breaks long url`s in text, while keeping it one link:
+
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+
+\theoremstyle{plain}
 \usepackage{graphicx}
+
+%\usepackage{gensymb}
 \usepackage{float}
 
-\title{Vizualizáció }
-\author{Prósz Aurél}
-\date{January 2019}
+% For bra-ket notation
+\usepackage{braket}
+
+%% New commands
+\newcommand{\dd}{\textrm{d}}
+
+%% Pauli matrices
+\newcommand{\sigx}{\sigma_x}
+\newcommand{\sigy}{\sigma_y}
+\newcommand{\sigz}{\sigma_z}
+
+\newcommand{\paulix}{
+    \left( \begin{array}{cc}
+        0 & 1 \\
+        1 & 0
+    \end{array}
+    \right)
+}
+
+\newcommand{\pauliy}{
+    \left( \begin{array}{cc}
+        0 & -i \\
+        i & 0
+    \end{array}
+    \right)
+}
+
+\newcommand{\pauliz}{
+    \left( \begin{array}{cc}
+        1 & 0 \\
+        0 & -1
+    \end{array}
+    \right)
+}
+
 
 \begin{document}
+\title{17. tétel: Vizualizáció}
+\author{Prósz Aurél}
 
 \maketitle
 
+
+\newpage
 \section{Tudományos adatok két és háromdimenziós megjelenítésének technikái}
 Többdimenziós tudományos adatok megjelenítésére számos módszer áll rendelkezésre, a továbbiakban ezeket szedtem össze kis magyarázat és példa keretében. \newline
 Tekintsünk egy példa adatkészletet, például az úgynevezett \textit{Wine Quality Data Set}-et, amely letölthető innen:  https://archive.ics.uci.edu/ml/index.php. Az adatkészlet a portugál \textit{Vinho Verde} bor tulajdonságait írja le, és ezen mutatom be a vizualizációs technikákat. 
-
-
-
-    
 
 
 \subsection{1D és 2D vizualizáció}
@@ -26,7 +89,7 @@ Egy dimenzióban, amennyiben egy változó eloszlására vagyunk kiváncsiak, á
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=8cm, height=6cm]{hist.png}
+    \includegraphics[width=8cm, height=6cm]{media/hist.png}
     \caption{\textbf{1D adatok ábrázolása hisztogramként.}}
     \label{fig:GeneralDiagram}
  \end{figure}
@@ -35,7 +98,7 @@ Egy dimenzióban, amennyiben egy változó eloszlására vagyunk kiváncsiak, á
  
  \begin{figure}[H]
     \centering
-    \includegraphics[width=8cm, height=6cm]{kormap.png}
+    \includegraphics[width=8cm, height=6cm]{media/kormap.png}
     \caption{\textbf{Korrelációs mátrix megjelenítése heatmap formájában.}}
     \label{fig:GeneralDiagram}
  \end{figure}
@@ -44,7 +107,7 @@ Egy dimenzióban, amennyiben egy változó eloszlására vagyunk kiváncsiak, á
  
  \begin{figure}[H]
     \centering
-    \includegraphics[width=8cm, height=6cm]{pariwise.png}
+    \includegraphics[width=8cm, height=6cm]{media/pariwise.png}
     \caption{\textbf{Scatterplotok megjelenítése rácson.}}
     \label{fig:GeneralDiagram}
  \end{figure}
@@ -53,7 +116,7 @@ Több dimenziós, kategorikus adat megjelenítésére szolgál az úgynevezett \
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=8cm, height=6cm]{multiplebar.png}
+    \includegraphics[width=8cm, height=6cm]{media/multiplebar.png}
     \caption{\textbf{Multiple bar plot két változóval.}}
     \label{fig:GeneralDiagram}
  \end{figure}
@@ -63,7 +126,7 @@ A \textbf{box plot} több információt tartalmazó változata a \textbf{violin 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=8cm, height=6cm]{violin.png}
+    \includegraphics[width=8cm, height=6cm]{media/violin.png}
     \caption{\textbf{Violin plot több változóval és kategorikus szinezéssel.}}
     \label{fig:GeneralDiagram}
  \end{figure}
@@ -74,7 +137,7 @@ Amennyiben egyszerre 3 változót szeretnénk megjeleníteni, lehetőségünk va
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=8cm, height=6cm]{3dscatter.png}
+    \includegraphics[width=8cm, height=6cm]{media/3dscatter.png}
     \caption{\textbf{2D scatterplot rácson színkóddal.}}
     \label{fig:GeneralDiagram}
  \end{figure}
@@ -83,7 +146,7 @@ Amennyiben egyszerre 3 változót szeretnénk megjeleníteni, lehetőségünk va
  
  \begin{figure}[H]
     \centering
-    \includegraphics[width=8cm, height=6cm]{3dcont.png}
+    \includegraphics[width=8cm, height=6cm]{media/3dcont.png}
     \caption{\textbf{3D scatterplot.}}
     \label{fig:GeneralDiagram}
  \end{figure}
@@ -100,7 +163,7 @@ Amennyiben egyszerre 3 változót szeretnénk megjeleníteni, lehetőségünk va
  
  \begin{figure}[H]
     \centering
-    \includegraphics[width=8cm, height=6cm]{iso.PNG}
+    \includegraphics[width=8cm, height=6cm]{media/iso.PNG}
     \caption{\textbf{Példa a kontúrvonalakra és a kontúrfelületekre.}}
     \label{fig:GeneralDiagram}
  \end{figure}
@@ -110,7 +173,7 @@ Amennyiben egyszerre 3 változót szeretnénk megjeleníteni, lehetőségünk va
  
  \begin{figure}[H]
     \centering
-    \includegraphics[width=8cm, height=6cm]{glyph.PNG}
+    \includegraphics[width=8cm, height=6cm]{media/glyph.PNG}
     \caption{\textbf{Példa az egyszerű vonalas vektorábrázolásra, illetve a bonyolultabb 2D és 3D objektumok használatára.}}
     \label{fig:GeneralDiagram}
  \end{figure}
@@ -118,7 +181,39 @@ Amennyiben egyszerre 3 változót szeretnénk megjeleníteni, lehetőségünk va
  A vektor értékű adatok ábrázolásánál figyelni kell, hogy 3 dimneziós ábrázolásoknál sokszor nehéz pontosan megállapítani a vektorok irányítottságát, hiszen a 3D térből vetítjük le a megjelenítést a 2D térbe. Ezen kívül fontos, hogy ne jelenítsünk meg egyszerre túl sok adatpontot, mert a vektorok összemosódhatnak és értelmezhetetlenné válik az ábra. 
  
   \subsection{Tenzor értékű adatok ábrázolása}
- TODO
+ A tenzor értékű adatok megjelenítése komplex feladat és jelenleg is aktívan kutatott terület. Használatuk kiemelkedő biológiai adatok (molekuláris diffúzió mérése) és mérnöki területek (feszültég tenzor) esetében. Ahhoz, hogy vizualizáljuk a tenzor értékű adatokat, minden egyes adatpont helyén 3 ortogonális vektor vizualizációjára van szükségünk. Ehhez felhasználhatjuk a vektor értékű adatok ábrázolásánál használt módszereket. \newline
+ A feszültég tenzor esetében például a vizualizálni kívánt tenzorokat reprezentálhatjuk 3X3 mátrixok segítségével. Ebből számolható 3 sajátérték és 3 ortogonális sajátvektor. A sajátvektorok hossza tartalmazhatja az információt az adott irányba keletkező feszültség értékéről, míg további színkódolással a mennyiség előjelét is meg lehet jeleníteni. Ez a módszer csak abban az esetben használható eredményesen, ha az adatpontok nincsenek túl közel egymáshoz és a feszültség homogén módon oszlik el az anyagban. \newline
+
+ 
+ 
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/stress.png}
+    \caption{\textbf{Példa a feszültség tenzor vizualizációjára.}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+ 
+  További vizualizációs módszer az úgynevezett \textbf{colormap} használata, mikor egy ábrán csak a legnagyobb sajátértékhez tartozó sajátvektorokat jelenítjük meg, irányukat pedig színekkel kódoljuk. 
+ 
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/colormap.PNG}
+    \caption{\textbf{Tenzor vizualizáció colormap módszerrel.}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+ 
+ Végül egy egyszerű technika, amelyel a mátrix összes komponensét tudjuk egyszerre vizualizálni: elkészítünk egy 3X3-as mozaik képet, amelynek minden egyes eleme az adott vizualizáció, olyan módon, hogy csak az adott mátrixelem értékeit jelenítjük meg benne.
+ 
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/brain.PNG}
+    \caption{\textbf{Mátrixelemek vizualizációja. Az egyes képek az adott elemhez tartozó intenzitásértékeket kódolják.}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+ 
+ \newline
+ http://www.inf.ed.ac.uk/teaching/courses/vis/lecture_notes/lecture14.pdf
+ 
  \section{Színek}
  Tudományos publikációkban rendkívül fontos szerepe van a megfelelő színválasztásnak. Ehhez előre definiált színpaletták állnak rendelkezésre, a következőkben ezeket tekintem át. Általános alapelv a színválasztásnál, hogy a megjelenített adatokat egyértelművé tegye, ne torzítsa el, és az esetleges színtévesztő olvasók számára is problémamentes legyen a megjelenítés.
  
@@ -128,14 +223,14 @@ Amennyiben egyszerre 3 változót szeretnénk megjeleníteni, lehetőségünk va
  
  \begin{figure}[H]
     \centering
-    \includegraphics[width=8cm, height=6cm]{sequential.png}
+    \includegraphics[width=8cm, height=6cm]{media/sequential.png}
     \caption{\textbf{Szekvenciális paletták}}
     \label{fig:GeneralDiagram}
  \end{figure}
  
   \begin{figure}[H]
     \centering
-    \includegraphics[width=8cm, height=6cm]{map.png}
+    \includegraphics[width=8cm, height=6cm]{media/map.png}
     \caption{\textbf{Egy példa a szekvenciális adatok színezésére.}}
     \label{fig:GeneralDiagram}
  \end{figure}
@@ -144,7 +239,7 @@ Amennyiben egyszerre 3 változót szeretnénk megjeleníteni, lehetőségünk va
  
   \begin{figure}[H]
     \centering
-    \includegraphics[width=8cm, height=6cm]{diverging.png}
+    \includegraphics[width=8cm, height=6cm]{media/diverging.png}
     \caption{\textbf{Divergens paletták}}
     \label{fig:GeneralDiagram}
  \end{figure}
@@ -156,7 +251,7 @@ Amennyiben egyszerre 3 változót szeretnénk megjeleníteni, lehetőségünk va
  
  \begin{figure}[H]
     \centering
-    \includegraphics[width=8cm, height=6cm]{categorical.png}
+    \includegraphics[width=8cm, height=6cm]{media/categorical.png}
     \caption{\textbf{Kategorikus paletták}}
     \label{fig:GeneralDiagram}
  \end{figure}
@@ -167,15 +262,15 @@ Amennyiben egyszerre 3 változót szeretnénk megjeleníteni, lehetőségünk va
  
  \begin{figure}[H]
     \centering
-    \includegraphics[width=8cm, height=6cm]{cwheel-polar.png}
+    \includegraphics[width=8cm, height=6cm]{media/cwheel-polar.png}
     \caption{\textbf{Színtévesztés szimulálása.}}
     \label{fig:GeneralDiagram}
  \end{figure}
  
  \begin{figure}[H]
     \centering
-    \includegraphics[width=8cm, height=6cm]{colorb.png}
-    \caption{\textbf{Színtévesztő-barát színpaletták}}
+    \includegraphics[width=8cm, height=6cm]{media/colorb.png}
+    \caption{\textbf{Színtévesztők számára is könnyen értelmezhető színpaletták}}
     \label{fig:GeneralDiagram}
  \end{figure}
  
@@ -185,10 +280,40 @@ Amennyiben egyszerre 3 változót szeretnénk megjeleníteni, lehetőségünk va
  TODO
  
  \section{Háromdimenziós renderelési technikák, ray casting, ray tracing.}
- TODO
+ Kezdésnek tekintsük át, hogy hogyan lehet leképezni 3D objektumokat egy 2D felületre. Az alább lévő ábrán látható, hogy ehhez szükségünk van az objektumra, egy felületre, majd egy pontra, amelyet úgy szerkesztünk, hogy a kapott piramis teteje lesz a pont, a talapzata pedig a felület. A csúcstól a felület felé húzott egyenessel párhuzamos a látósugarunk, a felületet pedig a képsík lesz. Erre a képsíkra fogjuk vetíteni a 3D objektum képét olyan módon, hogy a piramis csúcspontjából húzunk vonalakat az objektum különböző részeihez, és a vonalak és a sík metszéspontjai fogják adni a vetített képet. 
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/vantagepoint.png}
+    \caption{\textbf{A számítógépes képalkotás alapja.}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+ \newline
  
+ A képelkotáshoz szükség van még egy fényforrásra is, amely megvilágítja az objektumokat. Ezután több különböző módszer áll rendelkezésre annak érdekében, hogy valósághű képet hozhassunk létre. 
  
-
+ \subsection{Raszterelés}
+ 
+ \subsection{Scanline rendering}
+ 
+ \subsection{Ray tracing - Ray casting}
+ 
+ Tudjuk, hogy ahhoz, hogy a képalkotás létrejöhessen, a fényforrásból elsőnek az objektumra kell jutniuk a fotonoknak, majd onnan verődve az érzékelőre. Ehhez végigszámolthatjuk az összes foton útját a fényforrástól a szenzorig (ez az úgynevezett \textbf{forward tracing} technika), de mivel a fotonok többsége nem az érzékelőre fog veródni az objektumról, ezért ez nagyon számításigényes és nem hatékony eljárás. Ezzel szemben, ha megfordítjuk a kiértékelés menetét, olyan módon, hogy fotonokat bocsátunk ki az érzékelőből, és visszaszámoljuk, hogoy milyen úton jut el a fényforrásig. Ennek részletesebb menete úgy néz ki, hogy kibocsátunk egy fotont a képsík felé, majd megvizsgáljuk, hogy a foton útjával párhuzamosan húzott vonal (\textbf{primary ray}) ér-e objektumot. Ha igen, akkor az érintési ponttól szerkesztünk egy újabb egyenest a fényforrás felé, és vizsgáljuk, hogy ennek a szerkesztett egyenesnek van-e az útjában újabb objektum. Ezt a fotont, vagy sugarat nevezzük \textbf{shadow ray}-nek és arra használjuk, hogy megállapítsuk, hogy az adott objektum adott része árnyékban van-e. Az elv részletesebben megtekinthető az alsó ábrán.
+ 
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/shadow1.PNG}
+    \caption{\textbf{Képalkotás, ha az objektum adott része nincs árnyékban.}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+ 
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/shadow2.PNG}
+    \caption{\textbf{Képalkotás, ha az objektum adott része árnyékban van.}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+ 
+https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-overview
  
   
 \section{A sztereoszkópius megjelenítés technológiái}
@@ -200,7 +325,7 @@ A sztereoszkópikus technológia felbontható több csoportra. Az első ilyen m�
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=8cm, height=6cm]{stereo.PNG}
+    \includegraphics[width=8cm, height=6cm]{media/stereo.PNG}
     \caption{\textbf{Anaglif kép.}}
     \label{fig:GeneralDiagram}
  \end{figure}
@@ -221,7 +346,9 @@ https://www.cg.tuwien.ac.at/courses/Seminar/WS2006/stereo_techniques.pdf
 
 \section{Számítógépes geometria}
 TODO
+
+
 \bibliographystyle{plain}
-\bibliography{M335}
+\bibliography{references}
 
 \end{document}
