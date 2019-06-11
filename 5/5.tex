@@ -7,9 +7,9 @@
 \setlength{\oddsidemargin}{0cm}
 \setlength{\parindent}{0cm}
 
-\usepackage{allrunes}
+%\usepackage{allrunes}
 \usepackage{amsmath}
-\usepackage[magyar]{babel}
+\usepackage[hungarian]{babel}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{fixltx2e}
@@ -222,22 +222,71 @@ A természetben előforduló fraktálok többsége növekvő fraktál. Ebben a f
 
 
 \subsection{Random mozgás}
-Négyzetrácson történő mozgást nézünk, ahol az egyen irányokba történő elmozdulás valószínűsége ugyanakkora. Ekkor egy dimenzióban az elmozdulásnak $i$ lépés után $(x_i)$ a várható értéke nulla, $\left< x_i\right>  = 0$., szórása egy, $\sigma\left( x_i\right) = 1$
+Négyzetrácson történő mozgást nézünk, ahol az egyen irányokba történő elmozdulás valószínűsége ugyanakkora. Ekkor egy dimenzióban az elmozdulásnak $i$ lépés után $(x_i)$ a várható értéke nulla, $\left< x_i\right>  = 0$., szórása egy, $\sigma\left( x_i\right) = 1$. Az pozíció $\left( x \right)$ a centrális határeloszlás-tétel következtében egy $\mu = 0$ várhatóértékű és $\sigma = \sqrt{t} $ szórású normális eloszlást fog követni:
+
+\begin{equation}
+\rho \left( x\right) = 	\frac{1}{\sqrt{1\pi t}} \exp^{-\frac{x^2}{2}}.
+\end{equation}
+Amelyből kifolyólag az átlagos elmozdulás az origótól az időnek a gyökével egyenlő:
+
+\begin{equation}
+R = \sqrt{\left< x^2\right>} = \sqrt{t}.
+\end{equation}
+
+$d= 2,3$ dimenzióban feltételezzük, hogy az irányok egymástól függetlenek, így több normális eloszlás összege $\chi$ eloszlást fog követni, melyből megkapható, hogy az átlagos távolság arányos:
+
+\begin{equation}
+\left< R \right> = \sqrt{t} \sqrt{\frac{2}{d}} \frac{\Gamma \left( \frac{d+1}{2}\right)}{\Gamma \left( d/2 \right)} \Longrightarrow \left< R \right> \sim \sqrt{t}
+\end{equation}
+
+Hogyan lesz ebből fraktál? Ha minden pontot, ahol a részecskénk járt, kitöltünk, a teljes objektum fraktál-struktúrát fog mutatni, feltéve, hogy $ d \geqslant 3 $.
 
 
-\subsection{Lévy repülés}
 
 \subsection{Aggregátumok, perkoláció}
+Az aggregátumok olyan objektumok, melyben elemi blokkok kapcsolódnak egymáshoz. A perkoláció pedig az anyagnak akadályokkal teli, porózus közegben történő mozgását jelenti. Jelen esetben mindvégig csak olyan objektumokról beszélünk, melyben az elemi blokkok megkülönböztethetetlenek, teljesen ugyanazok. Négyzetrácson (diszkrét térben) a szomszéd jelentheti az egy egységen belüli lépéseket (azaz 2 dimenzióban 4 szomszéd például) vagy tekinthetjük az átlós helyeket is (2 dimenzióban 9 szomszéd). Valós (folytonos) térben a szomszédoknak az adott távolságon belüli pontokat értjük, ugyanakkor itt figyelembe vesszük, hogy azok között kölcsönhatás lehet. \\
 
-\subsection{Diffűzió-limitált növekedés}
-\subsubsection{Alapok}
-\subsubsection{Kísérletek}
-\subsubsection{Szimuláció}
-\subsubsection{Fraktáldimenzió}
-\subsubsection{Variációk}
+Aggregációnál általában egy maghoz kapcsolódnak a blokkok egy sztochasztikus folyamat révén. Ez kétféleképpen valósulhat meg: 1) elindítunk random pozícióból egy részecskét és az csatlakozik valahol a klaszterhez, avagy 2) kiválasztunk egy a klaszternek szomszédos véletlenszeű pozíciót és azt szintén random paraméterek alapján vagy kitöltjük, vagy nem. Pszeudo-random paraméter például a hőmérséklet-szerű paraméterek vagy több más paraméter összessége. \\
+
+\paragraph{Lokális modell} A lokális modellben a helyszín kitöltése csakis önmagától (betöltött-e vagy sem) és a többi szomszédtól függhet (diagonális megengedett) -- ilyenek például a sejtautomaták és a diffúzió-limitált növekedés alapú baktériumtelepek is. A lokális modellben elöfordulhatnak egymástól független klaszterek is, másnéven rács-állatkák (lattice animals) -- lásd \ref{fig:lattice_animals}. ábra. A rács-állatkák típusa (szimmetriák megléte (forgatás és/vagy tükrözés)), illetve gyakorisága jellemző az iterációs módszerre -- erről bövebben később a \ref{sec:cellular_automatons}. fejezetben. 
+
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=0.5\textwidth]{media/lattice_animals.png}
+    \caption{Rács-állatkák két dimenzióban. } 
+    \label{fig:lattice_animals}
+    \end{center}
+\end{figure}
+
+
+
+\paragraph{Nemlokális modell}
+A nemlokális modellben azonban megengedhetjük a távolhatást, azaz a távoli részecskék közötti kölcsönhatást -- erre tökéletes példa az \href{https://en.wikipedia.org/wiki/Abelian_sandpile_model}{ábeli homokdomb modell}. Ebben -- értelemszerűen -- a lokális randomitás helyett a globális lesz jelen. \\
+
+A perkolációs modell esetében egy véges rács minden pontjához rendelünk valami random számot (0 és 1 között), majd  egy $p$ határérték (\textit{valószínűség}) alatt feltöltjük azokat. Ekkor lehet vizsgálni a legnagyobb klaszter méretét, melynek keletkezése egy bizonyos $p_c$ kritikus valószínúségnél következik be. Perkolációra példa a természetben a szivacsban, falban vagy kőben történő folyadékterjedés. 
+
+\subsection{Diffúzió-limitált növekedés}
+A diffúzió-limitált növekedés (DLA -- diffusion limited aggregation) esetében nem egy random walker van, hanem hanem kontinuum sok. A cél megmutatni, hogy a növekedés nemlokális tér következtében történik. Ekkor a Laplace egyenletet kell megoldanunk időben változó határfeltételek mellett:
+
+\begin{equation}
+\frac{\partial C}{\partial t} = D \nabla^2 C.
+\end{equation}
+
+Ennek modellezésére egy példa: indítunk egy részecskét a távolból, ami random walkkal hozzácsatlakozik a nagy klaszterhez, amennyiben hozzáér, majd a következő részecske. Optimalizálási lehetőségek: egy az adott aggregátumot körülvevő körről indítjuk a részecskét (seed circle), távoli részecskéket elfelejtjük, és újraindítjuk őket a seed circle-ről. 2 dimenzióban kísérletek alapján a fraktáldimenziója $\approx 1.71$. Magasabb dimenziókban átlagtér közelítésssel megadható a fraktáldimenzió: $D = \left(d^2 + 1 \right)/\left( d+1\right)$. \\
+
+Ilyen alapon az aggregátumoknak izotrópnak és rácsfüggetlennek kéne lenniük, ezzel szemben anizotrópia és rácsfüggőség a megfigyelhető. Ezen ellentmondás feloldását az $N \rightarrow \infty$ határesetben lehet megtalálni, ugyanis a kísérletekben csak véges méretben és dimenzióban tudunk mérni. \\
+
+A DLA különböző variációi lehetnek:
+
+\begin{itemize}
+\item folytonos térben történe random walk,
+\item be lehet vezetni egy valószínűséget, mellyel a hozzákapcsolódás rátáját befolyásolhatjuk,
+\item véges méretben számíthat a rácsfüggőség $\rightarrow$ háromszögrács, hatszögrács, stb.
+\end{itemize}
 
 
 \section{Sejtautomaták}
+\label{sec:cellular_automatons}
 
 
 

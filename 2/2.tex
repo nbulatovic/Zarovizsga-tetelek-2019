@@ -280,10 +280,95 @@ lognormális eloszlást követ, amelyre $\mu=150000\text{HUF}$ és $\sigma=50000
     ahol $c$ a teszt kritikus értéke.
     \item A hipotézis tesztelés lényege keresni egy olyan $T$-t és $c$-t, amivel a legjobb (legkevésbé káros) döntést
     hozhatjuk.
+    \item \textbf{Egyoldalú teszt}: Ha $X$ a rendelkezésre álló adathalmaz, és $\theta\in \Theta$ egy paraméter 
+    (pl. átlag, variancia, stb), akkor egy egyoldalú teszt a következőt jelenti:
+    \begin{equation*}
+        H_0: \theta = \theta_0 ~\text{és}~ H_1: \theta < \theta_0 ~ (\text{vagy} > \theta_0) 
+    \end{equation*}
+    \item \textbf{Kettős hipotézisteszt}: Ha $X$ a rendelkezésre álló adathalmaz, és $\theta\in \Theta$ egy paraméter 
+    (pl. átlag, variancia, stb), akkor egy kettős teszt a következőt jelenti:
+    \begin{equation*}
+        H_0: \theta = \theta_0 ~\text{és}~ H_1: \theta \neq\theta_0 
+    \end{equation*}
+    \item \textbf{Hibák}
+    \begin{center}
+        \begin{tabular}[H]{|c|c|c|} \hline
+                            &        $H_0$ igaz        & $H_0$ hamis \\ \hline
+        Elfogadjuk $H_0$-t  &      OK   &   type 2 hiba (false positive)  \\ \hline
+        Elvetjük $H_0$-t    & type 1 hiba (false negative)  &      OK     \\ \hline
+        \end{tabular}
+    \end{center}
+    \begin{figure}[H]
+        \begin{center}
+        \includegraphics[width=0.75\textwidth]{media/typeoferrs.png}
+        \caption{A két hibatípus.} 
+        \label{fig:typeoferrs}
+        \end{center}
+    \end{figure}
+    \item \textbf{Statisztikai erő}: Egy kettős hipotézisteszt statisztikai ereje nem más, mint az a valószínűség,
+    hogy a teszt helyesen veti el a nullhipotézist, amikor az alternatív hipotézis igaz:
+    \begin{equation*}
+        \text{statisztikai erő} = \beta = P(H_0 \,\text{elutasítva} \,|\, H_1 \,\text{igaz})
+    \end{equation*}
+    \item \textbf{szignifikancia-szint} Egy statisztikai teszt $\alpha$ szignifikancia szintű, ha 
+    a nullhipotézis elvetésének a valószínűsége $\alpha$ feltéve, hogy a nullhipotézis igaz.
+    \begin{equation*}
+        \alpha = P(\text{$H_0$-t elvetjük}\,|\,\text{$H_0$ igaz})
+    \end{equation*}
+    \item \textbf{p-érték}: A p-érték azt mutatja meg, hogy ha igaz a nullhipotézis, akkor mekkora 
+    valószínűséggel kapunk olyan eredményt, amely legalább annyira extrém, mint a mért eredmény.
+    Pl. Ha egy minta átlaga $\overline{X}$, akkor a $p=5\%$ azt jelenti, hogy ha a populáció átlaga $\mu$,
+    akkor $5\%$ valószínűséggel mérhetek legalább $|\overline{X}-\mu|$ eltérést. A $p$-értéket így is definiálhatjuk:
+    \begin{equation*}
+        p = P(\text{ezt az eredményt mérem}\,|\,\text{$H_0$ igaz})
+    \end{equation*}
+    
 \end{itemize}
-\subsection{z-teszt}
-\subsection{t-test}
-\subsection{Konfidenciaintervallumok}
+\subsection{Egymintás $u$-próba \cite{uprobawiki}}(angolul z-test \cite{ztestwiki})
+\begin{itemize}
+    \item Egymintás $u$-próbával a minta alapján a populáció átlagára vonatkozó hipotézist lehet tesztelni.
+    \item A populációt normális eloszlásúnak feltételezzük, melynek ismerjük a $\sigma$ szórását.
+    \item Ha a $\sigma$ szórás nem ismert, akkor a $u$-próba helyett $t$-próbát kell végezni.
+    \item Azt akarjuk megvizsgálni, hogy a minta alapján a $\mu$ érték tekinthető-e a populáció átlagának.
+    \item A teszt elvégzéséhez kiszámoljuk a minta $\overline{X}$ átlagát, majd ebből a próbastatisztikát:
+        \begin{equation*}
+            u = \frac{\overline{X}-\mu}{\sigma/\sqrt{n}}
+        \end{equation*}
+    \item Kihasználjuk azt a feltételt, hogy az $u$ próbastatisztika standard normális eloszlást követ, és adott előre
+    meghatározott $p$-értékre kiszámoljuk a $u_{p/2} = \Phi^{-1}(1-p/2)$-t. 
+    \item Ha $|u| \geq u_{p/2}$, akkor ez azt jelenti, hogy a mért $\overline{X}$ és a feltételezett $\mu$ érték között
+    $p$ szignifikancia-szint mellett az eltérés szignifikáns. Tehát elvetjük a nullhipotézist, miszerint a populáció átlaga $\mu$.
+
+    \item \textbf{Példa:} Begyűjtünk 3 tonna almát, amiről tudjuk, hogy az almák tömegének szórása $\sigma=40g$.
+    Találomra kiválasztunk 100db almát, amelyeket megmérve azt kapjuk, hogy a tömegek átlaga $\overline{X}=150g$.
+    Kijelenthető-e $95\%$-os biztonsággal, hogy a begyűjtött almák átlagos tömege $\mu=140g$? És $99\%$-os 
+    biztonsággal?
+    \begin{itemize}
+        \item $H_0: \mu = 140g$
+        \item $H_1: \mu \neq 140g$
+        \item $p_1=0.05,\,p_2=0.01$
+        \item $u_{p_1/2} = \Phi^{-1}(1-p_1/2) = \Phi^{-1}(1-0.05/2) \approx 1.96$
+        \item $u_{p_2/2} = \Phi^{-1}(1-p_2/2) = \Phi^{-1}(1-0.01/2) \approx 2.58$
+        \item $u = {\displaystyle\frac{\overline{X}-\mu}{\sigma/\sqrt{n}}} = {\displaystyle \frac{150-140}{40/10}} = 2.5$
+        \item WTF???
+    \end{itemize}
+\end{itemize}
+
+\subsection{Egymintás $t$-próba \cite{tprobawiki}}
+\begin{itemize}
+    \item A vizsgált valószínűségi változó normális eloszlást követ, de nem ismerjük a $\sigma$ szórást.
+    \item A kérdés ugyanaz, mint az előbb, hogy a populáció átlaga megegyezik-e statisztikai szempontból a
+    feltételezett $\mu$ értékkel.
+    \item $t$-próba esetén a próbastatisztika a következő lesz:
+        \begin{equation*}
+            t = \frac{\overline{X}-\mu}{s/n} \,\text{,}
+        \end{equation*}
+        ahol ${\displaystyle s = \sqrt{\frac{1}{n-1}\sum\limits_{i=1}^{n}(X_i-\overline{X})^2}}$ a minta szórása. A próbastatisztika
+        ebben az esetben Student t-eloszlást követ, $f=n-1$ szabadsági fokkal.
+    \item Az előbbihez hasonlóan az adott $p$ szignifikancia szinthez megkeressük a $t_p$ értéket.
+    \item Ha $|t| \geq t_p$, akkor a nullhipotézist elvetjük, mert a minta átlaga szignifikánsan eltér a $\mu$ értéktől.
+    \item Ellenkező esetben, vagyis ha $|t| < t_p$, a nullhipotézist megtartjuk.
+\end{itemize}
 
 \section{Függetlenségvizsgálat, $\chi^2$-próba}
 
