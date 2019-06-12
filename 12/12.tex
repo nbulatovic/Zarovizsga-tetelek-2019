@@ -275,12 +275,35 @@ As already mentioned, the convolutional networks take advantage over the classic
 
 Notice that convolution is not naturally equivariant to other transformations, such as the rotation of the input image, but it can be achieved with the application of group theory.
 
-\subsection{TODO}
-batch normalization
+\pagebreak
+\section{Batch normalization}
 
-autoencoders
+In a neural network, batch normalization is achieved through a normalization step that fixes the means and variances of each layer's inputs. Ideally, the normalization would be conducted over the entire training set, but to use this step jointly with stochastic optimization methods, it is impractical to use the global information. Thus, normalization is restrained to each mini-batch in the training process.
 
-word2vec
+Denote a mini-batch of the entire training set of size $m$ as $B$. The mean and variance of $B$ could thus be denoted as
+
+\begin{equation}
+\mu_B = \frac{1}{m} \sum_{i=1}^m x_i,~~~ \sigma_B^2 = \frac{1}{m} \sum_{i=1}^m (x_i-\mu_B)^2.
+\end{equation}
+
+For a layer of the network with $d$-dimensional input, $x = (x^{(1)},...,x^{(d)})$, each dimension of its input is then normalized separately,
+
+\begin{equation}
+\hat{x}_{i}^{(k)} = \frac {x_i^{(k)}-\mu_B^{(k)}}{ \sqrt{\sigma_B^{(k)^2}+\epsilon}},
+\end{equation}
+where $k \in [1,d]$ and $i \in [1,m]$, $\mu_B^{(k)}$ and $\sigma_B^{(k)^2}$ are the per-dimension mean and variance, respectively. $\epsilon$ is added in the denominator for numerical stability and is an arbitrarily small constant. The resulting normalized activation $\hat{x}^{(k)}$ have zero mean and unit variance, if $\epsilon$ is not taken into account. To restore the representation power of the network, a transformation step then follows as
+
+\begin{equation}
+y_i^{(k)} = \gamma^{(k)} \hat{x}_{i}^{(k)} +\beta^{(k)},
+\end{equation}
+where the parameters $\gamma^{(k)}$ and $\beta^{(k)}$ are subsequently learnt in the optimization process.
+
+For more information please visit these webpages\footnote{\url{https://en.wikipedia.org/wiki/Batch_normalization}}\footnote{\url{https://towardsdatascience.com/batch-normalization-in-neural-networks-1ac91516821c}}.
+
+\section{Autoencoders}
+
+
+\section{word2vec}
 
 \newpage
 
