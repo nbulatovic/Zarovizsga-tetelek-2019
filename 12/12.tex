@@ -301,9 +301,31 @@ where the parameters $\gamma^{(k)}$ and $\beta^{(k)}$ are subsequently learnt in
 For more information please visit these webpages\footnote{\url{https://en.wikipedia.org/wiki/Batch_normalization}}\footnote{\url{https://towardsdatascience.com/batch-normalization-in-neural-networks-1ac91516821c}}.
 
 \section{Autoencoders}
+An autoencoder is a neural network that is trained to attempt to copy its input to its output. Internally, it has a hidden layer $\mathbf{h}$ that describes a \textit{code} used to represent the input. The network may be viewed as consisting of two parts (see figure \ref{autoencoder}):
+
+\begin{itemize}
+	\item an encoder function $\mathbf{h} = f(\mathbf{x})$,
+	\item and a decoder that produces a reconstruction $\mathbf{r} = g(\mathbf{h})$. 
+\end{itemize}
+
+\begin{figure}[h!]
+	\begin{center}
+	\includegraphics[width=0.3\linewidth]{media/autoencoder.png}
+	\caption{The general structure of an autoencoder that maps its input $\mathbf{x}$ to an output $\mathbf{r}$ through and internal representation or code $\mathbf{h}$.}
+	\label{autoencoder}
+	\end{center}
+\end{figure}
 
 
-\section{word2vec}
+If an autoencoder succeeds in simply learning to set $g(f(\mathbf{x})) = \mathbf{x}$ everywhere, then it is not practically useful. Instead, autoencoders are designed to be unable to learn to copy perfectly. Usually, they are restricted in ways that allow them to copy only approximately, and to copy only input that resembles the training data. Because the model is forced to prioritize which aspects of the input should be copied, it often learns useful properties of the data. For further information and special architectures of autoencoders read the related chapter of \hyperlink{Deeplea_Goodfellow}{Goodfellow et al (2016)}.
+
+\section{Word2vec}
+
+\textit{Word2vec} is a two-layer neural net that processes text. Its input is a text corpus and its output is a set of vectors: feature vectors for words in that corpus. While \textit{Word2vec} is not a deep neural network, it turns text into a numerical form that deep nets can understand. \textit{Word2vec}'s applications extend beyond parsing sentences, it can be applied just as well to genes, code, likes, playlists, social media graphs and other verbal or symbolic series in which patterns may be discerned. Words are simply discrete states like the other data mentioned above, and we are simply looking for the transitional probabilities between those states: the likelihood that they will co-occur.
+
+The purpose and usefulness of \textit{Word2vec} is to group the vectors of similar words together in vectorspace. That is, it detects similarities mathematically. \textit{Word2vec} creates vectors that are distributed numerical representations of word features, features such as the context of individual words. Given enough data, usage and contexts, \textit{Word2vec} can make highly accurate guesses about a word’s meaning based on past appearances. Those guesses can be used to establish a word’s association with other words (e.g. “man” is to “boy” what “woman” is to “girl”), or cluster documents and classify them by topic.
+
+To read more about this topic please follow this link\footnote{\url{https://skymind.ai/wiki/word2vec.}}.
 
 \newpage
 
