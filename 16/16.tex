@@ -81,18 +81,61 @@
 \newpage
 \begin{abstract}
     Többdimenziós adatok – Geográfiai és térbeli adatok reprezentálása, pontfelhők. Keresési alapproblémák: intervallum-keresés, térbeli keresés, legközelebbi szomszédok. Térbeli indexek, térkitöltő görbék (Z-index, Peano–Hilbert-index), kD-fa, R-fa, a bitkódolás szerepe. Tércellázási módszerek: Delaunay-háromszögelés, Voronoi-cellázás. A gömb indexelése, Quad-tree, HEALPix, HTM.
+    
+    Multidimensional data - geographical and spatial data representation, point clouds. Basic searching algorithms: interval searching, spatial searching, nearest neighbours. Spatial indices, space filling curves (Z-index, Peano–Hilbert-index), kD-tree, R-tree, the role of binary coding. Spatial tesselation: Delaunay-triangulation, Voronoi-diagram. Pixelization of the sphere, quad-tree, HEALPix, HTM.
 \end{abstract}
 
-\section{Duma}
-\begin{figure}[H]
-    \begin{center}
-    \includegraphics[width=0.5\textwidth]{media/tsneplot.png}
-    \caption{t-SNE plot for MNIST dataset \cite{tsne-article}} 
-    \label{fig:tsneplot}
-    \end{center}
-\end{figure}
 
-\bibliographystyle{plain}
-\bibliography{references}
+\section{Spatial data representation}
+https://gisgeography.com/spatial-data-types-vector-raster/
+
++egy előadásból, letöltve
+
+
+\section{Searching Algorithms}
+
+%https://www.geeksforgeeks.org/searching-algorithms/
+
++nearest neighbours
+%https://en.wikipedia.org/wiki/Nearest_neighbor_search
+
+\section{Spatial indices}
+%https://en.wikipedia.org/wiki/Spatial_database
+
+\section{Space filling curves}
+%https://en.wikipedia.org/wiki/Space-filling_curve
+
+%http://wwwmayr.informatik.tu-muenchen.de/konferenzen/Jass05/courses/2/Valgaerts/Valgaerts_paper.pdf
+
+%https://www.forceflow.be/2013/10/07/morton-encodingdecoding-through-bit-interleaving-implementations/
+
+%https://en.wikipedia.org/wiki/Binary_code
+
+\section{Spatial tesselation}
+
+%https://www.geos.ed.ac.uk/~gisteac/gis_book_abridged/files/ch36.pdf
+
+%http://aseldawy.blogspot.com/2015/12/voronoi-diagram-and-dealunay.html
+
+\subsection{Delaunay, Voronoi}
+%https://en.wikipedia.org/wiki/Delaunay_triangulation
+
+%https://en.wikipedia.org/wiki/Voronoi_diagram
+
+
+\subsection{Pixelization of the sphere}
+
+%https://rts2.org/malaga/pres/L_Nicastro.pdf
+
+
+\newpage
+
+\begin{thebibliography}{Nature}
+%\bibliography{references}
+
+\bibitem{Deeplea_Goodfellow}\hypertarget{Deeplea_Goodfellow}{}
+Ian Goodfellow and Yoshua Bengio and Aaron Courville (2016). \textit{Deep learning}. MIT Press. \url{http://www.deeplearningbook.org}
+
+\end{thebibliography}
 
 \end{document}
