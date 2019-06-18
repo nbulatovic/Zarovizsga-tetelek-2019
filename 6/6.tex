@@ -219,7 +219,7 @@ Fontos még megemlíteni, hogy bizonyos esetekben, a dinamikai rendszerekhez leh
 \subsection{Kaotikus viselkedés}
 A huszadik század végére tisztává vált, hogy az integrálható rendszerek sokkal inkább kivételek, egy általános dinamikai rendszer sokkal bonyolultabb viselkedést mutat. A kaotikus rendszerek annyira érzékenyek a numerikus pontatlanságokra, hogy viselkedésük egyáltalán nem jelezhető előre, annak ellenére hogy az őket leíró differenciálegyenletek teljesen {\em determinisztikusak}.
 
-Pontosabban megfogalmazva, a kaotikus rendszereket a kezdőfeltételre jellemző {\em exponenciális} érzékenység definiál. Azaz, a kezdőfeltételben lévő kezdeti hiba időben exponenciálisan növekszik. 
+Pontosabban megfogalmazva, a kaotikus rendszereket a kezdőfeltételre jellemző {\em exponenciális} érzékenység definiálja. Azaz, a kezdőfeltételben lévő kezdeti hiba időben exponenciálisan növekszik. 
 
 Az egyik legegyszerűbb példája a kaotikus rendszereknek a {\em logisztikus leképezés}. Az eddigiekkel ellentétben most nem folytonos idejű, differenciálegyenlettel adott rendszerről lesz szó, hanem egy diszkrét idejű leképezésről, amelyet a következő formula definiál
 \begin{equation}
@@ -241,7 +241,7 @@ Ebben az $r_2$ bifurkációs pontban olyan új megoldások születnek (méghozz�
 \end{equation}
 ezen $r$ érték fölött {\em végtelen} periódusú instabil ciklusok jönnek létre, ami azt jelenti hogy a rendszer {\em soha} nem tér vissza a kezdeti értékére. A végtelen számú instabil pálya által uralt dinamika kaotikussá válik, és megjelenik a kezdőfeltételekre való exponenciális érzékenység.
 
-Ezt számszerűsíti a {\em Lyapunov-exponens}. Vegyünk két trajektóriáját a logisztikus leképezésnek, amelyek $x_0$ és $y_0$ pontokból indulnak. A dinamika során ezek eltávolodhatnak egymástól vagy közeledhetnek egymáshoz, a közöttük lévő $|x_n - y_n|$ távolság $\sim \text{exp}(-\lambda n)$ szerint változik, ahol $\lambda$ a Lyapunov-exponens. Ezzel megfogalmazhatjuk, hogy a $\lambda > 0$-val jellemezhető viselkedést hívjuk kaotikusnak. A \ref{fig:lyap}. ábra a logisztikus leképezés ciklusait, és az ezekhez tartozó Lyapunov-exponenseket mutatja, az $r$ paraméter függvényében.
+Ezt számszerűsíti a {\em Lyapunov-exponens}. Vegyünk két trajektóriáját a logisztikus leképezésnek, amelyek $x_0$ és $y_0$ pontokból indulnak. A dinamika során ezek eltávolodhatnak egymástól vagy közeledhetnek egymáshoz, a közöttük lévő $|x_n - y_n|$ távolság $\sim \text{exp}(\lambda n)$ szerint változik, ahol $\lambda$ a Lyapunov-exponens. Ezzel megfogalmazhatjuk, hogy a $\lambda > 0$-val jellemezhető viselkedést hívjuk kaotikusnak. A \ref{fig:lyap}. ábra a logisztikus leképezés ciklusait, és az ezekhez tartozó Lyapunov-exponenseket mutatja, az $r$ paraméter függvényében.
 
 \begin{figure}[h!]
     \centering
