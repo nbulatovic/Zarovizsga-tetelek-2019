@@ -204,6 +204,25 @@ Az algoritmus a következő, amennyiben $f(x)$ eloszlással szeretnénk mintáka
     \item $u > \alpha$ esetén pedig elutasítjuk, $x_{n+1} = x_n$.
 \end{itemize}
 \section{Hierarchikus bayes-i hálózatok}
+A bayes-i hálózat egy olyan statisztikai modell, amelyben a változók egy irányított gráfba rendeződtek, ezzel kifejezve az ok-okozati viszonyt, illusztrációként lásd a \ref{fig:2}. ábrát.  
+\begin{figure}[h!]
+    \centering
+    \includegraphics{media/bayes.png}
+    \caption{Általános bayes-i hálózat, irányított gráfba rendezve.}
+    \label{fig:2}
+\end{figure}
+Tegyük fel, hogy a mért $x$ adatainkhoz egy paramétert rendelünk, és annak a valószínűségét keressük (posterior), hogy a paraméter értéke $\Theta$, a mért $x$ adatainkat feltéve. Bayes-tétele alapján ez a valószínűség
+\begin{equation}
+    \label{bayes}
+    p(\Theta | x) \sim p(x | \Theta) p(\Theta),
+\end{equation}
+ahol $p(x|\Theta)$ a likelihood (a megfigyel empirikus eloszlása $x$-nek),  és $p(\Theta)$ $\Theta$ prior eloszlása. 
+
+Egy hierarchikus bayes-i hálózatban azonban $\Theta$ is függhet további paraméterektől (további, őt okozó változóktól), például $\varphi$-től. Ekkor a $\Theta$ prior eloszlását $p(\Theta | \varphi)$ váltja le, vagyis
+\begin{equation}
+    p(\Theta, \varphi | x) \sim p(x | \Theta) p(\Theta | \varphi ) p(\varphi). 
+\end{equation}
+A folyamatot addig ismételjük, amíg a felállított statisztikus modell, a bayes-i hálózat minden csúcsát bele nem számoltuk a posterior valószínűségbe. Ezt a posterior eloszlást, vagyis a paraméter eloszlását a gyakorlatban Markov-Lánc Monte-Carlo módszerrel számoljuk ki. A paraméterekre feltett prior eloszlásokból és a likelihood-okból mintákat húzva, előállítjuk a keresett szorzatot. 
 \bibliographystyle{plain}
 \bibliography{references}
 
