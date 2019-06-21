@@ -125,7 +125,7 @@ In case of geographical data (Earth, sky) the representation can be given with s
 
 \section{Spatial indices}
 
-Spatial indices are used by spatial databases to optimize spatial queries. These are the numbering methods of cells with integers in a special way to keep locality. The most common methods are the Z-index, Peano–Hilbert-index, kD-tree, R-tree.
+Spatial indices are used by spatial databases to optimize spatial queries. These are the numbering methods of cells with integers in a special way to keep locality. The most common methods are the Z-index, Peano–Hilbert-index, k-d-tree, R-tree.
 
 \subsection{Z-index}
 
@@ -214,7 +214,7 @@ Since median requires sort it is an expensive step and therefore usually estimat
 
 R-trees are tree data structures used for indexing multi-dimensional data such as geographical coordinates, rectangles or polygons. The R-tree was proposed by \hyperlink{R. Guttmann (1984)}{R. Guttmann (1984)} and became significant in both theoretical and applied contexts. A common real-world usage for an R-tree might be to store spatial objects such as restaurant locations or the polygons that typical maps are made of: streets, buildings, outlines of lakes, coastlines, etc. and then find answers quickly to queries such as "Find all museums within 2 km of my current location" or "retrieve all road segments within 2 km of my location".
 
-The key idea of the data structure is to group nearby objects and represent them with their minimum bounding rectangle in the next higher level of the tree; the "R" in R-tree is for rectangle (see figure \ref{rtree}). Since all objects lie within this bounding rectangle, a query that does not intersect the bounding rectangle also cannot intersect any of the contained objects. At the leaf level, each rectangle describes a single object; at higher levels the aggregation of an increasing number of objects. This can also be seen as an increasingly coarse approximation of the data set.
+The key idea of the data structure is to group nearby objects and represent them with their minimum bounding rectangle in the next higher level of the tree (see figure \ref{rtree}); the "R" in R-tree is for rectangle. Since all objects lie within this bounding rectangle, a query that does not intersect the bounding rectangle also cannot intersect any of the contained objects. At the leaf level, each rectangle describes a single object; at higher levels the aggregation of an increasing number of objects. This can also be seen as an increasingly coarse approximation of the data set.
 
 \begin{figure}[h!]
     \centering
@@ -255,6 +255,8 @@ The space tesselation is the process how the multi-dimensional space or the surf
 
 A very popular computational geometry problem is the Voronoi Diagram (VD), and its dual Delaunay Triangulation (DT). In both cases, the input is a set of points (sites) (see figure \ref{delavoro}). In VD, the output is a tessellation of the space into convex polygons, as one per input site, such that each polygon covers all locations that are closest to the corresponding site than any other site. In DT, the output is a triangulation, where each triangle connects three sites, such that the circumcircle of each triangle does not contain any other sites. These two constructs are dual in a sense that each edge in the DT connects two sites that share a common edge in VD.
 
+The source and more information can be found here \footnote{\url{http://aseldawy.blogspot.com/2015/12/voronoi-diagram-and-dealunay.html}.}.
+
 \begin{figure}[h!]
     \centering
 	\includegraphics[width=.9\linewidth]{media/delavoro.png}
@@ -262,7 +264,6 @@ A very popular computational geometry problem is the Voronoi Diagram (VD), and i
 	\label{delavoro}
 \end{figure}
 
-The source and more information can be found here \footnote{\url{http://aseldawy.blogspot.com/2015/12/voronoi-diagram-and-dealunay.html}.}.
 
 
 %https://www.geos.ed.ac.uk/~gisteac/gis_book_abridged/files/ch36.pdf
@@ -274,7 +275,7 @@ The source and more information can be found here \footnote{\url{http://aseldawy
 
 \subsection{Pixelization of the sphere}
 
-As a consequence of the topology of the surface of the sphere the indexing is far from being trivial. The simple, usual indexing suffers from numerical instability around the poles due to singularities and also from discontinuity at $- 180^\circ - + 180^\circ$. These problems should be addressed algorithmically. The most frequent solution is to use Cartesian unit vectors instead of spherical coordinates, but a more advanced approach can be used: tessellate surface, tag cells with numbers and assign data points to cells, index them by the cell IDs. Earlier methods can be generalized (Quad-tree, Voronoi), but due to the periodic topology the algorithms should be modified. The two most used methods are the Hierarchical Triangular Mesh (HTM) and Hierarchical Equal Area isoLatitude Pixelisation (HEALPix) approaches. 
+The topology of the surface of the sphere eventuates that the indexing is far from being trivial. The simple, usual indexing suffers from numerical instability around the poles due to singularities and also from discontinuity at $- 180^\circ - + 180^\circ$. These problems should be addressed algorithmically. The most frequent solution is to use Cartesian unit vectors instead of spherical coordinates, but a more advanced approach can be used: tessellate surface, tag cells with numbers and assign data points to cells, index them by the cell IDs. Earlier methods can be generalized (Quad-tree, Voronoi), but due to the periodic topology the algorithms should be modified. The two most used methods are the Hierarchical Triangular Mesh (HTM) and Hierarchical Equal Area isoLatitude Pixelisation (HEALPix) approaches. 
 
 \subsubsection{HTM}
 
@@ -308,14 +309,46 @@ The Hierarchical Equal Area isoLatitude Pixelization (HEALPix) scheme of the sph
 
 \section{Searching Algorithms}
 
+Searching Algorithms are designed to check for an element or retrieve an element from any data structure where it is stored. Based on the type of search operation, these algorithms are generally classified into two categories\footnote{\url{https://www.geeksforgeeks.org/searching-algorithms/}.}:
+
+\begin{itemize}
+	\item \textbf{Sequential search:} the list or array is traversed sequentially and every element is checked. For example: linear search.
+	\item \textbf{Interval search:} These algorithms are specifically designed for searching in sorted data-structures. These type of searching algorithms are much more efficient than linear search as they repeatedly target the center of the search structure and divide the search space in half. For example: binary search.
+\end{itemize}
+
+
 %https://www.geeksforgeeks.org/searching-algorithms/
 
-+nearest neighbours
+\subsection{Spatial search}
+
+The spatial search takes advantage of the properties of the spatial databases and use spatial indices to find the target. The search region is given with analytic description and during the searching process the cells are compared with the search region with the following possible outcomes:
+
+\begin{itemize}
+	\item cell is entirely inside $\rightarrow$ all points are matches,
+	\item Cell is entirely outside $\rightarrow$ no points are matches.
+	\item Cell intersects with region $\rightarrow$ have to test each point.
+\end{itemize}
+
+The spatial search is efficient if the number of cells is much less than the number of data points. Roughly, the number of cells should be around $\sqrt[3]{N}$, where $N$ is the number of points in total.
+
+\subsection{K-nearest neighbour search}
+
+In order to find the K-nearest neighbours of a query point in a d-dimensional space spatial indices can be used. It is advantageous, because there is no need to compute distances from all data points, but on the other hand the closest point can be in the same cell as the query point or in the neighbouring cells. In high dimension, almost all cells are neighbours, so practically cells are to be used if the number of points is high ($N > 2^d$). The algorithm is as follows:
+
+\begin{itemize}
+	\item given a query point $Q$.
+	\item Find cell $C$ for which $Q \in C$.
+	\item Compute distance of all points $P \in C$. 
+	\item Sort by distance, find $k^{\text{th}}$ closest.
+	\item If the $k^{\text{th}}$ closest is further than any side of $C$ from $Q$, use neighbouring cells, too. 
+	\item Also use neighbouring cells if there are less points in $C$ than $k$.
+\end{itemize}
+
 %https://en.wikipedia.org/wiki/Nearest_neighbor_search
 
+\section{Conclusion}
 
-
-
+In this exam item we learnt about the spatial databases, spatial tesselation, spatial indices and searching methods that take advantage of the properties of these special databases.
 
 \newpage
 
