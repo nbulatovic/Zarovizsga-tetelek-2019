@@ -187,11 +187,48 @@
     \end{equation*}
     a feladat pedig $\mu$ és $\sigma$ meghatározása. Nem-parametrikus modellek azok, amelyeket nem lehet véges számú valós paraméterrel
     definiálni, pl. $\mathcal F = \{\text{az összes létező PDF}\}$.
+    \item \textbf{bias} Egy becsült $\hat\theta$ paraméter esetén a bias (előítélet, torzítás) alatt a becsült paraméter
+    várható értéke és a valódi értéke közötti különbséget értjük \cite{biaswiki}: 
+    \begin{equation*}
+        Bias(\hat\theta) = E(\hat\theta) - \theta 
+    \end{equation*}
 \end{itemize}
 
-\section{Bootstrap módszerek}
+\section{Bootstrap módszerek \cite{bootstrapwiki}}
+A Bootstrap módszerek arra jók, hogy egy statisztikai minta esetén meghatározzuk a mérés pontosságát. 
+A módszer lényege a következő: ahhoz, hogy az adott mérendő paraméter (pl. átlag) hibáját meg tudjuk mondani,
+ismerni kellene a populáció adott paraméterét. Mivel ezt nem ismerjük, ezért a paraméter mérésének hibáját úgy
+becsüljük, hogy a meglévő mintából sokszor újramintavételezünk, majd az újbóli mintavételezések alapján 
+számítjuk ki a hibát. Ezzel az eljárással egy becslést kapunk az adott paraméter eloszlására.
+Tehát a bootstrap módszer azzzal a feltételezéssel él, hogy a (minta $\rightarrow$ populáció) következtetés
+egyenértékű az (újramintavételezés $\rightarrow$ minta) következtetéssel.
+\par
+\textit{Példa}. arra vagyunk kíváncsiak, hogy Magyarországon átlagosan milyen magasak az emberek. Mivel nem tudunk megmérni mindenkit,
+ezért kiválasztunk $1000$ embert és lemérjük a magasságukat. Az átlagra a $\hat\mu$ értéket kapjuk. A kérdés az, hogy 
+ez a $\hat\mu$ érték mennyiben tér el a valós $\mu$ értéktől? A választ úgy keressük, hogy az $1000$ adatból
+véletlenszerűen újra mintavételezünk, így lesz sok $\hat\mu_i$ átlagunk és erre már kiszámíthatjuk a $V(\hat\mu)$ szórást.
 
-\subsection{Jackknife módszer}
+\subsection{Jackknife módszer \cite{JackknifeWiki}}
+
+A Jackknife egy olyan mintavételezési módszer, melynek segítségével különböző statisztikai paraméterek határozhatók
+meg, mint pl. a variancia és a bias. 
+A Jackknife módszer lényege, hogy az adott mintából mindig kihagyunk egy elemet, majd az így keletkező mintára újra 
+kiszámoljuk az adott paramétert. Így kapunk egy eloszlást a becsült paraméterre, amelyből pontosabb eredményt kaphatunk.
+\par
+\textit{Példa}. A populáció átlagot akarjuk megbecsülni egy $n$ elemű mintából. Ehhez kiszámoljuk minden $n-1$ elemű
+almintából az $\overline x_i$ átlagokat:
+\begin{equation*}
+    \overline x_i = \frac{1}{n-1}\sum\limits_{\substack{j=1 \\ j\neq i}}^{n} x_j
+\end{equation*}
+Ezután az átlag becslése az előbb kapott értékek átlaga:
+\begin{equation*}
+    \overline{x} = \frac{1}{n}\sum\limits_{i=1}^{n}\overline{x_i}
+\end{equation*}
+A Jackknife módszer alapján a becslés varianciája:
+\begin{equation*}
+    V(\overline{x}) = \frac{n-1}{n}\sum\limits_{i=1}^{n}(\overline{x}_i - \overline{x})^2
+\end{equation*}
+
 
 \section{Maximum likelihood}
 A maximum likelihood módszer egy olyan becslési eljárás, amelynek segítségével egy parametrikus modell paramétereinek
@@ -238,9 +275,25 @@ Ahhoz, hogy megkapjuk a $\hat\mu_{MLE}$ és $\hat\sigma_{MLE}$ becsült paramét
 \end{align*}
 Ha ezeket megoldjuk, az jön ki, hogy $\hat\mu_{MLE} = \overline{x} = \frac{1}{N}\sum\limits_{i=1}^{N}x_i$ és 
 $\hat\sigma_{MLE}^2 = \frac{1}{N}\sum\limits_{i=1}^{N}(x_i-\mu)^2$.
+
 \section{Extrém statisztikák}
+Az extrém statisztikák (extrémérték-elméletek) olyan események modellezésére alkalmazhatók, amelyek extrém ritkán fordulnak elő: pl. szökőár,
+tőzsdei összeomlás, 100 éves hőmérsékleti rekord, stb. \cite{extremestat}.
+
+Egy egyszerű egyváltozós modell a következő képpen írható le: Legyen $I_n$ annak a valószínűsége, hogy $n$ esemény során
+bekövetkezik az extrém érték. Ezt úgy modellezzük, hogy veszünk $X_1, ..., X_n$ iid változót az $F$ eloszlásból.
+Ekkor $M_n = \max(X_1, ..., X_n)$ esetén:
+\begin{equation*}
+    P(M_n < \leq z) = P(X_1\leq z, ..., X_n\leq z) = (F(z))^n
+\end{equation*}
+Az $I_n = I_n(M_n\geq z)$ így binomiális eloszlást követ, amelyre $p(z) = 1-(F(z))^n$. Az egy extrém esemény bekövetkezéséhez 
+szükséges próbálkozások száma pedig geometriai eloszlást követ ugyanezzel a $p(z)$ paraméterrel.\cite{extremestat_univariate}
 
 \section{Post-hoc analízis}
+A post-hoc analízis azt jelenti, hogy csak azután választjuk ki a teszt statisztikát, miután már az adatokat ismerjük.
+("post-hoc" = "ez után").
+Ez a módszer többféle problémához vezethet, bővebben: \cite{posthoc, dredging}
+
 \section{Regresszió}
 Tegyük fel, hogy a megfigyelt adathalmaz $\{(x_1, y_1), (x_2, y_2), ..., (x_N, y_N)\}$. Ekkor az $X$ a független változó
 (feature variable, predictor, regressor), $Y$ pedig a függő változó (outcome, response variable).
