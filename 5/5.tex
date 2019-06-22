@@ -287,13 +287,75 @@ A DLA különböző variációi lehetnek:
 
 \section{Sejtautomaták}
 \label{sec:cellular_automatons}
+Az első sejtautomatát Neumann János készítette, mellyel modellezni tudta a biológiai reprodukció folyamatát, amely többek között teljes Turing machine-ként is funkcionált. A leghíresebb sejtautomata minden bizonnyal \href{https://en.wikipedia.org/wiki/Conway's_Game_of_Life}{Conway életjátéka}. A sejtautomaták általános jellemzói:
+
+\begin{itemize}
+\item az $x,y,z$ folytonos tér felosztódik cellákra, melyek általában valamilyen rácson helyezkednek el,
+\item egy sejt állapotát jelző funkciók diszkretizálódnak,
+\item a $t$ idő is diszkretizálódik,
+\item egy sejt dinamikáját leíró függvényt a szomszédos cellák határozzák meg (lokális szabályok),
+\item a frissítések történhetnek szimultán vagy szinkronizálva. 
+\end{itemize}
+
+A sejtautomatákat könnyen lehet párhuzamosítani, ugyanis a cellák változóinak a számai végesek, így könnyen lehet integereket használni, illetve a cellák lokális szabályai miatt az egész teret fel lehet osztani kisebb részekre. 
+
+\subsection{Egydimenziós eset}
+Egydimenziós esetben egy sorba rendezett cellákról beszélhetünk, melyek 0 vagy 1 értéket tudnak felvenni (\textit{boolean cellular automaton}). Ekkor egy cella szomszédainak tekintjük az ahhoz egy-egy oldalról kapcsolódó cellákat.  Mivel a cella következő állapota függ a sajátjától, illetve a szomszédjaitól,  $2 \times 2 \times 2 = 8$, azaz nyolcféle helyzet alakulhat ki. Ekkor minden egyes helyzetre meg tudjuk szabni, hogy a következő időlépésben milyen állapotban legyen a központi sejtünk. Erre példát a \ref{fig:1dimca}. ábra szolgáltat. 
+
+
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=0.5\textwidth]{media/1dimca.png}
+    \caption{Egydimenziós sejtautomata egyik féle szabálya. A felső sor megdja a lehetséges kialakuló helyzeteket, az alsó sorban pedig megszabhatjuk, milyen állapotban legyen a központi cellánk a következő lépésben. } 
+    \label{fig:1dimca}
+    \end{center}
+\end{figure}
+
+Összességében tehát $2^8 = 256$ féle klünböző szabályt tudunk megalkotni. A \ref{fig:1dimca}. ábrán látott szabályt a 90-esnek nevezik (rule 90), ugyanis a kialakuló állapotokat binárisnak tekintve (01011010), ha átírjuk azt decimálissá, 90-et kapunk ($Bin 01011010 = Hex 90$). 
+
+Wolfram tanulámnyozta ezt a fajta sejtautomatát, és a hosszútávú viselkedésüket tekintve az alábbi négy csoportra tudta osztani a szabályokat:
+
+\begin{itemize}
+\item \textbf{Határponti viselkedés (limit point behaviour):} sejtek értékei egy meghatározott értékhez tartanak, mely a kezdeti állapottól független,
+\item \textbf{Határciklus (limit cycle behaviour):} stabil (időben) periodikus mintázat jön létre,
+\item \textbf{Kaotikus viselkedés:} a sejt állapotának változása nem követ semmi struktúrát, kaotikus viselkedés jön létre,
+\item \textbf{Komplex viselkedés:} komplex és lokális mozgó mintázatok jönnek létre.
+\end{itemize}
+
+\subsection{Conway életjátéka}
+
+1970-ben John Conway matematikus alkotta meg a sejtautomaták azon csoportját, melyben egy 2 dimenziós négyzetrács van, a sejt bináris (élő - 0, halott - 1), és a sejt következő állapotát csak az életben lévő szomszédok száma határozza meg. Továbbá, \textit{Moore szomszédokat} veszünk, azaz megengedjük a diagonális átmenetet is, tehát egy sejtnek 8 szomszédja lesz -- az eredeti Neumann-féle sejtautomaták \textit{Neumann szomszédokat} használtak, ahol a diagonál nem volt megengedett, tehát 2 dimenzióban is csak 2 szomszédja volt egy sejtnek.\\
+Ekkor szintén lehet definiálni szabályokat, és értelmezni egy bináris kódot: például a $000011100$ kódot úgy kell értelmezni, hogy alárakjuk az életben lévő szomszádok számát ($012345678$). A kód alapján, élő lesz (marad) a sejt, ha az életben lévő szomszédjainak a száma 4, 5 vagy 6, minden más esetben halott. Értelemszerűen, a sejt saját állapotától is függhet a jövője, amellyel a szabályokat Ezzel az élet különöző modelljeit tudjuk rekonstruálni.  
+
+\subsection{Gáz szimulálása rácson}
+Egy nagyon effektív modellt publikált U. Frisch et al. 1986-ban a kétdimenziós Navier-Stokes egyenletek alapján. Ennek a modellnek a főbb jellemzői:
+
+\begin{itemize}
+\item \textbf{Hatszögrács:} A hexagonális szimmetria elengedhetetlen ahhoz, hogy elég szabadsági fok legyen a forgásszimmetriának, így biztosítva a perdületmegmaradást.
+\item \textbf{Sűrűség:} Minden cellának maximum 6 db $m=1$ tömegű részecskéje lehet, így a sűrűség 7 különböző értéket vehet fel.
+\item \textbf{Szabad áramlás (Euler):} a szabad áramlás létrejöttét az alábbi szabályok segítik elő:
+\begin{itemize}
+\item Sebesség: minden részecskének 6 lehetséges irányú sebessége lehet, azonban egy időlépés alatt csak egy cellát mozdulhat el. 
+\item Sebesség egy cellán belül: az egy cellán belül lévő részecskéknek csakis különböző irányú sebességei lehetnek -- két részecske nem akarhat ugyanoda menni.
+\end{itemize}
+\item \textbf{Viszkozitás (Navier-Stokes):} A viszkozitás létrejöttét	az ütközési szabályok biztosítják: ha egy sejtre 2, 3 vagy 4 részecske pályázik, azok úgy változtatják majd a sebességüket, hogy az összimpulzus megmaradjon. Ilyen ütközésekre példa a \ref{fig:hexalattice}. ábra.
+
+\end{itemize}
+
+	
+\begin{figure}[H]
+    \begin{center}
+    \includegraphics[width=0.5\textwidth]{media/hexalattice.png}
+    \caption{Kétdimenziós hatszográcson történő ütközések lehetséges kimenetelei. Mindenhol az $X$ jelöli a részecskét, és a közepe felé haladnának. Az első és negyedik esetben a két választás egyenértékű. Ha az irányt véletlenszerűen választjuk ki, a rendszer sztochasztikussá válhat. Akkor tudjuk megtartani a rendszert determinisztikusnak, ha nem választunk kitüntetett irányt, mert így nem törik meg a királis szimmetria sem.}
+    \label{fig:hexalattice}
+    \end{center}
+\end{figure}
 
 
 
-
-
-
-
+\subsection*{Források} 
+Fraktálokat Palla Gergely előadásjegyzete alapján: \url{http://pallag.web.elte.hu/fractals/}, a sejtautomatákat pedig Csabai István jegyzete alapján: \url{csabai.web.elte.hu/http/szamszim/lecture7/topic6-lec1.pdf} készítettem.
+ 
 
 \bibliographystyle{plain}
 \bibliography{references}
