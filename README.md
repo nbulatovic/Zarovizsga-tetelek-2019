@@ -27,11 +27,11 @@ Berekméri Evelin 1, 11
 
   
 
-Biricz András 12, 16
+Biricz András 12, 16, 8
 
   
 
-Bulatovic Nikola 9, 14
+Bulatovic Nikola 9, 14, 15
 
   
 
@@ -48,10 +48,6 @@ Kaszás Bálint 6, 3
   
 
 Kruppa Zoltán 13
-
-  
-
-Mezősi Máté 15, 8
 
   
 
