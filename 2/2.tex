@@ -424,8 +424,32 @@ lognormális eloszlást követ, amelyre $\mu=150000\text{HUF}$ és $\sigma=50000
 \end{itemize}
 
 \section{Függetlenségvizsgálat, $\chi^2$-próba}
+A függetlenségvizsgálat arra szolgál, hogy eldöntsük, két diszkrét változó között, adott konfidenciaszinten van-e
+összefüggés, vagy ez csupán a véletlen mintavételezés következménye. A változók lehetnek nominálisak (pl. fizetés)
+vagy kategoriálisak (pl. nem). Folytonos változók (pl. életkor, fizetés, magasság) esetén ezeket diszkrétté tesszük, 
+úgy hogy felosztjuk véges számú intervallumra. Ahhoz, hogy megállapítsuk, a mért gyakoriságok szignifikánsan eltérnek-e
+a véletlen mértékétől, ún. Pearson-féle $\chi^2$-próbát kell végezni. Ennek a menete a következő:
+\begin{itemize}
+    \item első lépésben kiszámoljuk a teszt statisztikát: $\displaystyle{\chi^2 = \sum\limits_{i=1}^{n} \frac{(O_i-E_i)^2}{E_i}}$, ahol
+    \begin{itemize}
+        \item $O_i$ a mért értékek
+        \item $E_i$ a várt elméleti értékek
+        \item $\chi^2$ a teszt-statisztika, ami aszimptotikusan a $\chi^2$ eloszláshoz tart
+    \end{itemize}
+    \item Megállapítjuk a szabadsági fokok számát. Függetlenségvizsgálat esetén ez $df=(R-1)(C-1)$, ahol
+    $R$ az egyik $C$ pedig a másik változó kategoriáinak száma (pl. ha azt vizsgáljuk, hogy van-e összefüggés a nemek és 
+    a magasság között, akkor $R=2$ és $C=10$, ha a magasságot $10$ csoportra osztjuk).
+    \item Meghatározunk egy szignifikancia szintet pl $95\%$.
+    \item Összehasonlítjuk a kiszámolt $\chi^2$ értéket kritikus $\chi^2_t$ értékkel. $\chi^2_t$ függ a választott
+    szignifikancia szinttől és a szabadsági fokok számától.
+    \item A két érték összehasonlításával elfogadjuk, vagy elvetjuk a nullhipotézist (a nullhipotézis általában az, hogy
+    a két változó között adott szignifikancia szinten van összefüggés.)
+\end{itemize}
+Konkrét számolásos példákat ebben a jegyzetben lehet találni: \cite{chi2jegyz}
 
-\bibliographystyle{plain}
+
+
+\bibliographystyle{plain} 
 \bibliography{references}
 
 \end{document}
