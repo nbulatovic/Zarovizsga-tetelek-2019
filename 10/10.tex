@@ -324,6 +324,8 @@ Hasonlóképp a $\Sigma-\Delta$ moduláció is tömörítéssel jár: itt is ele
 
 \section{Digitális számábrázolás és műveletvégzés}
 
+\subsection{Bináris számábrázolás}
+
 A digitális memória alapegysége a bit, aminek két lehetséges értéke lehet: 0 vagy 1. A számábrázolás ezért kettes számrendszerben történik a digitális eszközökön: az egyes bitek 2 hatványainak megfelelő helyiértéket képviselnek, és minden 2-hatvány együtthatója 0-t vagy 1-et vehet fel. Egyszerű példaként tekintsük egy pozitív egész szám ábrázolását 8 biten (1 bájt)!
 
 \begin{equation}
@@ -336,7 +338,20 @@ Törtek ábrázolására egy logikusan következő módszer a \textbf{fixpontos 
 	 0 \cdot 2^{-1} + 1 \cdot 2^{-2} + 0 \cdot 2^{-3} + 0 \cdot 2^{-4} 
 	 \implies 1101.0100
 \end{equation}
-Ezzel a gyakorlatban nagyon nem praktikus, mert komolyan limitálja az ábrázolható számok nagyságát (a fenti példánál maradva, 8 helyett 4 egészrészbit esetén 255 helyett 15 lesz a legnagyobb ábrázolható egész szám), illetve egy rögzített felbontás alatt (itt: $2^{-4} = 0.0625$) nem lehet törtrészt ábrázolni. Ezért a gyakorlatban \textbf{lebegőpontos számábrázolás}t használunk. Ennek motivációja a 10-es számrendszerben is használt normál alak:
+Ez a gyakorlatban nagyon nem praktikus, mert komolyan limitálja az ábrázolható számok nagyságát (a fenti példánál maradva, 8 helyett 4 egészrészbit esetén 255 helyett 15 lesz a legnagyobb ábrázolható egész szám), illetve egy rögzített felbontás alatt (itt: $2^{-4} = 0.0625$) nem lehet törtrészt ábrázolni. 
+
+
+\subsection{Lebegőpontos számábrázolás}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{media/IEEE754}
+	\caption{A szabványos 32 bites float és 64 bites double lebegőpontos számok bitkiosztása.}
+	\label{fig:ieee754}
+\end{figure}
+
+
+A törtszámok digitális reprezentációjára a gyakorlatban \textbf{lebegőpontos számábrázolás}t használunk. Ennek motivációja a 10-es számrendszerben is használt normál alak:
 
 \begin{equation}
 	-2.3454612 \cdot 10^3, ~\mathrm{vagy} ~ -0.23454612E4.
@@ -346,16 +361,21 @@ A számot itt három egységre bontottuk: előjel, mantissza és kitevő. A lebe
 \begin{equation}
 	(-1)^s \cdot f \cdot 2^{e-b},
 \end{equation}
-ahol $s$ az előjel (egyetlen bit, 0 vagy 1 egyértelműen meghatározza, hogy pozitív vagy negatív a szám), $f$ a mantissza, $e$ a kitevő (karakterisztika), $b$ pedig egy szabvány szerinti konstans. Az $f$, $e$ és $b$ mind 2-es számrendszerben reprezentált egész számok.
+ahol $s$ az előjel (egyetlen bit, 0 vagy 1 egyértelműen meghatározza, hogy pozitív vagy negatív a szám), $f$ a mantissza, $e$ a kitevő (karakterisztika), $b$ pedig egy szabvány szerinti konstans. Az $f$, $e$ és $b$ mind 2-es számrendszerben reprezentált egész számok. A lebegőpontos számábrázolásra egyetlen hardveresen támogatott szabvány van, az IEEE 754. Ez alapján kétféle pontosság létezik: a 32 bites float és a 64 bites double. Ezek bitkiosztását és a $b$ konstans értékét lásd \aref{fig:ieee754}. ábrán. Az ábrázolás pontosságát a mantisszára kiosztott bitek határozzák meg: float esetében ez 7 tizedesjegyet jelent ($2^{23} \approx 10^6$, azaz 7 jegyű szám), double-nál 16-ot ($2^{52} \approx 10^{15}$, azaz 16 jegyű szám)\footnote{GPU-n létezik még a 16 bites half, ez tizes számrendszerben már csak 3-4 tizedesjegyre pontos, de bizonyos speciális esetekben ez elegendő.}. Megkülönböztetünk továbbá normált és nem normált lebegőpontos számokat. Normált számok esetében a mantissza teljesen "ki van töltve", a legnagyobb helyiértékén 1 áll, amit így nem is szükséges eltárolni. Ez az ábrázolás kihasználja az elérhető maximális pontosságot. Ezen kívül léteznek nem normalizált számok, amelyeknél a mantissza (törtrész) nagyobb helyiértékein 0 szerepel. Ezek kevésbé pontosak, azonban a normalizált számoknak van egy alsó limitje, aminél kisebb számok csak így ábrázolhatók.
 
 
-\begin{figure}
-	\centering
-	\includegraphics[width=0.7\linewidth]{media/IEEE754}
-	\caption{A szabványos 32 bites float és 64 bites double lebegőpontos számok bitkiosztása.}
-	\label{fig:ieee754}
-\end{figure}
+\subsection{Műveletek lebegőpontos számokkal}
 
+Az előbbiekben a statikus számábrázolás pontosságát vizsgáltuk meg. Fontos, hogy a műveletvégzés pontossága ettől jelentősen eltérhet.
+
+\subsubsection{Összeadás, kivonás}
+
+Ez a kritikus művelet. Ilyenkor a két számot azonos exponensre kell konvertálni (a nagyobb szám kitevőjére). A kisebb szám pontossága így csökken, hiszen kevesebb biten ábrázolódik (a nagyobb helyiértékeken 0 szerepel, nem normalizáltan ábrázolódik). Sok nagyságrend különbség esetén a műveletvégzési pontosság jelentősen romolhat az ábrázoláshoz képest.
+
+
+\subsubsection{Szorzás, osztás}
+
+Ezek a műveletek gyakorlatilag megtartják a pontosságot, akárhány nagyságrend különbség van a számok között. Ilyenkor a kitevőket összeadjuk/kivonjuk egymásból, a mantisszákat összeszorozzuk/elosztjuk egymással.
 
 
 
