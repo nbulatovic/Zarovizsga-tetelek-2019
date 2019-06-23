@@ -73,6 +73,7 @@
 
 \usepackage[bottom]{footmisc}
 
+
 \begin{document}
 \title{8th exam item}
 \author{András Mátyás Biricz}
@@ -149,7 +150,7 @@ f(x) = \sum_{n=-\infty}^{\infty} A_n e^{i 2 \pi n x/L},
 A_n = \frac{1}{L} \int_{-L/2}^{L/2} f(x) e^{i 2 \pi n x/L} \text{d}x.
 \end{equation}
 
-The source and more information with examples can be found by following this link\footnote{\url{http://mathworld.wolfram.com/FourierSeries.html}}. 
+The source and more information with examples can be found by following this link\footnote{\url{http://mathworld.wolfram.com/FourierSeries.html}.}. 
 
 \subsection{Fourier transform}
 
@@ -179,7 +180,7 @@ A function $f(x)$ has a forward and inverse Fourier transform if:
 \begin{itemize}
 	\item $\int_{-\infty}^{\infty} |f(x)| \text{d}x$ exists,
 	\item there are a finite number of discontinuities,
-	\item the function has bounded variation. (A sufficient weaker condition is fulfillment of the Lipschitz condition.\footnote{\url{http://mathworld.wolfram.com/LipschitzCondition.html}.})
+	\item the function has bounded variation. (A sufficient weaker condition is fulfillment of the Lipschitz condition.\footnote{\url{http://mathworld.wolfram.com/LipschitzCondition.html},})
 \end{itemize}
 
 The Fourier transform is linear, which means the following for functions $f(x)$ and $g(x)$:
@@ -188,7 +189,7 @@ The Fourier transform is linear, which means the following for functions $f(x)$ 
 \mathcal{F}[a f(x) + b g(x)] = a \mathcal{F}[f(x)] + b \mathcal{F}[g(x)] = a F(k) + b G(k).
 \end{equation}
 
-The source and more information with examples can be found by following this link\footnote{\url{http://mathworld.wolfram.com/FourierTransform.html}}. 
+The source and more information with examples can be found by following this link\footnote{\url{http://mathworld.wolfram.com/FourierTransform.html}.}. 
 
 \subsection{Fast Fourier Transform}
 
@@ -256,6 +257,7 @@ X_{k+\frac{N}{2}} & =
 This result, expressing the DFT of length $N$ recursively in terms of two DFTs of size $N/2$, is the core of the Radix-2 DIT fast Fourier transform. The algorithm gains its speed by re-using the results of intermediate computations to compute multiple DFT outputs.  Note that final outputs are obtained by a $\pm$ combination of $E_k$ and $O_k \exp(-2\pi i k/N)$, which is simply a size-2 DFT (sometimes called a butterfly diagram in this context (see figure \ref{radix_fig})); when this is generalized to larger radices, the size-2 DFT is replaced by a larger DFT (which itself can be evaluated with an FFT).
 
 The source and more information with examples can be found by following these links\footnote{\url{https://en.wikipedia.org/wiki/Cooley\%E2\%80\%93Tukey_FFT_algorithm},}\footnote{\url{https://en.wikipedia.org/wiki/Fast_Fourier_transform}.}.
+\newpage
 
 \begin{figure}[h!]
     \centering
@@ -264,62 +266,152 @@ The source and more information with examples can be found by following these li
 	\label{radix_fig}
 \end{figure}
 
+\pagebreak
 \subsection{Spectrum, spectrogram}
 
-The spectrum is the (frequency) domain representation of a signal. A spectrogram is a visual representation of the spectrum of frequencies of a signal as it varies with time (see figures \ref{spectrogram_1} and \ref{spectrogram_2}). When applied to an audio signal, spectrograms are sometimes called sonographs, voiceprints, or voicegrams. When the data is represented in a 3D plot they may be called waterfalls. Spectrograms are used extensively in the fields of music, sonar, radar, and speech processing, seismology, and others. Spectrograms of audio can be used to identify spoken words phonetically, and to analyse the various calls of animals.
+The spectrum is the (frequency) domain representation of a signal. A spectrogram is a visual representation of the spectrum of frequencies of a signal as it varies with time (see figures \ref{spectrogram_1} and \ref{spectrogram_2}). When applied to an audio signal, spectrograms are sometimes called sonographs, voiceprints, or voicegrams. When the data is represented in a 3D plot they may be called waterfalls. Spectrograms are used extensively in the fields of music, sonar, radar, and speech processing, seismology, and others. Spectrograms of audio can be used to identify spoken words phonetically, and to analyse the various calls of animals\footnote{\url{https://en.wikipedia.org/wiki/Spectrogram}.}.
 
 \begin{figure}[h!]
     \centering
-	\includegraphics[width=.9\linewidth]{media/yes_sound_time.png}
+	\includegraphics[width=.7\linewidth]{media/yes_sound_time.png}
 	\caption{Yes sound. Source: \url{https://www.pacdv.com/sounds/voices/yes-2.wav}.}
 	\label{spectrogram_1}
 \end{figure}
 
 \begin{figure}[h!]
     \centering
-	\includegraphics[width=.9\linewidth]{media/yes_sound_spectrogram.png}
+	\includegraphics[width=.7\linewidth]{media/yes_sound_spectrogram.png}
 	\caption{Spectrogram of the yes sound.}
 	\label{spectrogram_2}
 \end{figure}
 
-%/media/abiricz/Storage/ELTE/Fizika9félév/Data mining and machine learning/lab10/yes_sound_spectrogram.png
-%/media/abiricz/Storage/ELTE/Fizika9félév/Data mining and machine learning/lab10/yes_sound_time.png
+To summarize, in this section the basics of the Fourier methods are explained. In the upcoming sections the wide usability and powerfullness of these methods will be presented.
 
+\pagebreak
+\section{Convolution}
 
+The definition of convolution for two functions $f(x)$ and $g(x)$:
+
+\begin{equation}
+[f * g](x) = \int_{\infty}^{\infty} f(x^{\prime}) g( x - x^{\prime} ) \text{d}x^{\prime},
+\end{equation}
+
+The Fourier transform of convolutions of two functions $f(x)$ and $g(x)$ is defined as follows:
+
+\begin{equation}
+\mathcal{F}[f * g] = \int_{\infty}^{\infty} \int_{\infty}^{\infty} e^{-2\pi i k x} f(x^{\prime}) g( x - x^{\prime} ) \text{d}x^{\prime} \text{d}x,
+\end{equation}
+which can be easily proved, that:
+
+\begin{equation}
+\mathcal{F}[f * g] = \mathcal{F}[f] \cdot \mathcal{F}[g],
+\end{equation}
+or in words: the convolution of two functions becomes a simple multiplication in Fourier space. Since the Fourier transform can be calculated by an efficient numerical method, this will be a widely applicable, preferred technique in computer science.
+
+To learn about the convolution and deconvolution, please read the 9th exam item.
 
 \section{Correlation functions}
 
+There is also a somewhat surprising and extremely important relationship between the \textbf{autocorrelation} and the Fourier transform known as the \textbf{Wiener-Khinchin theorem}\footnote{\url{http://mathworld.wolfram.com/Wiener-KhinchinTheorem.html},}. Let $\mathcal{F}[f(x)](k) = F(k)$, and $\overline{f}$ denote the complex conjugate of $f$, then the Fourier transform of the absolute square of $F(k)$ can be given by\footnote{\url{http://mathworld.wolfram.com/FourierTransform.html},}:
 
+\begin{equation}
+\mathcal{F}^{-1} [ |F(k)|^2 ](x) = \int_{\infty}^{\infty} \overline{f}(\tau) f(\tau + x) \text{d} \tau.
+\end{equation}
 
-\section{Convolution}
+The Wiener-Khinchin theorem is a special case of the cross-correlation theorem with $f=g$. The \textbf{cross-correlation} can be defined as the following:
 
+\begin{equation}
+[f \bullet g](x) = \int_{\infty}^{\infty} f(x^{\prime}) g( x + x^{\prime} ) \text{d}x^{\prime},
+\end{equation}
+
+and can be also calculated as:
+
+\begin{equation}
+[f \bullet g](x) = \mathcal{F}^{-1} [ \overline{F}(k) G(k) ].
+\end{equation}
 
 \section{Transfer and window functions}
 
+In engineering, a \textbf{transfer function} of an electronic or control system component is a mathematical function which theoretically models the device's output for each possible input\footnote{\url{https://en.wikipedia.org/wiki/Transfer_function}.}. In signal processing, the impulse response, or impulse response function (IRF), of a dynamic system is its output when presented with a brief input signal, called an impulse. More generally, an impulse response is the reaction of any dynamic system in response to some external change. In both cases, the impulse response describes the reaction of the system as a function of time (or possibly as a function of some other independent variable that parameterizes the dynamic behavior of the system)\footnote{\url{https://en.wikipedia.org/wiki/Impulse_response},}. For physical systems this process can be described by the Green's function\footnote{\url{http://www1.spms.ntu.edu.sg/~ydchong/teaching/10_greens_function.pdf},}.
+
+In signal processing and statistics, a \textbf{window function} (also known as tapering function) is a mathematical function that is zero-valued outside of some chosen interval, normally symmetric around the middle of the interval, usually near a maximum in the middle, and usually tapering away from the middle. Mathematically, when another function or waveform/data-sequence is "multiplied" by a window function, the product is also zero-valued outside the interval: all that is left is the part where they overlap, the "view through the window". Equivalently, and in actual practice, the segment of data within the window is first isolated, and then only that data is multiplied by the window function values. Thus, tapering, not segmentation, is the main purpose of window functions. The reasons for examining segments of a longer function include detection of transient events and time-averaging of frequency spectra. The duration of the segments is determined in each application by requirements like time and frequency resolution. But that method also changes the frequency content of the signal by an effect called spectral leakage. Window functions allow us to distribute the leakage spectrally in different ways, according to the needs of the particular application. In typical applications, the window functions used are non-negative, smooth, "bell-shaped" curves. Rectangle, triangle, and other functions can also be used. For more information visit this page\footnote{\url{https://en.wikipedia.org/wiki/Window_function},}.
 
 \section{Filters}
 
 
-\subsection{Analog}
+\subsection{Analog signal}
+
+Analog signal processing is for signals that have not been digitized, as in legacy radio, telephone, radar, and television systems. This involves linear electronic circuits as well as non-linear ones. The former are, for instance, passive filters, active filters, additive mixers, integrators and delay lines. Non-linear circuits include compandors, multiplicators (frequency mixers and voltage-controlled amplifiers), voltage-controlled filters, voltage-controlled oscillators and phase-locked loops.
 
 
-\subsection{Digital}
+\subsection{Digital signal}
+
+Digital signal processing is the processing of digitized discrete-time sampled signals. Processing is done by general-purpose computers or by digital circuits such as ASICs, field-programmable gate arrays or specialized digital signal processors (DSP chips). Typical arithmetical operations include fixed-point and floating-point, real-valued and complex-valued, multiplication and addition. Other typical operations supported by the hardware are circular buffers and lookup tables. Examples of algorithms are the Fast Fourier transform (FFT), finite impulse response (FIR) filter, Infinite impulse response (IIR) filter, and adaptive filters such as the Wiener filter.
+
+To read more about these, visit this site\footnote{\url{https://en.wikipedia.org/wiki/Signal_processing}.}.
 
 
 \subsection{RLC circuit}
 
+An RLC circuit is an electrical circuit consisting of a resistor (R), an inductor (L), and a capacitor (C), connected in series or in parallel. The name of the circuit is derived from the letters that are used to denote the constituent components of this circuit, where the sequence of the components may vary from RLC.
+
+The circuit forms a harmonic oscillator for current, and resonates in a similar way as an LC circuit. Introducing the resistor increases the decay of these oscillations, which is also known as damping. The resistor also reduces the peak resonant frequency. In ordinary conditions, some resistance is unavoidable even if a resistor is not specifically included as a component; an ideal, pure LC circuit exists only in the domain of superconductivity, a physical effect demonstrated to this point only at temperatures far below ambient temperatures found anywhere on the Earth's surface.
+
+RLC circuits have many applications as oscillator circuits. Radio receivers and television sets use them for tuning to select a narrow frequency range from ambient radio waves. In this role, the circuit is often referred to as a tuned circuit. An RLC circuit can be used as a band-pass filter, band-stop filter, low-pass filter or high-pass filter. The tuning application, for instance, is an example of band-pass filtering. The RLC filter is described as a second-order circuit, meaning that any voltage or current in the circuit can be described by a second-order differential equation in circuit analysis.
+
+An important property of this circuit is its ability to resonate at a specific frequency. Resonance occurs because energy is stored in two different ways: in an electric field as the capacitor is charged and in a magnetic field as current flows through the inductor. Energy can be transferred from one to the other within the circuit and this can be oscillatory. The resistance in an RLC circuit will "damp" the oscillation, diminishing it with time if there is no driving AC power source in the circuit. 
+
+The driven frequency may be called the undamped resonance frequency or undamped natural frequency and the peak frequency may be called the damped resonance frequency or the damped natural frequency. The reason for this terminology is that the driven resonance frequency in a series or parallel resonant circuit has the value:
+
+\begin{equation}
+\omega_0 = \frac{1}{\sqrt{LC}}.
+\end{equation}
+where $L$ is the property of the inductor and $C$ is the capacity of the capacitor. 
+
+The resonance effect can be used for filtering, the rapid change in impedance near resonance can be used to pass or block signals close to the resonance frequency. Both b\textit{and-pass} and \textit{band-stop} filters can be constructed and some filter circuits are shown later in the article. A key parameter in filter design is bandwidth. The bandwidth is measured between the cutoff frequencies, most frequently defined as the frequencies at which the power passed through the circuit has fallen to half the value passed at resonance. There are two of these half-power frequencies, one above, and one below the resonance frequency:
+
+\begin{equation}
+\Delta \omega = \omega_2 - \omega_1,
+\end{equation}
+where $\Delta \omega$ is the bandwidth, $\omega_1$ is the lower half-power frequency and $\omega_2$ is the upper half-power frequency.
+
+To get to know more about RLC circuits, please follow this link\footnote{\url{https://en.wikipedia.org/wiki/RLC_circuit}.}.
 
 \subsection{FIR}
+
+In signal processing, a finite impulse response (FIR) filter is a filter whose impulse response (or response to any finite length input) is of finite duration, because it settles to zero in finite time. This is in contrast to infinite impulse response (IIR) filters, which may have internal feedback and may continue to respond indefinitely (usually decaying).
+
+The impulse response (that is, the output in response to a Kronecker delta input) of an Nth-order discrete-time FIR filter lasts exactly N + 1 samples (from first nonzero element through last nonzero element) before it then settles to zero.
+
+FIR filters can be discrete-time or continuous-time, and digital or analog\footnote{\url{https://en.wikipedia.org/wiki/Finite_impulse_response},}.
 
 
 \subsection{IIR}
 
+Infinite impulse response (IIR) is a property applying to many linear time-invariant systems. Common examples of linear time-invariant systems are most electronic and digital filters. Systems with this property are known as IIR systems or IIR filters, and are distinguished by having an impulse response which does not become exactly zero past a certain point, but continues indefinitely. This is in contrast to a finite impulse response (FIR) in which the impulse response h(t) does become exactly zero at times t > T for some finite T, thus being of finite duration.
+
+In practice, the impulse response, even of IIR systems, usually approaches zero and can be neglected past a certain point. However the physical systems which give rise to IIR or FIR responses are dissimilar, and therein lies the importance of the distinction. For instance, analog electronic filters composed of resistors, capacitors, and/or inductors (and perhaps linear amplifiers) are generally IIR filters. On the other hand, discrete-time filters (usually digital filters) based on a tapped delay line employing no feedback are necessarily FIR filters. The capacitors (or inductors) in the analog filter have a "memory" and their internal state never completely relaxes following an impulse (assuming the classical model of capacitors and inductors where quantum effects are ignored). But in the latter case, after an impulse has reached the end of the tapped delay line, the system has no further memory of that impulse and has returned to its initial state; its impulse response beyond that point is exactly zero\footnote{\url{https://en.wikipedia.org/wiki/Infinite_impulse_response}.}.
+
 
 \subsection{Wiener-filter}
 
+In signal processing, the Wiener filter is a filter used to produce an estimate of a desired or target random process by linear time-invariant (LTI) filtering of an observed noisy process, assuming known stationary signal and noise spectra, and additive noise. The Wiener filter minimizes the mean square error between the estimated random process and the desired process.
 
+The goal of the Wiener filter is to compute a statistical estimate of an unknown signal using a related signal as an input and filtering that known signal to produce the estimate as an output. For example, the known signal might consist of an unknown signal of interest that has been corrupted by additive noise. The Wiener filter can be used to filter out the noise from the corrupted signal to provide an estimate of the underlying signal of interest. The Wiener filter is based on a statistical approach, and a more statistical account of the theory is given in the minimum mean square error (MMSE) estimator article.
+
+Typical deterministic filters are designed for a desired frequency response. However, the design of the Wiener filter takes a different approach. One is assumed to have knowledge of the spectral properties of the original signal and the noise, and one seeks the linear time-invariant filter whose output would come as close to the original signal as possible. Wiener filters are characterized by the following points.
+
+\begin{itemize}
+	\item Assumption: signal and (additive) noise are stationary linear stochastic processes with known spectral characteristics or known autocorrelation and cross-correlation.
+	\item Requirement: the filter must be physically realizable/causal (this requirement can be dropped, resulting in a non-causal solution).
+	\item Performance criterion: minimum mean-square error (MMSE)
+\end{itemize}
+
+This filter is frequently used in the process of deconvolution. For more information follow this link\footnote{\url{https://en.wikipedia.org/wiki/Wiener_filter}.}.
 
 \section{Conclusion}
+
+In this exam item the basics of signal processing can be learnt: the underlying, widely applicable Fourier methods, then the convolution, correlation functions and finally various types of filters. 
 
 \newpage
 \begin{thebibliography}{Nature}
