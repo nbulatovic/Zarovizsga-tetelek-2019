@@ -84,6 +84,10 @@
     AD és DA konverterek – Digitális-analóg konverzió, AD-konverzió szukcesszív approximációval. A kvantálási zaj és a mintavételi törvény. Digitális jelek tömörítési módszerei: delta-moduláció és delta-szigma moduláció. Digitális számábrázolás és műveletvégzés.
 \end{abstract}
 
+
+Az anyag összegyűjtésekor legfőképpen Bagoly Zsolt Elektronika és méréstechnika előadásának a jegyzetét vettem alapul \cite{Bagoly}. Egyes témák leírásához Dülk Ivor BME-s oktató beágyazott rendszerekről szóló jegyzetét kivonatoltam \cite{BME}. Használtam még Dobos László hangfeldolgozásról szóló jegyzetét, ami a Digitális méréstechnika labor egy mérése volt \cite{hangfeldolgozas}, illetve egy Quora-cikket \cite{quora}. Amely fejezetek egyértelműen egy konkrét forrás gondolatmenetét követik, ott ezt a címben jelzem.
+
+
 \section{Bevezetés}
 
 A számítógépes rendszerek önmagukban csak számokat tudnak értelmezni és előállítani, a bemenő- és kimenőmennyiségeik mértékegység nélküli digitális értékek. A mérhető fizikai mennyiségek azonban túlnyomórészt folytonosak, és a mérőeszközök jelentős része analóg jelet ad ki magából. Ezért mielőtt bármilyen digitális jelfeldolgozási eljárást hajtanánk végre, a fizikai valóság releváns mennyiségeit szükségszerűen át kell alakítani a digitális rendszerek által értelmezhető számokká úgy, hogy a számok az eredeti mennyiségeket hűen tükrözzék. A másik oldalról pedig, a számítógép vezérelheti a külvilágot (mérőberendezést), jellemzően egy feszültségjellel. Ilyenkor tehát a digitális műveletek eredményeit kell valamilyen arányos módon visszaalakítani valódi fizikai mennyiséggé. Összességében tehát a digitális-analóg és az analóg-digitális irányú átalakítás egyaránt gyakori a mindennapokban. A legkézenfekvőbb, mindkét irányú konverziót tartalmazó hétköznapi példa a számítógépes hangrögzítés, tárolás, feldolgozás, illetve hangszórón történő lejátszás. Ezekre a feladatokra dedikált áramköri egységek, az analóg-digitális (analog digital converter, ADC) és digitális-analóg (digital analog converter, DAC) átalakítók szolgálnak. Az eszközök egyszerű vázlata \aref{fig:konverter_vazlat}. ábrán látható. 
@@ -111,7 +115,7 @@ A digitális-analóg átalakítók (D/A konverterek) digitális jelek folytonoss
 Az alábbiakban két egyszerű elektronikai megvalósítását nézzük meg a digitális-analóg átalakítóknak.
 
 
-\subsection{Bináris súlyozású DAC}
+\subsection{Bináris súlyozású DAC \cite{Bagoly}}
 
 \Aref{fig:dacbinaris}. ábrán egy 6 bites bináris súlyozású D/A konverter látható.
 Az $R_i$ ellenállások nagysága az egyes bitek helyiértékével fordítottan arányos, ezért a biteknek megfelelő $I_i$ áramok a helyiértékeknek megfelelően súlyozódnak. A csomópontban az egyes bitek összegződnek, így a bináris bemenettel arányos $\sum_i I_i$ áram jelenik meg.
@@ -127,7 +131,7 @@ Meg kell jegyezni, hogy az egyes bitekhez tartozó $V_i$ bemenő feszültségek 
 \end{figure}
 
 
-\subsection{R/2R létra}
+\subsection{R/2R létra \cite{Bagoly}}
 
 A bináris súlyozású DAC problémáit hatékonyan küszöböli ki a beszédesen R/2R létrának nevezett kapcsolás, ami \aref{fig:dacletra}. ábrán látható.
 A bitek bináris súlyozása különböző ellenállások helyett egy speciális kapcsolással valósul meg, mindössze kétféle ellenállás használatával. A kapcsolást áttekintve, a Kirchoff-egyenleteket felírva belátható, hogy a műveleti erősítő bemenetén lévő létraáramkör a feszültségeket a bitek helyiértékével súlyozva összegzi, MSB-től kezdődően $U_0/2$, $U_0/4$, $U_0/8$ stb. járulékok adódnak hozzá az összegzéshez.
@@ -147,7 +151,7 @@ Az analóg-digitális átalakítók a bemenetükre kapcsolt folytonos, analóg j
 16 stb. bites típusok vannak forgalomban. Az alábbiakban az A/D konverterek néhány gyakori típusát (elektronikai megvalósítását) vizsgáljuk meg.
 
 
-\subsection{Szimultán (flash) A/D konverter}
+\subsection{Szimultán (flash) A/D konverter \cite{Bagoly}}
 
 \begin{figure}[]
 	\centering
@@ -160,7 +164,7 @@ Az analóg-digitális átalakítók a bemenetükre kapcsolt folytonos, analóg j
 
 
 
-\subsection{Számláló A/D konverter}
+\subsection{Számláló A/D konverter \cite{Bagoly}}
 
 \begin{figure}[]
 	\centering
@@ -176,12 +180,12 @@ A konverter nagy hibája, hogy a mérési (átalakítási) idő függ a mérend�
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{media/ADC_szamlalo_jel}
-	\caption{Számláló A/D konverterrel végzett konverzió szemléltetése. Jól látható a diszkrét lépések számának és az átalakítandó analóg feszültség nagyságának viszonya, illetve a konverzió közti időlépések különbözősége.}
+	\caption{Számláló A/D konverterrel végzett konverzió szemléltetése. Jól látható a diszkrét lépések számának és az átalakítandó analóg feszültség nagyságának viszonya, illetve a konverzió közti időlépések különbözősége \cite{Bagoly}.}
 	\label{fig:adcszamlalojel}
 \end{figure}
 
 
-\subsection{Szukcesszív approximációs A/D konverter}
+\subsection{Szukcesszív approximációs A/D konverter \cite{Bagoly}}
 
 \begin{figure}[]
 	\centering
@@ -225,7 +229,7 @@ olyan számsor, ami a függvény értéke $\frac{1}{2 \cdot f_{max}}$ távolság
 
 
 
-\section{Kvantálási zaj}
+\section{Kvantálási zaj \cite{BME}}
 
 Egy A/D konverter jellegéből adódóan a folytonos analóg jel diszkrét digitális jellé való átalakítása során fellép a kvantálási hiba: a bemenő analóg érték és az eredményül kapott digitális érték különbsége. Ez csonkolásos esetben $LSB$-ig terjed, kerekítéses konverziónál $\pm LSB/2$ nagyságú. Ez egy elvi érték a konverzió hibájára: valójában sok egyéb áramköri tényezőből adódóan különféle, általában nagyobb mértékű hibák adódhatnak ezen kívül. A digitális jelfeldolgozás szempontjából a kvantálási hibának komoly jelentősége van. Gyakori feltételezés, hogy additív zajnak tekintjük, aminek értéke független a bemenő jeltől. A konvertált jel így az eredeti jel és a kvantálási zaj összege:
 \begin{equation}
@@ -252,7 +256,7 @@ Tegyük fel továbbá, hogy a kvantálási zaj a teljes Nyquist-sávszélességb
 
 
 
-\section{$\Delta$-$\Sigma$-moduláció}
+\section{$\Delta$-$\Sigma$-moduláció \cite{BME}}
 
 Az fentiekben ismertetett additív, fehér spektrumú kvantálási zajmodellt (\ref{eq:kvant_zaj}) alkalmazva, az átalakított jel spektruma a Fourier-transzformáció linearitása miatt az eredeti jel spektrumának és a kvantálási zaj (hiba) spektrumának az összege. A kvantálási zajról elmondható, hogy a teljesítménysűrűségének a spektruma egyenletesen oszlik el az $f_m/2$ frekvenciáig, és az általa határolt téglalap alatti terület $\frac{q}{\sqrt{12}}$ (vö. (\ref{eq:zaj_power})). Gondolatkísérletként növeljük most a mintavételi frekvenciát $k \cdot f_m$-re! Ez esetben 0 és $k \cdot f_m/2$ frekvencia között oszlik meg a teljesítményspektrum egyenletesen, a korábbihoz képest $k$-szor annyi pontban. Az alatta lévő terület viszont változatlanul $\frac{q}{\sqrt{12}}$, így egy pontban $k$-ad részére csökken a kvantálási zaj teljesítménye. Adott szinuszjel vizsgálatakor ez $k$-szoros jel-zaj arányt jelent.
 Túlmintavételezéskor tehát az átalakító kvantálási hibájának egy szélesebb spektrumba való szétszórásával az adott jel konverziójakor bekövetkező kvantálási hiba csökkenthető, más szóval a felbontás növelhető. Ez effektíve olyan, mintha plusz biteket adnánk hozzá az A/D átalakítóhoz.
@@ -283,7 +287,7 @@ Belátható, hogy a negatív visszacsatolás miatt a visszacsatolásban lévő D
 \end{figure}
 
 
-\section{$\Delta$-moduláció}
+\section{$\Delta$-moduláció \cite{quora}}
 
 A $\Delta$-modulátor a $\Sigma-\Delta$-modulátorhoz hasonlóan negatív visszacsatoláson alapszik. Lényegében azt nézi, hogy az analóg jel a következő mintavételi ablakban alacsonyabb vagy magasabb, mint a konvertált digitális jel aktuális értéke. 1 bites esetben a következő forgatókönyv zajlik le: ha alacsonyabb az analóg jel az aktuális digitális értéknél, akkor 0-t ad ki a komparátor, és csökkentjük egy kvantálási lépcsővel a digitális jel értékét, ellenkező esetben az összehasonlítás eredménye logikai 1, és növeljük egy lépcsővel a digitális jelet. A mintavételi frekvencián kívül ez esetben a $q$ kvantumlépcső és a mérendő jel amplitúdója is meghatározó a konverzió sikeressége szempontjából: \aref{fig:deltamodulation}. ábra bal oldalán helyes, jobb oldalán hibás A/D átalakítást látunk $\Delta$-modulátorral. 
 
@@ -304,7 +308,7 @@ A $\Delta$-modulátor a $\Sigma-\Delta$-modulátorhoz hasonlóan negatív vissza
 
 
 
-\section{A tömörítésről}
+\section{Digitális jelek tömörítése \cite{Bagoly}}
 
 Egy eseményhalmaz megfigyelése során nyert átlagos információt, más szóval az adott eseményhalmaz entrópiája:
 
@@ -320,18 +324,40 @@ Hasonlóképp a $\Sigma-\Delta$ moduláció is tömörítéssel jár: itt is ele
 
 \section{Digitális számábrázolás és műveletvégzés}
 
+A digitális memória alapegysége a bit, aminek két lehetséges értéke lehet: 0 vagy 1. A számábrázolás ezért kettes számrendszerben történik a digitális eszközökön: az egyes bitek 2 hatványainak megfelelő helyiértéket képviselnek, és minden 2-hatvány együtthatója 0-t vagy 1-et vehet fel. Egyszerű példaként tekintsük egy pozitív egész szám ábrázolását 8 biten (1 bájt)!
 
-%\begin{figure}[H]
-%    \begin{center}
-%    \includegraphics[width=0.5\textwidth]{media/tsneplot.png}
-%    \caption{t-SNE plot for MNIST dataset \cite{tsne-article}} 
-%    \label{fig:tsneplot}
-%    \end{center}
-%\end{figure}
+\begin{equation}
+	107 = 0 \cdot 2^7 + 1 \cdot 2^6 + 1 \cdot 2^5 + 0 \cdot 2^4 + 1 \cdot 2^3 + 0 \cdot 2^2 + 1 \cdot 2^1 + 1 \cdot 2^0 \implies 01101011
+\end{equation}
+Törtek ábrázolására egy logikusan következő módszer a \textbf{fixpontos ábrázolás}: a bitek egy részét 2 negatív hatványainak dedikáljuk, így azok a törtrészt, a többi bit az egész részt reprezentálják. Például:
 
-\nocite{Bagoly}
-\nocite{BME}
-\nocite{hangfeldolgozas}
+\begin{equation}
+	13.25 = 1 \cdot 2^3 + 1 \cdot 2^2 + 0 \cdot 2^1 + 1 \cdot 2^0 +
+	 0 \cdot 2^{-1} + 1 \cdot 2^{-2} + 0 \cdot 2^{-3} + 0 \cdot 2^{-4} 
+	 \implies 1101.0100
+\end{equation}
+Ezzel a gyakorlatban nagyon nem praktikus, mert komolyan limitálja az ábrázolható számok nagyságát (a fenti példánál maradva, 8 helyett 4 egészrészbit esetén 255 helyett 15 lesz a legnagyobb ábrázolható egész szám), illetve egy rögzített felbontás alatt (itt: $2^{-4} = 0.0625$) nem lehet törtrészt ábrázolni. Ezért a gyakorlatban \textbf{lebegőpontos számábrázolás}t használunk. Ennek motivációja a 10-es számrendszerben is használt normál alak:
+
+\begin{equation}
+	-2.3454612 \cdot 10^3, ~\mathrm{vagy} ~ -0.23454612E4.
+\end{equation}
+A számot itt három egységre bontottuk: előjel, mantissza és kitevő. A lebegőpontos számábrázolás hasonlót jelent a normál alakhoz, kettes számrendszerben. Egy számot az alábbi képlet szerint reprezentálunk digitálisan:
+
+\begin{equation}
+	(-1)^s \cdot f \cdot 2^{e-b},
+\end{equation}
+ahol $s$ az előjel (egyetlen bit, 0 vagy 1 egyértelműen meghatározza, hogy pozitív vagy negatív a szám), $f$ a mantissza, $e$ a kitevő (karakterisztika), $b$ pedig egy szabvány szerinti konstans. Az $f$, $e$ és $b$ mind 2-es számrendszerben reprezentált egész számok.
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{media/IEEE754}
+	\caption{A szabványos 32 bites float és 64 bites double lebegőpontos számok bitkiosztása.}
+	\label{fig:ieee754}
+\end{figure}
+
+
+
 
 \bibliographystyle{plain}
 \bibliography{references}
