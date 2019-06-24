@@ -121,15 +121,28 @@ A legegyszerűbb ezek közül a {\em trapéz-szabály}, amely $x_i$ és $x_{i+1}
     \label{trap}
     \int_{x_{i}}^{x_{i+1}} f(x) \text{d}x \approx (x_{i+1} - x_i) \frac{f(x_{i+1} + f(x_i))}{2}.
 \end{equation}
+Kiszámolható az is \cite{error}, hogy az $[x_i, x_{i+1}]$ intervallumon elkövetett numerikus hiba, amit a trapéz szabályt alkalmazva elkövetünk
+$$
+\Delta I ^{\text{trap.}} = \frac{1}{12}\Delta x^3 f''(\xi),
+$$
+valamilyen $\xi \in [x_i, x_{i+1}]$-re. Tehát a módszer hibája a függvény második deriváltjának maximumával becsülhető.
+
+
 Ezt a kis intervallumokra egymás után alkalmazva és a $\Delta x$ jelölést használva az integrálási pontok távolságára
 \begin{equation}
     \int_a^b f(x) \text{d}x  = \Delta x  \frac{f(x_0) + f(x_n)}{2} + \sum_{i = 1} ^{n-1}f(x_i)\Delta x.
 \end{equation}
+
 A trapéz szabálynál pontosabb formulákat is használhatunk, ezek az elemi intervallumok feletti interpoláció alakjában különböznek. 
 A {\em Simpson-szabály} szerint például másodfokú polinommal interpolálunk, és ezért szükség lesz az intervallum közepén kiértékelt függvényértékre is. Megtartva a $\Delta x = x_{i+1} - x_i$ jelölést:
 \begin{equation}
     \int_{x_{i}}^{x_{i+1}} f(x) \text{d}x \approx \frac{\Delta x}{3}\left( f(x_i) + 4f(x_i+\Delta x/2) + f(x_{i+1})\right).
 \end{equation}
+A Simpson-szabály hibáját is kiszámolhatjuk \cite{error}, erre
+$$
+\Delta I ^{\text{Simps.}} = \frac{1}{90}\left(\frac{\Delta x}{2}\right)^5 f^{(4)}(\xi) 
+$$
+adódik, szintén valamilyen $\xi \in [x_i, x_{i+1}]$ értékre. 
 \subsection{Gauss-formulák}
 A Gauss-formulák ehhez képest nem ragaszkodnak az egyenközű függvény-kiértékeléshez. Ha az $f(x)$ integrandusból kiemelünk egy súly-faktort
 \begin{equation}
