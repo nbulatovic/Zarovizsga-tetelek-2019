@@ -1,0 +1,353 @@
+\documentclass[12pt]{article}
+\setlength{\textwidth}{17cm}
+\setlength{\textheight}{24cm}
+\setlength{\topmargin}{-2cm}
+\setlength{\footskip}{1cm}
+\setlength{\evensidemargin}{0cm}
+\setlength{\oddsidemargin}{0cm}
+\setlength{\parindent}{0cm}
+
+\usepackage{allrunes}
+\usepackage{amsmath}
+\usepackage[magyar]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{fixltx2e}
+\usepackage{multirow}
+\usepackage{cite}
+\usepackage[hyphens]{url}
+\usepackage[unicode,colorlinks=true,breaklinks]{hyperref}
+%\usepackage[dvips]{hyperref}
+%should display links, but it does not work with \H accent
+%and formulas in section titles
+
+\hypersetup{colorlinks,linkcolor=blue,urlcolor=magenta,citecolor=magenta}
+%Breaks long url`s in text, while keeping it one link:
+
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amssymb}
+
+
+\theoremstyle{plain}
+\usepackage{graphicx}
+
+%\usepackage{gensymb}
+\usepackage{float}
+
+% For bra-ket notation
+\usepackage{braket}
+
+%% New commands
+\newcommand{\dd}{\textrm{d}}
+
+%% Pauli matrices
+\newcommand{\sigx}{\sigma_x}
+\newcommand{\sigy}{\sigma_y}
+\newcommand{\sigz}{\sigma_z}
+
+\newcommand{\paulix}{
+    \left( \begin{array}{cc}
+        0 & 1 \\
+        1 & 0
+    \end{array}
+    \right)
+}
+
+\newcommand{\pauliy}{
+    \left( \begin{array}{cc}
+        0 & -i \\
+        i & 0
+    \end{array}
+    \right)
+}
+
+\newcommand{\pauliz}{
+    \left( \begin{array}{cc}
+        1 & 0 \\
+        0 & -1
+    \end{array}
+    \right)
+}
+
+
+\begin{document}
+\title{17. tétel: Vizualizáció}
+\author{Prósz Aurél}
+
+\maketitle
+
+\pagenumbering{gobble}
+
+\begin{abstract}
+   TODO : add abstract
+\end{abstract}
+
+\vfill
+
+\tableofcontents
+
+\newpage
+
+\section{Tudományos adatok két és háromdimenziós megjelenítésének technikái}
+Többdimenziós tudományos adatok megjelenítésére számos módszer áll rendelkezésre, a továbbiakban ezeket szedtem össze kis magyarázat és példa keretében. \newline
+Tekintsünk egy példa adatkészletet, például az úgynevezett \textit{Wine Quality Data Set}-et, amely letölthető innen:  https://archive.ics.uci.edu/ml/index.php. Az adatkészlet a portugál \textit{Vinho Verde} bor tulajdonságait írja le, és ezen mutatom be a vizualizációs technikákat. 
+
+
+\subsection{1D és 2D vizualizáció}
+Egy dimenzióban, amennyiben egy változó eloszlására vagyunk kiváncsiak, ábrázolhatjuk az adatot \textbf{hisztogramként}. Ha egyszerre több változót kívánunk ábrázolni, úgy lehetőség van őket egyenként elrendezni egy rácson. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/hist.png}
+    \caption{\textbf{1D adatok ábrázolása hisztogramként.}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+ 
+ Egyszerű módszer az adatokon belüli mintázatok és korrelációk felfedezésére az úgynevezett korrelációs módszer kiszámítása, majd annak vizualizációja \textbf{heatmap} formájában. A heatmap esetében az adott párokhoz tartozó értékek jelzik a korreláció, vagy általános esetben bármilyen skalár értékű függvény nagyságát.
+ 
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/kormap.png}
+    \caption{\textbf{Korrelációs mátrix megjelenítése heatmap formájában.}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+ 
+ Két változó közötti összefüggés megjelenítésére alkalmas a \textbf{scatterplot}, míg a hisztogramokhoz hasonlóan több változó esetén ezt is megjeleníthetjük egy rácson.
+ 
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/pariwise.png}
+    \caption{\textbf{Scatterplotok megjelenítése rácson.}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+ 
+Több dimenziós, kategorikus adat megjelenítésére szolgál az úgynevezett \textbf{multiple bar plot}, ahol egy klasszikus bar ploton tudunk megjeleníteni több változót is.
+
+A \textbf{box plot} több információt tartalmazó változata a \textbf{violin plot}, amely többváltozós adatot vizualizál olyan módon, hogy az eloszlás alakja is leolvasható az outlier adatpontokkal együtt.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/violin.png}
+    \caption{\textbf{Violin plot több változóval és kategorikus szinezéssel.}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+
+
+\subsection{3D adatvizualizáció}
+Amennyiben egyszerre 3 változót szeretnénk megjeleníteni, lehetőségünk van alkalmazni a már korábban látott \textbf{scatterplot}-ot egy rácson elhelyezve, de színkódolás segítségével újabb változó értékét megjeleníthetjük.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/3dscatter.png}
+    \caption{\textbf{2D scatterplot rácson színkóddal.}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+ 
+ Ha mind a három változónk folytonos, akkor érdemes az úgynevezett \textbf{3D scatterplot}-on ábrázolni, amelyben az adatpontok mélységében tároljuk a plusz információt a kétdimenziós megjelenítéshez képest.
+ 
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/3dcont.png}
+    \caption{\textbf{3D scatterplot.}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+
+ Magasabb dimenzióban az eddigiek analógiájára bővíthetjük a megjelenítést újabb színkódolás, forma, méret, vagy egyéb paraméterek bevezetésével. \newline
+ Bővebb információkért, illetve egzotikusabb vizualizációs technikákért érdemes megtekinteni a következő linket: https://towardsdatascience.com/the-art-of-effective-visualization-of-multi-dimensional-data-6c7202990c57
+ 
+ \section{Skalár-, vektor- és tenzorértékű adatok ábrázolása}
+ https://booksite.elsevier.com/samplechapters/9780123875822/9780123875822.PDF
+ \subsection{Skalár értékű adatok ábrázolása}
+ 
+ Skalár értékű adatokat az előző részekben tárgyaltakon kívül ábrázolhatunk még felületeken, vagy térfogatokban olyan módon, hogy színekkel jelöljük a konkrét értékeket, ezt nevezzük \textbf{color mapping}-nak. \newline
+ Másik módszer az úgynevezett \textbf{contouring}, amely egyfajta kibővítése a color mapping-nak olyan módon, hogy a szinte azonos színű (és értékű) régiókat kontúrvonalakkal (vagy kontúrfelületekkel) elkeríti, és ezeket a területeket (vagy térfogatokat) ugyanolyan színnel színezi. Tipikus példa erre a megjelenítsére az időjárást ábrázoló térképek, ahol a konstans hőmérsékletet jellemző kontúrvonalak választják el az egyes régiókat.
+ 
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/iso.PNG}
+    \caption{\textbf{Példa a kontúrvonalakra és a kontúrfelületekre.}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+ 
+ \subsection{Vektor értékű adatok ábrázolása}
+ Vektor értékű adatok adatok ábrázolását a legegyszerűbb módon úgy valósíthatjuk meg, hogy minden egyes adatponthoz társítunk egy vonalat, amelynek meghatározott iránya és nagysága van. A technika neve \textbf{hedgehog}, a keletkező vizualizáció kinézete miatt. A megjelenítést tovább lehet finomítani a vonalak színezésével és méretük változtatásával. Ezen kívül az egyszerű vonalak helyett alkalmazhatunk 2D és 3D irányított objektumokat is, amelyek többdimenziós adatok megjelenítésénél lehet hasznos, mert könnyebb a jelölt irányt megállapítani az alkalmazásukkal.
+ 
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/glyph.PNG}
+    \caption{\textbf{Példa az egyszerű vonalas vektorábrázolásra, illetve a bonyolultabb 2D és 3D objektumok használatára.}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+ 
+ A vektor értékű adatok ábrázolásánál figyelni kell, hogy 3 dimneziós ábrázolásoknál sokszor nehéz pontosan megállapítani a vektorok irányítottságát, hiszen a 3D térből vetítjük le a megjelenítést a 2D térbe. Ezen kívül fontos, hogy ne jelenítsünk meg egyszerre túl sok adatpontot, mert a vektorok összemosódhatnak és értelmezhetetlenné válik az ábra. 
+ 
+  \subsection{Tenzor értékű adatok ábrázolása}
+ A tenzor értékű adatok megjelenítése komplex feladat és jelenleg is aktívan kutatott terület. Használatuk kiemelkedő biológiai adatok (molekuláris diffúzió mérése) és mérnöki területek (feszültég tenzor) esetében. Ahhoz, hogy vizualizáljuk a tenzor értékű adatokat, minden egyes adatpont helyén 3 ortogonális vektor vizualizációjára van szükségünk. Ehhez felhasználhatjuk a vektor értékű adatok ábrázolásánál használt módszereket. \newline
+ A feszültég tenzor esetében például a vizualizálni kívánt tenzorokat reprezentálhatjuk 3X3 mátrixok segítségével. Ebből számolható 3 sajátérték és 3 ortogonális sajátvektor. A sajátvektorok hossza tartalmazhatja az információt az adott irányba keletkező feszültség értékéről, míg további színkódolással a mennyiség előjelét is meg lehet jeleníteni. Ez a módszer csak abban az esetben használható eredményesen, ha az adatpontok nincsenek túl közel egymáshoz és a feszültség homogén módon oszlik el az anyagban. \newline
+
+ 
+ 
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/stress.png}
+    \caption{\textbf{Példa a feszültség tenzor vizualizációjára.}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+ 
+  További vizualizációs módszer az úgynevezett \textbf{colormap} használata, mikor egy ábrán csak a legnagyobb sajátértékhez tartozó sajátvektorokat jelenítjük meg, irányukat pedig színekkel kódoljuk. 
+ 
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/colormap.PNG}
+    \caption{\textbf{Tenzor vizualizáció colormap módszerrel.}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+ 
+ Végül egy egyszerű technika, amelyel a mátrix összes komponensét tudjuk egyszerre vizualizálni: elkészítünk egy 3X3-as mozaik képet, amelynek minden egyes eleme az adott vizualizáció, olyan módon, hogy csak az adott mátrixelem értékeit jelenítjük meg benne.
+ 
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/brain.PNG}
+    \caption{\textbf{Mátrixelemek vizualizációja. Az egyes képek az adott elemhez tartozó intenzitásértékeket kódolják.}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+
+ \url{http://www.inf.ed.ac.uk/teaching/courses/vis/lecture_notes/lecture14.pdf}
+ 
+ \section{Színek}
+ Tudományos publikációkban rendkívül fontos szerepe van a megfelelő színválasztásnak. Ehhez előre definiált színpaletták állnak rendelkezésre, a következőkben ezeket tekintem át. Általános alapelv a színválasztásnál, hogy a megjelenített adatokat egyértelművé tegye, ne torzítsa el, és az esetleges színtévesztő olvasók számára is problémamentes legyen a megjelenítés.
+ 
+ \subsection{Szekvenciális adatok színezése}
+ 
+ Amennyiben olyan adatot kívánunk megjeleníteni, amely értékei folytonosak és sorba rendezhetőek nagyság szerint, úgy érdemes az úgynevezett szekvenciális paletták közül válogatni. Ennek előnye, hogy a legtöbb ember a sötétebb színeket, például a feketét a "több", vagy "sűrűbb" adathoz társítja, míg a világosabb színek az ellenkező hatást érik el. 
+ 
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/sequential.png}
+    \caption{\textbf{Szekvenciális paletták}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+ 
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/map.png}
+    \caption{\textbf{Egy példa a szekvenciális adatok színezésére.}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+ \subsection{Divergens adatok színezése}
+ Ha az adataink divergens struktúrájúak, tehát tartozik hozzá egy nullpont, amihez képest lehet az adatok értéke nagyobb, vagy kisebb, akkor célszerű a divergens színpalettákból válogatni. Ezek olyan paletták, amelyek két vége tendál a sötétebb színek felé, így mutatva, hogy azok a részei a "jobban" negatívak, vagy pozitívak.
+ 
+  \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/diverging.png}
+    \caption{\textbf{Divergens paletták}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+ 
+ \subsection{Kategorikus adatok színezése}
+ Kategorikus adatok esetében, amelyek nem állíthatóak sorba, törekednünk kell arra, hogy egymástól jól megkülönböztethető színeket használjunk, illetve, hogy egy ábrázoláson csak megfelelő mennyiségű kategóriát szerepeltessünk, hogy ne legyenek összekeverhetőek az adatpontok.
+ 
+ 
+ 
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/categorical.png}
+    \caption{\textbf{Kategorikus paletták}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+ 
+ \subsection{Egyéb szempontok}
+ 
+ Fontos szempont, hogy az adatok megjelenítésénél gondoljunk  színtévesztő olvasókra. Ehhez általános szabály, hogy pirosat és zöldet soha ne használjunk együtt, mert a színtévesztés leggyakoribb fajtája (8\% férfiaknál, 0.5\% nőknél) pont ezt a két színt teszi nehezen megkülönböztethetővé. Ezen szabály betartása mellett rendelkezésre állnak kifejezetten színtévesztőknek kifejlesztett színpaletták is, ezek használata is indokolt lehet. 
+ 
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/cwheel-polar.png}
+    \caption{\textbf{Színtévesztés szimulálása.}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+ 
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/colorb.png}
+    \caption{\textbf{Színtévesztők számára is könnyen értelmezhető színpaletták}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+
+ \section{Térbeli adatok megjelenítése, volometrikus és szintfelületes ábrázolás.}
+ TODO
+ 
+ \section{Háromdimenziós renderelési technikák, ray casting, ray tracing.}
+ Kezdésnek tekintsük át, hogy hogyan lehet leképezni 3D objektumokat egy 2D felületre. Az alább lévő ábrán látható, hogy ehhez szükségünk van az objektumra, egy felületre, majd egy pontra, amelyet úgy szerkesztünk, hogy a kapott piramis teteje lesz a pont, a talapzata pedig a felület. A csúcstól a felület felé húzott egyenessel párhuzamos a látósugarunk, a felületet pedig a képsík lesz. Erre a képsíkra fogjuk vetíteni a 3D objektum képét olyan módon, hogy a piramis csúcspontjából húzunk vonalakat az objektum különböző részeihez, és a vonalak és a sík metszéspontjai fogják adni a vetített képet. 
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/vantagepoint.png}
+    \caption{\textbf{A számítógépes képalkotás alapja.}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+ 
+ A képelkotáshoz szükség van még egy fényforrásra is, amely megvilágítja az objektumokat. Ezután több különböző módszer áll rendelkezésre annak érdekében, hogy valósághű képet hozhassunk létre. 
+ 
+ \subsection{Raszterelés}
+ 
+ \subsection{Scanline rendering}
+ 
+ \subsection{Ray tracing - Ray casting}
+ 
+ Tudjuk, hogy ahhoz, hogy a képalkotás létrejöhessen, a fényforrásból elsőnek az objektumra kell jutniuk a fotonoknak, majd onnan verődve az érzékelőre. Ehhez végigszámolthatjuk az összes foton útját a fényforrástól a szenzorig (ez az úgynevezett \textbf{forward tracing} technika), de mivel a fotonok többsége nem az érzékelőre fog veródni az objektumról, ezért ez nagyon számításigényes és nem hatékony eljárás. Ezzel szemben, ha megfordítjuk a kiértékelés menetét, olyan módon, hogy fotonokat bocsátunk ki az érzékelőből, és visszaszámoljuk, hogoy milyen úton jut el a fényforrásig. Ennek részletesebb menete úgy néz ki, hogy kibocsátunk egy fotont a képsík felé, majd megvizsgáljuk, hogy a foton útjával párhuzamosan húzott vonal (\textbf{primary ray}) ér-e objektumot. Ha igen, akkor az érintési ponttól szerkesztünk egy újabb egyenest a fényforrás felé, és vizsgáljuk, hogy ennek a szerkesztett egyenesnek van-e az útjában újabb objektum. Ezt a fotont, vagy sugarat nevezzük \textbf{shadow ray}-nek és arra használjuk, hogy megállapítsuk, hogy az adott objektum adott része árnyékban van-e. Az elv részletesebben megtekinthető az alsó ábrán.
+ 
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/shadow1.PNG}
+    \caption{\textbf{Képalkotás, ha az objektum adott része nincs árnyékban.}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+ 
+ \begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/shadow2.PNG}
+    \caption{\textbf{Képalkotás, ha az objektum adott része árnyékban van.}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+ 
+https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-overview
+ 
+  
+\section{A sztereoszkópius megjelenítés technológiái}
+
+Sztereoszkópiának hívunk bármilyen olyan technológiát, amely lehetőséget ad egy 2D kép olyan módon való megjelenítésére, amely valódi 3D képnek tűnő hatást kelt. Fotók, vagy videók esetében ezt úgy érik el, hogy különböző képet mutatnak a különböző szemeknek. \newline
+A térlátás abból adódik, hogy az emberi szemek közelítőleg 5 cm-re helyezkednek el egymáshoz képest, így egy adott jelenséget a két szem kicsit más szögből látja. Lehetőség van ennek analógiájára olyan kamerát készíteni, amely két lencsével rendelkezik, reprodukálva az emberi látás sajátosságait. Alapvetően kétfajta technikát különböztetünk meg: a sztereoszkópikus és az autosztereoszkópikus megjelenítéseket. Az elsőnél a megfigyelőnek szüksége van valamilyen eszköz, például speciális szemüveg viselésére a 3D hatás megtapasztalására, míg a másodiknál nincs. \newline
+\subsection{Anaglif megjelenítés}
+A sztereoszkópikus technológia felbontható több csoportra. Az első ilyen módszer az úgynevezett anaglif megjelenítés. Ennek során egy képet két különböző szögből vesznek fel, majd két különböző színnel látnak el, amelyet hasonló színezésű szemüveggel (egy szín az egyik, másik szín a másik szemnek) vizsgálva előhozható a 3D megjelenítés. Általában a két használt szín a piros és a kék. Előnyei a technikának, hogy nagyon egyszerűen lehet előállítani a kompozit képet, és olcsó a hozzá tartozó szemüveg. Ezen kívül fizikailag is kinyomtatható a kép, a hatás úgy is megmarad. Hátrányai, hogy nehéz valódi színeket megjeleníteni rajta, a keletkező kép gyakran homályos.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm, height=6cm]{media/stereo.PNG}
+    \caption{\textbf{Anaglif kép.}}
+    \label{fig:GeneralDiagram}
+ \end{figure}
+
+
+
+\subsection{Polarizációs szemüvegek}
+
+Ez a technika hasonló az anaglif megjelenítéshez, de itt színkódolás helyett különböző polarizációs szűrőkön vezetik át a két szemhez tartozó képet. Előnye az előzőhöz képest a jobb színhűség, de hátránya, hogy a megjelenő kép homályos és fényszegény a szűrők fényelnyelése miatt.
+
+\subsection{Shutter szemüvegek}
+
+Ennek a technika során a speciális szemüveg periodikusan kitakarja egyszer az egyik, másszor a másik szem képét, így a kijelző videokártyájával megfelelően szinkronizálva, majd azon megfelelő időben megjelenítve a képeket elérhető a 3D hatás. Előnye, hogy sokkal meggyőzőbb képet ad az előző két technikával szemben, de hátránya, hogy a speciális szemüvegek gyakran nagyon drágák, és értelemszerűen a keletkező képet kinyomtatni se lehet. \newline
+\subsection{Autosztereoszkópikus technikák}
+Az autosztereoszkópikus technikák is felbonthatóak több csoportra. 
+ 
+\url{https://www.cg.tuwien.ac.at/courses/Seminar/WS2006/stereo_techniques.pdf}
+
+\section{Számítógépes geometria}
+
+TODO
+
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
